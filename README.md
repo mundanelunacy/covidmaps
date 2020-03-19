@@ -1,6 +1,6 @@
 # Coronamaps.org
 
-The goal of Coronamaps.org[https://coronamaps.org] is to have a website where people can type in their location to bring up hot spots where confirmed Corona Virus cases had visited prior to quarintine
+The goal of [Coronamaps.org](https://coronamaps.org) is to have a website where people can type in their location to bring up hot spots where confirmed Corona Virus cases had visited prior to quarintine
 
 A universally accessible database with the power to inform you if you've been in contact with active Corona cases could be the difference between life and death ...
 maybe not for you but for someone you know
@@ -11,3 +11,5 @@ maybe not for you but for someone you know
 -   For everyone else, please consider donating
 
 I will not take a dime for the work I'm putting into this. All the money will go toward paying off server fees and operations
+
+-Toshi
