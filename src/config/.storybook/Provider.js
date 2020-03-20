@@ -1,18 +1,17 @@
 import React from "react";
 import { Provider } from "react-redux";
-import { store, rrfProps } from "./redux/store";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
-import { GeoPointQuery } from "./components/GeoPointQuery";
+import { BrowserRouter as Router } from "react-router-dom";
+import { store, rrfProps } from "../../redux/store";
 
-const App = props => {
+const withProvider = story => {
     return (
         <Provider store={store}>
             <ReactReduxFirebaseProvider {...rrfProps}>
-                hello world
-                <GeoPointQuery></GeoPointQuery>
+                <Router>{story()}</Router>
             </ReactReduxFirebaseProvider>
         </Provider>
     );
 };
 
-export default App;
+export default withProvider;
