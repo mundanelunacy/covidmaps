@@ -8,7 +8,7 @@ import { submitIncident, queryIncidents } from "../../redux/actions";
 const mapStateToProps = (state, props) => {
     return {
         firebase: state.firebase,
-        query: state.displayMap.query
+        query: state.query
     };
 };
 
@@ -16,12 +16,4 @@ GeoPointQuery.propTypes = {};
 
 GeoPointQuery.defaultProps = {};
 
-export default compose(
-    connect(mapStateToProps, { submitIncident, queryIncidents }),
-    firestoreConnect(props => {
-        // if (!props.latitude || props.longtitude){
-        //     return[]
-        // }
-        return [];
-    })
-)(GeoPointQuery);
+export default compose(connect(mapStateToProps, { submitIncident, queryIncidents }), firestoreConnect())(GeoPointQuery);

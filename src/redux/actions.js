@@ -31,7 +31,7 @@ const query = async (lat, lng, radius, firebase) => {
     return await get(query);
 };
 
-export const queryIncidents = (lat, lng, radius, firebase) => async (dispatch, getState) => {
+export const queryIncidents = (lat, lng, radius, firebase) => async dispatch => {
     const incidents = await query(lat, lng, radius, firebase);
 
     dispatch({
