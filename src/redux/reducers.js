@@ -10,7 +10,8 @@ export const initialState = {
         selectedPlace: {},
         query: {
             center: { lat: 35.6938, lng: 139.7034 }, // default Shinjuku
-            radius: 1
+            radius: 1,
+            incidents: []
         }
     }
 };
@@ -30,6 +31,9 @@ const displayMap = (state = initialState.displayMap, action) => {
         return { ...state, activeMarker: null, showingInfoWindow: false };
     }
     if (action.type === "CENTER_MOVED") {
+        return { ...state, query: action.query };
+    }
+    if (action.type === "QUERY_INCIDENTS") {
         return { ...state, query: action.query };
     }
     return state;

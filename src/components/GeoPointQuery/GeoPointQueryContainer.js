@@ -3,14 +3,12 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 // import PropTypes from "prop-types";
-
-const mapDispatchToProps = dispatch => {
-    return {};
-};
+import { submitIncident, queryIncidents } from "../../redux/actions";
 
 const mapStateToProps = (state, props) => {
     return {
-        firebase: state.firebase
+        firebase: state.firebase,
+        query: state.displayMap.query
     };
 };
 
@@ -19,7 +17,7 @@ GeoPointQuery.propTypes = {};
 GeoPointQuery.defaultProps = {};
 
 export default compose(
-    connect(mapStateToProps, mapDispatchToProps),
+    connect(mapStateToProps, { submitIncident, queryIncidents }),
     firestoreConnect(props => {
         // if (!props.latitude || props.longtitude){
         //     return[]

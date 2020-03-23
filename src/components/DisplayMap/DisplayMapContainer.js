@@ -5,14 +5,14 @@ import { firestoreConnect } from "react-redux-firebase";
 // import PropTypes from "prop-types";
 import { apiKey } from "../../config/GoogleMapsAPIKey";
 import { GoogleApiWrapper } from "google-maps-react";
-import { onMarkerClick, onMapClicked, onCenterMoved } from "../../redux/actions";
+import { onMarkerClick, onMapClicked, centerMoved } from "../../redux/actions";
 
 const mapStateToProps = state => {
-    return { displayMap: state.displayMap };
+    return { firebase: state.firebase, displayMap: state.displayMap, query: state.displayMap.query };
 };
 
 DisplayMap.propTypes = {};
 
 DisplayMap.defaultProps = {};
 
-export default compose(GoogleApiWrapper({ apiKey }), connect(mapStateToProps, { onMarkerClick, onMapClicked, onCenterMoved }), firestoreConnect())(DisplayMap);
+export default compose(GoogleApiWrapper({ apiKey }), connect(mapStateToProps, { onMarkerClick, onMapClicked, centerMoved }), firestoreConnect())(DisplayMap);
