@@ -10,7 +10,7 @@ const mapDispatchToProps = dispatch => {
 
 const mapStateToProps = (state, props) => {
     return {
-        firestore: state.firestore
+        firebase: state.firebase
     };
 };
 

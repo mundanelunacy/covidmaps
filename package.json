@@ -11,6 +11,8 @@
         "axios": "^0.19.2",
         "firebase": "^7.11.0",
         "geofirestore": "^3.4.1",
+        "geofirex": "^0.1.0",
+        "google-maps-react": "^2.0.2",
         "react": "^16.13.0",
         "react-dom": "^16.13.0",
         "react-redux": "^7.2.0",
@@ -20,7 +22,8 @@
         "redux": "^4.0.5",
         "redux-devtools-extension": "^2.13.8",
         "redux-firestore": "^0.13.0",
-        "redux-thunk": "^2.3.0"
+        "redux-thunk": "^2.3.0",
+        "rxjs": "^6.5.4"
     },
     "scripts": {
         "start": "react-scripts start",

@@ -8,7 +8,6 @@ const App = props => {
     return (
         <Provider store={store}>
             <ReactReduxFirebaseProvider {...rrfProps}>
-                hello world
                 <GeoPointQuery></GeoPointQuery>
             </ReactReduxFirebaseProvider>
         </Provider>
