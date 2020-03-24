@@ -36,6 +36,10 @@ yarn-error.log*
 # production
 /build
 
+# keys
+/src/config/firebaseConfig.js
+/src/config/GoogleMapsAPIKey.js
+
 # misc
 .DS_Store
 .env.local

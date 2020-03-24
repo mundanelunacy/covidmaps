@@ -33,7 +33,7 @@ export const GeoPointQuery = ({ firebase, submitIncident, query, queryIncidents 
                 <Typography>Query Coordinates</Typography>
                 <TextField label="Latitude" onChange={e => setQueryLat(e.target.value)} />
                 <TextField label="Longitude" onChange={e => setQueryLong(e.target.value)} />
-                <TextField label="Radius" onChange={e => setQueryRadius(e.target.value)} />
+                <TextField label="Radius (km)" onChange={e => setQueryRadius(e.target.value)} />
                 <Button type="submit" onClick={onQueryPosition}>
                     Query coordinate
                 </Button>
