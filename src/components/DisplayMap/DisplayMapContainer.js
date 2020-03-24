@@ -8,7 +8,7 @@ import { GoogleApiWrapper } from "google-maps-react";
 import { onMarkerClick, onMapClicked, centerMoved } from "../../redux/actions";
 
 const mapStateToProps = state => {
-    return { firebase: state.firebase, displayMap: state.displayMap, query: state.query };
+    return { firebase: state.firebase, displayMap: state.displayMap, query: state.query, tzString: state.timezone.tzString };
 };
 
 DisplayMap.propTypes = {};

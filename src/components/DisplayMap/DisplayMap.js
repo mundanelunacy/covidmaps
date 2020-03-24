@@ -1,36 +1,42 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { Map, InfoWindow, Marker } from "google-maps-react";
+import moment from "moment-timezone";
 
-export const DisplayMap = ({ initialCenter, onMarkerClick, onMapClicked, centerMoved, displayMap, firebase, query, google }) => {
+export const DisplayMap = ({ initialCenter, onMarkerClick, onMapClicked, centerMoved, displayMap, firebase, query, google, tzString }) => {
     const onCenterMoved = (mapProps, map) => {
         centerMoved(mapProps, map, firebase);
     };
 
+    const onMapInitialized = (mapProps, map) => {
+        map.setOptions({ minZoom: 15 });
+    };
+
     const icon = {
         url: "/covid_icon.png",
-        anchor: new google.maps.Point(32, 32),
-        scaledSize: new google.maps.Size(64, 64)
+        anchor: new google.maps.Point(8, 8),
+        scaledSize: new google.maps.Size(16, 16)
     };
 
     return (
         <>
-            <Box p={1} component="span">
-                <Typography>DisplayMap</Typography>
-            </Box>
-
-            <Box>
-                <Map google={google} zoom={14} center={query.center} onClick={onMapClicked} initialCenter={initialCenter} onDragend={onCenterMoved} style={{ width: "500px", height: "500px" }}>
-                    {query.incidents.map(incident => (
-                        <Marker key={incident.id} title={incident.name} name={incident.name} position={{ lat: incident.position.geopoint.latitude, lng: incident.position.geopoint.longitude }} icon={icon} onClick={onMarkerClick} />
-                    ))}
-                    <InfoWindow marker={displayMap.activeMarker} visible={displayMap.showingInfoWindow}>
-                        <div>
-                            <h1>{displayMap.selectedPlace.name}</h1>
-                        </div>
-                    </InfoWindow>
-                </Map>
-            </Box>
+            <Map google={google} zoom={16} center={query.center} onClick={onMapClicked} initialCenter={initialCenter} onDragend={onCenterMoved} streetViewControl={false} mapTypeControl={false} fullscreenControl={false} onReady={onMapInitialized}>
+                {query.incidents.map(incident => (
+                    <Marker key={incident.id} title={incident.name} name={incident.name} start={incident.startTimestampMs} end={incident.endTimestampMs} position={{ lat: incident.position.geopoint.latitude, lng: incident.position.geopoint.longitude }} onClick={onMarkerClick} icon={icon} />
+                ))}
+                <InfoWindow marker={displayMap.activeMarker} visible={displayMap.showingInfoWindow}>
+                    <>
+                        <Box>
+                            <Typography>{displayMap.selectedPlace.name}</Typography>
+                        </Box>
+                        <Box>
+                            <Typography>
+                                {moment.tz(displayMap.selectedPlace.start, tzString).format("HH:mm Do-MMM-YYYY")} ({parseInt((displayMap.selectedPlace.end - displayMap.selectedPlace.start) / 1000 / 60)} min)
+                            </Typography>
+                        </Box>
+                    </>
+                </InfoWindow>
+            </Map>
         </>
     );
 };

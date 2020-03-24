@@ -25,9 +25,39 @@ export const submitIncident = (inputLat, inputLong, firebase) => dispatch => {
     dispatch({ type: "INPUT_COORD_CLEAR" });
 };
 
+export const submitIncidentBatch = (placeVisits, firebase) => dispatch => {
+    const geo = geofirex.init(firebase);
+    const incidents = firebase.firestore().collection("incidents");
+
+    placeVisits.map(({ placeVisit }, idx) => {
+        const position = geo.point(placeVisit.location.latitudeE7 / 10000000, placeVisit.location.longitudeE7 / 10000000);
+
+        incidents.add({
+            name: placeVisit.location.name,
+            placeId: placeVisit.location.placeId,
+            address: placeVisit.location.address,
+            startTimestampMs: parseInt(placeVisit.duration.startTimestampMs),
+            endTimestampMs: parseInt(placeVisit.duration.endTimestampMs),
+            validated: Math.random() > 0.5,
+            position
+        });
+        return {};
+    });
+
+    dispatch({ type: "PARSER_CLEAR" });
+};
+
 const query = async (lat, lng, radius, firebase) => {
     const geo = geofirex.init(firebase);
-    const query = geo.query("incidents").within(geo.point(lat, lng), radius, "position");
+    // const query = geo.query("incidents").within(geo.point(lat, lng), radius, "position");
+
+    const query = geo
+        .query(
+            firebase.firestore().collection("incidents")
+            // .where("validated", "==", true)
+        )
+        .within(geo.point(lat, lng), radius, "position");
+
     return await get(query);
 };
 
@@ -57,5 +87,19 @@ export const centerMoved = (mapProps, map, firebase) => async dispatch => {
             radius,
             incidents
         }
+    });
+};
+
+export const changeTimeZone = tzString => (dispatch, getState) => {
+    dispatch({
+        type: "CHANGE_TIMEZONE",
+        tzString
+    });
+};
+
+export const loadParsedVisits = placeVisits => dispatch => {
+    dispatch({
+        type: "LOAD_VISITS",
+        placeVisits
     });
 };

@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Box, TextField, Typography, Button, List, ListItem } from "@material-ui/core";
+// import { Box, TextField, Typography, Button, List, ListItem } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import { useStyles } from "./GeoPointQueryCss";
 import { DisplayMap } from "../DisplayMap";
 
@@ -13,23 +14,23 @@ export const GeoPointQuery = ({ firebase, submitIncident, query, queryIncidents 
     const [queryLong, setQueryLong] = useState(initialCenter.lng);
     const [queryRadius, setQueryRadius] = useState(query ? query.radius : 1);
 
-    const onQueryPosition = useCallback(async () => {
+    const onQueryPosition = useCallback(() => {
         if (queryLat && queryLong && queryRadius) {
             queryIncidents(parseFloat(queryLat), parseFloat(queryLong), parseFloat(queryRadius), firebase);
         }
     }, [queryLat, queryLong, queryRadius, firebase, queryIncidents]);
 
-    const onSubmitIncident = () => {
-        submitIncident(parseFloat(inputLat), parseFloat(inputLong), firebase);
-        setInputLat("");
-        setInputLong("");
-    };
+    // const onSubmitIncident = () => {
+    //     submitIncident(parseFloat(inputLat), parseFloat(inputLong), firebase);
+    //     setInputLat("");
+    //     setInputLong("");
+    // };
 
     useEffect(() => onQueryPosition(), [onQueryPosition]);
 
     return (
         <>
-            <Box p={1} component="span" className={classes.root}>
+            {/* <Box p={1} component="span" className={classes.root}>
                 <Typography>Query Coordinates</Typography>
                 <TextField label="Latitude" onChange={e => setQueryLat(e.target.value)} />
                 <TextField label="Longitude" onChange={e => setQueryLong(e.target.value)} />
@@ -45,8 +46,8 @@ export const GeoPointQuery = ({ firebase, submitIncident, query, queryIncidents 
                 <Button type="submit" onClick={onSubmitIncident}>
                     Add coordinate
                 </Button>
-            </Box>
-            <Box p={1} component="span" className={classes.root}>
+            </Box> */}
+            {/* <Box p={1} component="span" className={classes.root}>
                 <List>
                     {query.incidents.map((item, idx) => (
                         <ListItem key={idx}>
@@ -54,8 +55,8 @@ export const GeoPointQuery = ({ firebase, submitIncident, query, queryIncidents 
                         </ListItem>
                     ))}
                 </List>
-            </Box>
-            <Box>
+            </Box> */}
+            <Box p={1} component="span" className={classes.root}>
                 <DisplayMap initialCenter={initialCenter} />
             </Box>
         </>
