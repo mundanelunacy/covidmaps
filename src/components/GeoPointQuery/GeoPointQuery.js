@@ -1,9 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Box, TextField, Typography, Button, List, ListItem } from "@material-ui/core";
 import { useStyles } from "./GeoPointQueryCss";
 import { DisplayMap } from "../DisplayMap";
-
-// const geofirex = require("geofirex");
 
 export const GeoPointQuery = ({ firebase, submitIncident, query, queryIncidents }) => {
     const classes = useStyles();
@@ -13,21 +11,22 @@ export const GeoPointQuery = ({ firebase, submitIncident, query, queryIncidents 
     const [inputLong, setInputLong] = useState("");
     const [queryLat, setQueryLat] = useState(initialCenter.lat);
     const [queryLong, setQueryLong] = useState(initialCenter.lng);
-    const [queryRadius, setQueryRadius] = useState(20000);
+    const [queryRadius, setQueryRadius] = useState(query ? query.radius : 1);
 
-    const onQueryPosition = async () => {
+    const onQueryPosition = useCallback(async () => {
         if (queryLat && queryLong && queryRadius) {
-            queryIncidents(queryLat, queryLong, queryRadius, firebase);
+            queryIncidents(parseFloat(queryLat), parseFloat(queryLong), parseFloat(queryRadius), firebase);
         }
-    };
+    }, [queryLat, queryLong, queryRadius, firebase, queryIncidents]);
 
     const onSubmitIncident = () => {
-        submitIncident(inputLat, inputLong, firebase);
+        submitIncident(parseFloat(inputLat), parseFloat(inputLong), firebase);
         setInputLat("");
         setInputLong("");
     };
 
-    // useEffect(() => queryPosition, [firstRun]);
+    useEffect(() => onQueryPosition(), [onQueryPosition]);
+
     return (
         <>
             <Box p={1} component="span" className={classes.root}>

@@ -20,14 +20,14 @@ export const onMapClicked = props => (dispatch, getState) => {
 export const submitIncident = (inputLat, inputLong, firebase) => dispatch => {
     const geo = geofirex.init(firebase);
     const incidents = firebase.firestore().collection("incidents");
-    const position = geo.point(parseFloat(inputLat), parseFloat(inputLong));
+    const position = geo.point(inputLat, inputLong);
     incidents.add({ name: "Phoenix", position });
     dispatch({ type: "INPUT_COORD_CLEAR" });
 };
 
 const query = async (lat, lng, radius, firebase) => {
     const geo = geofirex.init(firebase);
-    const query = geo.query("incidents").within(geo.point(parseFloat(lat), parseFloat(lng)), radius, "position");
+    const query = geo.query("incidents").within(geo.point(lat, lng), radius, "position");
     return await get(query);
 };
 
@@ -53,10 +53,7 @@ export const centerMoved = (mapProps, map, firebase) => async dispatch => {
     dispatch({
         type: "CENTER_MOVED",
         query: {
-            center: {
-                lat,
-                lng
-            },
+            center: { lat, lng },
             radius,
             incidents
         }
