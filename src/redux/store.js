@@ -2,7 +2,8 @@ import { createStore, applyMiddleware } from "redux";
 import { composeWithDevTools } from "redux-devtools-extension";
 import { createFirestoreInstance } from "redux-firestore";
 import { initialState, rootReducer } from "./reducers";
-import { firebaseConfig, rrfConfig } from "../config/firebaseConfig";
+import { firebaseConfig } from "../config/firebaseConfig";
+import { rrfConfig } from "../config/rrfConfig";
 import thunk from "redux-thunk";
 
 //Firebase initializations
