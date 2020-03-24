@@ -14,8 +14,8 @@ export const DisplayMap = ({ initialCenter, onMarkerClick, onMapClicked, centerM
 
     const icon = {
         url: "/covid_icon.png",
-        anchor: new google.maps.Point(8, 8),
-        scaledSize: new google.maps.Size(16, 16)
+        anchor: new google.maps.Point(12, 12),
+        scaledSize: new google.maps.Size(24, 24)
     };
 
     return (

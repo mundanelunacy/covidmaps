@@ -56,9 +56,8 @@ export const GeoPointQuery = ({ firebase, submitIncident, query, queryIncidents 
                     ))}
                 </List>
             </Box> */}
-            <Box p={1} component="span" className={classes.root}>
-                <DisplayMap initialCenter={initialCenter} />
-            </Box>
+
+            <DisplayMap initialCenter={initialCenter} />
         </>
     );
 };
