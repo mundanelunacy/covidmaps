@@ -13,12 +13,12 @@ import {
     Language as LanguageIcon,
     Add as AddIcon
 } from "@material-ui/icons";
-import { GeoPointQuery } from "../../components/GeoPointQuery";
-
+// import { GeoPointQuery } from "../../components/GeoPointQuery";
+import { DisplayMap } from "../../components/DisplayMap";
 import { useStyles } from "./LandingPageCss";
 import clsx from "clsx";
 
-export const LandingPage = props => {
+export const LandingPage = ({ query }) => {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -157,7 +157,7 @@ export const LandingPage = props => {
                     sed odio morbi. Euismod lacinia at quis risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in. In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant morbi tristique senectus et. Adipiscing elit duis
                     tristique sollicitudin nibh sit. Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin aliquam ultrices sagittis orci a.
                 </Typography> */}
-                <GeoPointQuery />
+                <DisplayMap initialCenter={query.center} />
             </main>
             <Fab variant="extended" color="secondary" className={classes.submitButton}>
                 <AddIcon className={classes.extendedIcon} />

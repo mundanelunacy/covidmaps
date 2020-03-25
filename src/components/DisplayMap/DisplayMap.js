@@ -3,13 +3,23 @@ import { Box, Typography } from "@material-ui/core";
 import { Map, InfoWindow, Marker } from "google-maps-react";
 import moment from "moment-timezone";
 
-export const DisplayMap = ({ initialCenter, onMarkerClick, onMapClicked, centerMoved, displayMap, firebase, query, google, tzString }) => {
+export const DisplayMap = ({ initialCenter, onMarkerClick, onMapClicked, centerMoved, displayMap, firebase, query, google, tzString, queryIncidents }) => {
     const onCenterMoved = (mapProps, map) => {
         centerMoved(mapProps, map, firebase);
     };
 
     const onMapInitialized = (mapProps, map) => {
         map.setOptions({ minZoom: 15 });
+
+        if (initialCenter) {
+            queryIncidents(initialCenter.lat, initialCenter.lng, 2, firebase);
+            return;
+        }
+
+        if (query) {
+            queryIncidents(query.center.lat, query.center.lng, 2, firebase);
+            return;
+        }
     };
 
     const icon = {

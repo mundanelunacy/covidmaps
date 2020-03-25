@@ -1,24 +1,24 @@
-import React, { useState, useEffect, useCallback } from "react";
+// import React, { useState, useEffect, useCallback } from "react";
+import React from "react";
 // import { Box, TextField, Typography, Button, List, ListItem } from "@material-ui/core";
-import { Box } from "@material-ui/core";
-import { useStyles } from "./GeoPointQueryCss";
+// import { useStyles } from "./GeoPointQueryCss";
 import { DisplayMap } from "../DisplayMap";
 
 export const GeoPointQuery = ({ firebase, submitIncident, query, queryIncidents }) => {
-    const classes = useStyles();
+    // const classes = useStyles();
     const initialCenter = query ? { lat: query.center.lat, lng: query.center.lng } : { lat: 0, lng: 0 };
 
-    const [inputLat, setInputLat] = useState("");
-    const [inputLong, setInputLong] = useState("");
-    const [queryLat, setQueryLat] = useState(initialCenter.lat);
-    const [queryLong, setQueryLong] = useState(initialCenter.lng);
-    const [queryRadius, setQueryRadius] = useState(query ? query.radius : 1);
+    // const [inputLat, setInputLat] = useState("");
+    // const [inputLong, setInputLong] = useState("");
+    // const [queryLat, setQueryLat] = useState(initialCenter.lat);
+    // const [queryLong, setQueryLong] = useState(initialCenter.lng);
+    // const [queryRadius, setQueryRadius] = useState(query ? query.radius : 1);
 
-    const onQueryPosition = useCallback(() => {
-        if (queryLat && queryLong && queryRadius) {
-            queryIncidents(parseFloat(queryLat), parseFloat(queryLong), parseFloat(queryRadius), firebase);
-        }
-    }, [queryLat, queryLong, queryRadius, firebase, queryIncidents]);
+    // const onQueryPosition = useCallback(() => {
+    //     if (queryLat && queryLong && queryRadius) {
+    //         queryIncidents(parseFloat(queryLat), parseFloat(queryLong), parseFloat(queryRadius), firebase);
+    //     }
+    // }, [queryLat, queryLong, queryRadius, firebase, queryIncidents]);
 
     // const onSubmitIncident = () => {
     //     submitIncident(parseFloat(inputLat), parseFloat(inputLong), firebase);
@@ -26,7 +26,7 @@ export const GeoPointQuery = ({ firebase, submitIncident, query, queryIncidents 
     //     setInputLong("");
     // };
 
-    useEffect(() => onQueryPosition(), [onQueryPosition]);
+    // useEffect(() => onQueryPosition(), [onQueryPosition]);
 
     return (
         <>

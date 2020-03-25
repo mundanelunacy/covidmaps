@@ -9,7 +9,7 @@ const mapDispatchToProps = dispatch => {
 };
 
 const mapStateToProps = state => {
-    return {};
+    return { query: state.query };
 };
 
 LandingPage.propTypes = {};
