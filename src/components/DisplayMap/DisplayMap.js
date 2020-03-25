@@ -3,13 +3,27 @@ import { Box, Typography } from "@material-ui/core";
 import { Map, InfoWindow, Marker } from "google-maps-react";
 import moment from "moment-timezone";
 
-export const DisplayMap = ({ initialCenter, onMarkerClick, onMapClicked, centerMoved, displayMap, firebase, query, google, tzString, queryIncidents }) => {
+export const DisplayMap = ({
+    initialCenter,
+    onMarkerClick,
+    onMapClicked,
+    centerMoved,
+    displayMap,
+    firebase,
+    query,
+    google,
+    tzString,
+    queryIncidents
+}) => {
     const onCenterMoved = (mapProps, map) => {
         centerMoved(mapProps, map, firebase);
     };
 
     const onMapInitialized = (mapProps, map) => {
-        map.setOptions({ minZoom: 15 });
+        map.setOptions({
+            minZoom: 15,
+            zoomControlOptions: { position: google.maps.ControlPosition.LEFT_BOTTOM }
+        });
 
         if (initialCenter) {
             queryIncidents(initialCenter.lat, initialCenter.lng, 2, firebase);
@@ -30,9 +44,34 @@ export const DisplayMap = ({ initialCenter, onMarkerClick, onMapClicked, centerM
 
     return (
         <>
-            <Map google={google} zoom={16} center={query.center} onClick={onMapClicked} initialCenter={initialCenter} onDragend={onCenterMoved} streetViewControl={false} mapTypeControl={false} fullscreenControl={false} onReady={onMapInitialized}>
+            <Map
+                google={google}
+                zoom={16}
+                center={query.center}
+                onClick={onMapClicked}
+                initialCenter={initialCenter}
+                onDragend={onCenterMoved}
+                streetViewControl={false}
+                mapTypeControl={false}
+                fullscreenControl={false}
+                onReady={onMapInitialized}
+                style={{ width: "100%", height: "100%" }}
+                containerStyle={{ position: "static", width: "100%", height: "100%" }}
+            >
                 {query.incidents.map(incident => (
-                    <Marker key={incident.id} title={incident.name} name={incident.name} start={incident.startTimestampMs} end={incident.endTimestampMs} position={{ lat: incident.position.geopoint.latitude, lng: incident.position.geopoint.longitude }} onClick={onMarkerClick} icon={icon} />
+                    <Marker
+                        key={incident.id}
+                        title={incident.name}
+                        name={incident.name}
+                        start={incident.startTimestampMs}
+                        end={incident.endTimestampMs}
+                        position={{
+                            lat: incident.position.geopoint.latitude,
+                            lng: incident.position.geopoint.longitude
+                        }}
+                        onClick={onMarkerClick}
+                        icon={icon}
+                    />
                 ))}
                 <InfoWindow marker={displayMap.activeMarker} visible={displayMap.showingInfoWindow}>
                     <>
@@ -41,7 +80,16 @@ export const DisplayMap = ({ initialCenter, onMarkerClick, onMapClicked, centerM
                         </Box>
                         <Box>
                             <Typography>
-                                {moment.tz(displayMap.selectedPlace.start, tzString).format("HH:mm Do-MMM-YYYY")} ({parseInt((displayMap.selectedPlace.end - displayMap.selectedPlace.start) / 1000 / 60)} min)
+                                {moment
+                                    .tz(displayMap.selectedPlace.start, tzString)
+                                    .format("HH:mm Do-MMM-YYYY")}{" "}
+                                (
+                                {parseInt(
+                                    (displayMap.selectedPlace.end - displayMap.selectedPlace.start) /
+                                        1000 /
+                                        60
+                                )}{" "}
+                                min)
                             </Typography>
                         </Box>
                     </>

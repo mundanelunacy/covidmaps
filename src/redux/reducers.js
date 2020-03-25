@@ -11,7 +11,7 @@ export const initialState = {
         selectedPlace: {}
     },
     query: {
-        center: { lat: 35.6938, lng: 139.7034 }, // default Shinjuku
+        center: { lat: 35.689, lng: 139.703 }, // default Shinjuku
         radius: 1,
         incidents: []
     },
@@ -30,7 +30,12 @@ const searchFormReducer = (state = initialState.searchForm, action) => {
 
 const displayMapReducer = (state = initialState.displayMap, action) => {
     if (action.type === "MARKER_SELECT") {
-        return { ...state, selectedPlace: action.payload.props, activeMarker: action.payload.marker, showingInfoWindow: true };
+        return {
+            ...state,
+            selectedPlace: action.payload.props,
+            activeMarker: action.payload.marker,
+            showingInfoWindow: true
+        };
     }
     if (action.type === "MARKER_CLEAR") {
         return { ...state, activeMarker: null, showingInfoWindow: false };
