@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    Fab,
+    // Fab,
     CssBaseline,
     AppBar,
     Toolbar,
@@ -13,7 +13,7 @@ import {
     ListItem,
     ListItemIcon,
     ListItemText,
-    InputBase,
+    // InputBase,
     useTheme,
     ExpansionPanel,
     ExpansionPanelSummary,
@@ -23,16 +23,17 @@ import {
     Menu as MenuIcon,
     ChevronRight as ChevronRightIcon,
     ChevronLeft as ChevronLeftIcon,
-    Search as SearchIcon,
+    // Search as SearchIcon,
     FilterList as FilterListIcon,
     ExpandMore as ExpandMoreIcon,
     Info as InfoIcon,
     VisibilityOff as VisibilityOffIcon,
     Favorite as FavoriteIcon,
-    Language as LanguageIcon,
+    // Language as LanguageIcon,
     Add as AddIcon
 } from "@material-ui/icons";
 import { DisplayMap } from "../../components/DisplayMap";
+import { SearchForm } from "../../components/SearchForm";
 import { useStyles } from "./LandingPageCss";
 import clsx from "clsx";
 
@@ -73,7 +74,7 @@ export const LandingPage = ({ query }) => {
                     <Typography variant="h6" className={classes.title}>
                         Coronamaps.org [Prototype]
                     </Typography>
-                    <div className={classes.search}>
+                    {/* <div className={classes.search}>
                         <div className={classes.searchIcon}>
                             <SearchIcon />
                         </div>
@@ -85,10 +86,23 @@ export const LandingPage = ({ query }) => {
                             }}
                             inputProps={{ "aria-label": "search" }}
                         />
-                    </div>
+                    </div> */}
+
+                    <SearchForm />
+
                     {/* <div className={classes.grow} /> */}
-                    <Button startIcon={<LanguageIcon />} className={classes.languageButton}>
+                    {/* <Button startIcon={<LanguageIcon />} className={classes.languageButton}>
                         <Typography>En</Typography>
+                    </Button> */}
+
+                    <Button
+                        startIcon={<AddIcon />}
+                        color="secondary"
+                        variant="contained"
+                        size="large"
+                        className={classes.submitButton}
+                    >
+                        <Typography>Submit Case</Typography>
                     </Button>
                 </Toolbar>
             </AppBar>
@@ -152,10 +166,10 @@ export const LandingPage = ({ query }) => {
                 <div className={classes.drawerHeader} />
                 <DisplayMap initialCenter={query.center} />
             </main>
-            <Fab variant="extended" color="secondary" className={classes.submitButton}>
+            {/* <Fab variant="extended" color="secondary" className={classes.submitButtonFab}>
                 <AddIcon className={classes.extendedIcon} />
                 Submit Case
-            </Fab>
+            </Fab> */}
         </div>
     );
 };

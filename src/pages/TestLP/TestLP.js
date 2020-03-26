@@ -24,6 +24,11 @@ export const TestLP = props => {
                         <Typography>Landing Page</Typography>
                     </Link>
                 </ListItem>
+                <ListItem>
+                    <Link component={RouterLink} to="/search">
+                        <Typography>Search Form</Typography>
+                    </Link>
+                </ListItem>
             </List>
         </Box>
     );

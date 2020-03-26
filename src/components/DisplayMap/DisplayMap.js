@@ -11,10 +11,10 @@ export const DisplayMap = ({
     displayMap,
     firebase,
     query,
-    google,
     tzString,
     queryIncidents
 }) => {
+    const google = window.google;
     const onCenterMoved = (mapProps, map) => {
         centerMoved(mapProps, map, firebase);
     };

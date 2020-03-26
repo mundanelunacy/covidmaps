@@ -6,6 +6,7 @@ import { TestLP } from "./pages/TestLP";
 import { GeoPointQuery } from "./components/GeoPointQuery";
 import { TakeoutParser } from "./components/TakeoutParser";
 import { LandingPage } from "./pages/LandingPage";
+import { SearchForm } from "./components/SearchForm";
 import { MuiThemeProvider } from "@material-ui/core";
 import { theme } from "./config/material-ui";
 
@@ -22,6 +23,7 @@ const App = props => {
                             <Route exact path="/map" component={GeoPointQuery} />
                             <Route exact path="/submit" component={TakeoutParser} />
                             <Route exact path="/lp" component={LandingPage} />
+                            <Route exact path="/search" component={SearchForm} />
                         </Switch>
                     </Router>
                 </MuiThemeProvider>
