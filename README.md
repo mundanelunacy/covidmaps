@@ -1,5 +1,10 @@
 # Coronamaps.org
 
+## Under Development
+
+A prototype of the site can be found here:
+https://coronamaps-9e44a.firebaseapp.com/lp
+
 [Coronamaps.org](https://coronamaps.org) is a crowdsourced website where people can type in an address to bring up locations where COVID-19 cases had visited prior to quarintine. It aims to create a universally accessible database which give users the ability to check if they have been exposed.
 
 -   If you are Corona Case I urge you to click on the ["Submit Case" button](https://coronamaps.org/submit) where you'll be given instructions on how to input your information. Don't worry. [Privacy and anonymity are enforced](https://coronamaps.org/privacy)
