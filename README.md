@@ -1,6 +1,6 @@
 # Coronamaps.org
 
-## Under Development
+### Under Development
 
 A prototype of the site can be found here:
 https://coronamaps-9e44a.firebaseapp.com/lp
