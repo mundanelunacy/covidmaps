@@ -16,7 +16,8 @@ import {
     useTheme,
     ExpansionPanel,
     ExpansionPanelSummary,
-    ExpansionPanelDetails
+    ExpansionPanelDetails,
+    Link
 } from "@material-ui/core";
 import {
     Menu as MenuIcon,
@@ -33,6 +34,8 @@ import {
 import { SearchForm } from "../../components/SearchForm";
 import { useStyles } from "./TopBarCss";
 import clsx from "clsx";
+
+import { Link as RouterLink } from "react-router-dom";
 
 export const TopBar = ({ query }) => {
     const classes = useStyles();
@@ -67,20 +70,25 @@ export const TopBar = ({ query }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <img src="/logo.png" className={classes.logo} alt="logo" />
+                    <Link component={RouterLink} to="/">
+                        <img src="/logo.png" className={classes.logo} alt="logo" />
+                    </Link>
                     <Typography variant="h6" className={classes.title}>
                         Coronamaps.org [Prototype]
                     </Typography>
+
                     <SearchForm />
-                    <Button
-                        startIcon={<AddIcon />}
-                        color="secondary"
-                        variant="contained"
-                        size="large"
-                        className={classes.submitButton}
-                    >
-                        <Typography>Submit Case</Typography>
-                    </Button>
+                    <Link component={RouterLink} to="/submit">
+                        <Button
+                            startIcon={<AddIcon />}
+                            color="secondary"
+                            variant="contained"
+                            size="large"
+                            className={classes.submitButton}
+                        >
+                            <Typography>Submit Case</Typography>
+                        </Button>
+                    </Link>
                 </Toolbar>
             </AppBar>
             <Drawer
