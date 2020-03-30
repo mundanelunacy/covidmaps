@@ -16,7 +16,7 @@ export const TestLP = props => {
                 </ListItem>
                 <ListItem>
                     <Link component={RouterLink} to="/submit">
-                        <Typography>Parser</Typography>
+                        <Typography>Submit Case Page</Typography>
                     </Link>
                 </ListItem>
                 <ListItem>

@@ -4,7 +4,6 @@ import { firestoreReducer } from "redux-firestore";
 import { getTzString } from "../utilities/timeUtils";
 
 export const initialState = {
-    searchForm: { input_address: "111 Falcon Road Livingston, NJ" },
     displayMap: {
         showingInfoWindow: false,
         activeMarker: {},
@@ -18,14 +17,26 @@ export const initialState = {
     timezone: { tzString: getTzString() },
     parser: {
         placeVisits: []
-    }
-};
+    },
+    manualInputBuffer: {
+        startTimestampMs: 0,
+        endTimestampMs: 0,
+        address: "",
+        name: "",
+        placeId: "",
+        position: {},
+        validated: false
+    },
 
-const searchFormReducer = (state = initialState.searchForm, action) => {
-    if (action.type === "ADDRESS_SUBMIT") {
-        return { ...state, input_address: action.input_address };
+    manualInputForm: {
+        inputValue: "",
+        inputDate: new Date(2020, 0, 1),
+        inputDuration: 30
+    },
+
+    databaseStaging: {
+        incidents: []
     }
-    return state;
 };
 
 const displayMapReducer = (state = initialState.displayMap, action) => {
@@ -79,12 +90,80 @@ const parserReducer = (state = initialState.parser, action) => {
     return state;
 };
 
+const manualInputBufferReducer = (state = initialState.manualInputBuffer, action) => {
+    if (action.type === "ADD_MANUAL_PLACE_TO_BUFFER") {
+        return {
+            ...state,
+            ...action.place
+        };
+    }
+    if (action.type === "ADD_MANUAL_TIME_TO_BUFFER") {
+        return {
+            ...state,
+            ...action.time
+        };
+    }
+    if (action.type === "CLEAR_MANUAL_INPUT") {
+        return {
+            ...state,
+            ...initialState.manualInputBuffer
+        };
+    }
+    return state;
+};
+
+const manualInputFormReducer = (state = initialState.manualInputForm, action) => {
+    if (action.type === "SET_MANUAL_INPUT_VALUE") {
+        return {
+            ...state,
+            inputValue: action.inputValue
+        };
+    }
+    if (action.type === "SET_MANUAL_INPUT_DATE") {
+        return {
+            ...state,
+            inputDate: action.inputDate
+        };
+    }
+    if (action.type === "SET_MANUAL_INPUT_DURATION") {
+        return {
+            ...state,
+            inputDuration: action.inputDuration
+        };
+    }
+    if (action.type === "CLEAR_MANUAL_INPUT") {
+        return {
+            ...state,
+            ...initialState.manualInputForm
+        };
+    }
+    return state;
+};
+
+const databaseStagingReducer = (state = initialState.databaseStaging, action) => {
+    if (action.type === "ADD_BUFFER_TO_STAGING") {
+        return {
+            ...state,
+            incidents: [...state.incidents, ...[action.buffer]]
+        };
+    }
+    if (action.type === "CLEAR_STAGING") {
+        return {
+            ...state,
+            ...initialState.databaseStaging
+        };
+    }
+    return state;
+};
+
 export const rootReducer = combineReducers({
     firebase: firebaseReducer,
     firestore: firestoreReducer,
-    searchForm: searchFormReducer,
     displayMap: displayMapReducer,
     query: queryReducer,
     timezone: timeZoneReducer,
-    parser: parserReducer
+    parser: parserReducer,
+    manualInputBuffer: manualInputBufferReducer,
+    manualInputForm: manualInputFormReducer,
+    databaseStaging: databaseStagingReducer
 });
