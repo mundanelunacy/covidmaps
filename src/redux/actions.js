@@ -25,17 +25,14 @@ export const submitIncident = (inputLat, inputLong, firebase) => dispatch => {
     dispatch({ type: "INPUT_COORD_CLEAR" });
 };
 
-export const submitIncidentBatch = (placeVisits, firebase) => dispatch => {
+export const importTakeoutToStaging = (placeVisits, firebase) => dispatch => {
     const geo = geofirex.init(firebase);
-    const incidents = firebase.firestore().collection("incidents");
-
-    placeVisits.map(({ placeVisit }, idx) => {
+    const incidents = placeVisits.map(({ placeVisit }, idx) => {
         const position = geo.point(
             placeVisit.location.latitudeE7 / 10000000,
             placeVisit.location.longitudeE7 / 10000000
         );
-
-        incidents.add({
+        return {
             name: placeVisit.location.name,
             placeId: placeVisit.location.placeId,
             address: placeVisit.location.address,
@@ -43,11 +40,10 @@ export const submitIncidentBatch = (placeVisits, firebase) => dispatch => {
             endTimestampMs: parseInt(placeVisit.duration.endTimestampMs),
             validated: Math.random() > 0.5,
             position
-        });
-        return {};
+        };
     });
 
-    dispatch({ type: "PARSER_CLEAR" });
+    dispatch({ type: "IMPORT_TAKEOUT_TO_STAGING", incidents });
 };
 
 const query = async (lat, lng, radius, firebase) => {
@@ -180,5 +176,12 @@ export const uploadStagingToDb = (stagingIncidents, firebase) => dispatch => {
 export const clearStaging = () => dispatch => {
     dispatch({
         type: "CLEAR_STAGING"
+    });
+};
+
+export const deleteFromStaging = index => dispatch => {
+    dispatch({
+        type: "DELETE_FROM_STAGING",
+        index
     });
 };

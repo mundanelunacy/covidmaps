@@ -13,6 +13,9 @@ export const UploadStagingButton = ({
 
     return (
         <Box p={1} component="span" className={classes.root}>
+            <Button variant="contained" onClick={clearStaging} disabled={!uploadStagingValid}>
+                Clear List
+            </Button>
             <Button
                 variant="contained"
                 onClick={() => {

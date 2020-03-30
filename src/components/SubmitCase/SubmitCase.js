@@ -3,8 +3,6 @@ import { Box, Button } from "@material-ui/core";
 import { useStyles } from "./SubmitCaseCss";
 import { AddPlace } from "../AddPlace";
 import { AddDuration } from "../AddDuration";
-import { StagingList } from "../StagingList";
-import { UploadStagingButton } from "../UploadStagingButton";
 
 export const SubmitCase = ({ manualInputBuffer, manualInputValid, clearManualInput, addBufferToStaging }) => {
     const classes = useStyles();
@@ -23,8 +21,6 @@ export const SubmitCase = ({ manualInputBuffer, manualInputValid, clearManualInp
             >
                 Add to List
             </Button>
-            <StagingList />
-            <UploadStagingButton />
         </Box>
     );
 };

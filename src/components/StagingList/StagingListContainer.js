@@ -3,6 +3,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 // import PropTypes from "prop-types";
+import { deleteFromStaging } from "../../redux/actions";
 
 const mapStateToProps = state => {
     return {
@@ -15,4 +16,4 @@ StagingList.propTypes = {};
 
 StagingList.defaultProps = {};
 
-export default compose(connect(mapStateToProps, {}), firestoreConnect())(StagingList);
+export default compose(connect(mapStateToProps, { deleteFromStaging }), firestoreConnect())(StagingList);
