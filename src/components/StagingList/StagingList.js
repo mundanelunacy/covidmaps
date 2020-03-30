@@ -1,27 +1,69 @@
 import React from "react";
-import { Box, List, ListItem, Typography } from "@material-ui/core";
+import {
+    Button,
+    Box,
+    Typography,
+    TableContainer,
+    Table,
+    TableHead,
+    TableRow,
+    TableCell,
+    TableBody,
+    Paper
+} from "@material-ui/core";
 import { useStyles } from "./StagingListCss";
 import moment from "moment-timezone";
 
-export const StagingList = ({ incidents, tzString }) => {
+export const StagingList = ({ incidents, tzString, deleteFromStaging }) => {
     const classes = useStyles();
     return (
         <Box p={1} component="span" className={classes.root}>
-            <List>
-                {incidents.map(incident => {
-                    const startTime = moment.tz(parseInt(incident.startTimestampMs), tzString);
-                    const durationMin = parseInt(
-                        (parseInt(incident.endTimestampMs) - parseInt(incident.startTimestampMs)) / 1000 / 60
-                    );
-                    return (
-                        <ListItem>
-                            <Typography>{incident.name}</Typography>
-                            <Typography>{startTime.format("HH:mm Do-MMM-YYYY (ddd)")}</Typography>
-                            <Typography>{durationMin} min</Typography>
-                        </ListItem>
-                    );
-                })}
-            </List>
+            <TableContainer component={Paper}>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Location</TableCell>
+                            <TableCell>Start Time</TableCell>
+                            <TableCell>Duration</TableCell>
+                            <TableCell>Delete</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {incidents.map((incident, idx) => {
+                            const startTime = moment.tz(parseInt(incident.startTimestampMs), tzString);
+                            const durationMin = parseInt(
+                                (parseInt(incident.endTimestampMs) - parseInt(incident.startTimestampMs)) /
+                                    1000 /
+                                    60
+                            );
+                            return (
+                                <TableRow key={idx}>
+                                    <TableCell>
+                                        <Typography>{incident.name}</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>{startTime.format("HH:mm Do-MMM-YYYY (ddd)")}</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Typography>{durationMin} min</Typography>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Button
+                                            color="primary"
+                                            variant="contained"
+                                            onClick={() => {
+                                                deleteFromStaging(idx);
+                                            }}
+                                        >
+                                            Delete Row
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            );
+                        })}
+                    </TableBody>
+                </Table>
+            </TableContainer>
         </Box>
     );
 };

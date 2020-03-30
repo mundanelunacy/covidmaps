@@ -1,4 +1,4 @@
-import { SubmitCase } from "./SubmitCase";
+import { Submit } from "./Submit";
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
@@ -16,9 +16,9 @@ const mapStateToProps = state => {
     };
 };
 
-SubmitCase.propTypes = {};
+Submit.propTypes = {};
 
-SubmitCase.defaultProps = {};
+Submit.defaultProps = {};
 
 export default compose(
     connect(mapStateToProps, {
@@ -26,4 +26,4 @@ export default compose(
         addBufferToStaging
     }),
     firestoreConnect()
-)(SubmitCase);
+)(Submit);

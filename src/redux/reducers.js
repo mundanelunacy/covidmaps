@@ -35,6 +35,7 @@ export const initialState = {
     },
 
     databaseStaging: {
+        count: 0,
         incidents: []
     }
 };
@@ -151,6 +152,20 @@ const databaseStagingReducer = (state = initialState.databaseStaging, action) =>
         return {
             ...state,
             ...initialState.databaseStaging
+        };
+    }
+    if (action.type === "IMPORT_TAKEOUT_TO_STAGING") {
+        return {
+            ...state,
+            incidents: [...state.incidents, ...action.incidents]
+        };
+    }
+    if (action.type === "DELETE_FROM_STAGING") {
+        const newState = state;
+        newState.incidents.splice(action.index, 1);
+        return {
+            ...state,
+            incidents: [...newState.incidents]
         };
     }
     return state;

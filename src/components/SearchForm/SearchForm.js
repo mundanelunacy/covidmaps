@@ -96,7 +96,7 @@ export function SearchForm({ firebase, queryIncidents }) {
 
     return (
         <Autocomplete
-            id="google-map-demo"
+            id="submit-place-form"
             style={{ width: 300 }}
             getOptionLabel={option => (typeof option === "string" ? option : option.description)}
             onChange={onPlaceSelected}
