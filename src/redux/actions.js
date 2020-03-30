@@ -30,7 +30,10 @@ export const submitIncidentBatch = (placeVisits, firebase) => dispatch => {
     const incidents = firebase.firestore().collection("incidents");
 
     placeVisits.map(({ placeVisit }, idx) => {
-        const position = geo.point(placeVisit.location.latitudeE7 / 10000000, placeVisit.location.longitudeE7 / 10000000);
+        const position = geo.point(
+            placeVisit.location.latitudeE7 / 10000000,
+            placeVisit.location.longitudeE7 / 10000000
+        );
 
         incidents.add({
             name: placeVisit.location.name,
@@ -101,5 +104,81 @@ export const loadParsedVisits = placeVisits => dispatch => {
     dispatch({
         type: "LOAD_VISITS",
         placeVisits
+    });
+};
+
+export const addManualInputPlaceToBuffer = (value, results, firebase) => dispatch => {
+    const geo = geofirex.init(firebase);
+
+    const place = {
+        name: value.description,
+        address: results[0].formatted_address,
+        placeId: value.place_id,
+        position: geo.point(results[0].geometry.location.lat(), results[0].geometry.location.lng())
+    };
+
+    dispatch({
+        type: "ADD_MANUAL_PLACE_TO_BUFFER",
+        place
+    });
+};
+
+export const addManualInputTimeToBuffer = (startDate, durationMin) => dispatch => {
+    dispatch({
+        type: "ADD_MANUAL_TIME_TO_BUFFER",
+        time: {
+            startTimestampMs: startDate.getTime(),
+            endTimestampMs: startDate.getTime() + 1000 * 60 * durationMin
+        }
+    });
+};
+
+export const setManualInputValue = inputValue => dispatch => {
+    dispatch({
+        type: "SET_MANUAL_INPUT_VALUE",
+        inputValue
+    });
+};
+
+export const setManualInputDate = inputDate => dispatch => {
+    dispatch({
+        type: "SET_MANUAL_INPUT_DATE",
+        inputDate
+    });
+};
+
+export const setManualInputDuration = inputDuration => dispatch => {
+    dispatch({
+        type: "SET_MANUAL_INPUT_DURATION",
+        inputDuration
+    });
+};
+
+export const clearManualInput = () => dispatch => {
+    dispatch({
+        type: "CLEAR_MANUAL_INPUT"
+    });
+};
+
+export const addBufferToStaging = buffer => dispatch => {
+    dispatch({
+        type: "ADD_BUFFER_TO_STAGING",
+        buffer
+    });
+};
+
+export const uploadStagingToDb = (stagingIncidents, firebase) => dispatch => {
+    // const geo = geofirex.init(firebase);
+    const incidents = firebase.firestore().collection("incidents");
+
+    stagingIncidents.map((incident, idx) => {
+        incidents.add(incident);
+        return {};
+    });
+};
+
+export const clearStaging = () => dispatch => {
+    dispatch({
+        type: "CLEAR_STAGING"
     });
 };
