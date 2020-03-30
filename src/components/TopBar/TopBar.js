@@ -74,7 +74,7 @@ export const TopBar = ({ query }) => {
                         <img src="/logo.png" className={classes.logo} alt="logo" />
                     </Link>
                     <Typography variant="h6" className={classes.title}>
-                        Coronamaps.org [Prototype]
+                        Covidmaps.org [Prototype]
                     </Typography>
 
                     <SearchForm />
