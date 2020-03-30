@@ -1,25 +1,12 @@
 import React from "react";
-// import { Box, Select, MenuItem, Button } from "@material-ui/core";
 import { Box, Button } from "@material-ui/core";
 import { useStyles } from "./SubmitCaseCss";
-// import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-
-// import DateFnsUtils from "@date-io/date-fns";
 import { AddPlace } from "../AddPlace";
 import { AddDuration } from "../AddDuration";
 import { StagingList } from "../StagingList";
+import { UploadStagingButton } from "../UploadStagingButton";
 
-export const SubmitCase = ({
-    firebase,
-    manualInputBuffer,
-    manualInputValid,
-    uploadStagingValid,
-    stagingIncidents,
-    clearManualInput,
-    addBufferToStaging,
-    uploadStagingToDb,
-    clearStaging
-}) => {
+export const SubmitCase = ({ manualInputBuffer, manualInputValid, clearManualInput, addBufferToStaging }) => {
     const classes = useStyles();
 
     return (
@@ -37,17 +24,7 @@ export const SubmitCase = ({
                 Add to List
             </Button>
             <StagingList />
-
-            <Button
-                variant="contained"
-                onClick={() => {
-                    uploadStagingToDb(stagingIncidents, firebase);
-                    clearStaging();
-                }}
-                disabled={!uploadStagingValid}
-            >
-                Upload List to Coronamaps.org
-            </Button>
+            <UploadStagingButton />
         </Box>
     );
 };
