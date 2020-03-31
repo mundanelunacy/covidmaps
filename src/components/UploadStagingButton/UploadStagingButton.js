@@ -24,7 +24,7 @@ export const UploadStagingButton = ({
                 }}
                 disabled={!uploadStagingValid}
             >
-                Upload List to Coronamaps.org
+                Upload List to Covidmaps.org
             </Button>
         </Box>
     );
