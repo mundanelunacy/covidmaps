@@ -10,8 +10,8 @@ export const initialState = {
         selectedPlace: {}
     },
     query: {
-        center: { lat: 35.689, lng: 139.703 }, // default Shinjuku
-        radius: 1,
+        center: { lat: 37.5172, lng: 127.0473 }, // default Gangnam
+        radius: 5,
         incidents: []
     },
     timezone: { tzString: getTzString() },

@@ -22,17 +22,17 @@ export const DisplayMap = ({
 
     const onMapInitialized = (mapProps, map) => {
         map.setOptions({
-            minZoom: 15,
+            minZoom: 10,
             zoomControlOptions: { position: google.maps.ControlPosition.LEFT_BOTTOM }
         });
 
         if (initialCenter) {
-            queryIncidents(initialCenter.lat, initialCenter.lng, 2, firebase);
+            queryIncidents(initialCenter.lat, initialCenter.lng, query.radius, firebase);
             return;
         }
 
         if (query) {
-            queryIncidents(query.center.lat, query.center.lng, 2, firebase);
+            queryIncidents(query.center.lat, query.center.lng, query.radius, firebase);
             return;
         }
     };
@@ -87,7 +87,7 @@ export const DisplayMap = ({
         <>
             <Map
                 google={google}
-                zoom={16}
+                zoom={14}
                 center={query.center}
                 onClick={onMapClicked}
                 initialCenter={initialCenter}

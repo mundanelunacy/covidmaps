@@ -1,0 +1,207 @@
+[debug] [2020-04-01T17:25:05.111Z] ----------------------------------------------------------------------
+[debug] [2020-04-01T17:25:05.112Z] Command:       /usr/local/Cellar/node/11.4.0/bin/node /usr/local/bin/firebase functions:shell
+[debug] [2020-04-01T17:25:05.113Z] CLI Version:   7.15.1
+[debug] [2020-04-01T17:25:05.113Z] Platform:      darwin
+[debug] [2020-04-01T17:25:05.113Z] Node Version:  v11.4.0
+[debug] [2020-04-01T17:25:05.114Z] Time:          Thu Apr 02 2020 02:25:05 GMT+0900 (Korean Standard Time)
+[debug] [2020-04-01T17:25:05.114Z] ----------------------------------------------------------------------
+[debug] [2020-04-01T17:25:05.114Z] 
+[debug] [2020-04-01T17:25:05.125Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-01T17:25:05.125Z] > authorizing via signed-in user
+[debug] [2020-04-01T17:25:05.125Z] [iam] checking project coronamaps-9e44a for permissions ["firebase.projects.get"]
+[debug] [2020-04-01T17:25:05.127Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2020-04-01T17:25:05.127Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2020-04-01T17:25:05.530Z] <<< HTTP RESPONSE 200
+[debug] [2020-04-01T17:25:05.545Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/coronamaps-9e44a:testIamPermissions  
+
+[debug] [2020-04-01T17:25:06.624Z] <<< HTTP RESPONSE 200
+[warn] ⚠  Your requested "node" version "8" doesn't match your global version "11"
+[info] ✔  functions: functions emulator started at http://localhost:5000
+[debug] [2020-04-01T17:25:06.653Z] [functions] Watching "/Users/mundanelunacy/coronamaps/functions" for Cloud Functions...
+[debug] [2020-04-01T17:25:06.661Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-04-01T17:25:06.661Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=1
+[debug] [2020-04-01T17:25:06.661Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-04-01T17:25:06.662Z] DEBUG: [worker-~diagnostic~-2d8e2e1f-4954-42db-a126-03795adb7515]: Assigning socketPath: /var/folders/v_/z4vclcrd70bd5td8y0bywwk00000gp/T/fire_emu_8404.sock
+[debug] [2020-04-01T17:25:06.662Z] DEBUG: [worker-~diagnostic~-2d8e2e1f-4954-42db-a126-03795adb7515]: BUSY
+[debug] [2020-04-01T17:25:06.963Z] DEBUG: [runtime-status] [8404] Functions runtime initialized. {"cwd":"/Users/mundanelunacy/coronamaps/functions","node_version":"11.4.0"}
+[debug] [2020-04-01T17:25:06.965Z] DEBUG: [runtime-status] [8404] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true,"pubsub_emulator":true}
+[debug] [2020-04-01T17:25:06.967Z] DEBUG: [runtime-status] [8404] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-04-01T17:25:06.968Z] DEBUG: [runtime-status] [8404] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-01T17:25:06.969Z] DEBUG: [runtime-status] [8404] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-01T17:25:07.810Z] [functions[scrapeKoreanData]] http function initialized (http://localhost:5000/coronamaps-9e44a/us-central1/scrapeKoreanData).
+[debug] [2020-04-01T17:25:07.810Z] [functions[importKoreanData]] http function initialized (http://localhost:5000/coronamaps-9e44a/us-central1/importKoreanData).
+[info] i  functions: Loaded functions: scrapeKoreanData, importKoreanData
+[debug] [2020-04-01T17:25:07.824Z] DEBUG: [worker-~diagnostic~-2d8e2e1f-4954-42db-a126-03795adb7515]: IDLE
+[debug] [2020-04-01T17:25:13.634Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2020-04-01T17:25:13.634Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-04-01T17:25:13.634Z] Accepted request GET /coronamaps-9e44a/us-central1/scrapeKoreanData --> scrapeKoreanData
+[debug] [2020-04-01T17:25:13.641Z] DEBUG: [worker-pool] addWorker(scrapeKoreanData)
+[debug] [2020-04-01T17:25:13.641Z] DEBUG: [worker-pool] Adding worker with key scrapeKoreanData, total=1
+[debug] [2020-04-01T17:25:13.641Z] DEBUG: [worker-pool] submitWork(triggerId=scrapeKoreanData)
+[debug] [2020-04-01T17:25:13.642Z] DEBUG: [worker-scrapeKoreanData-a4e95a23-f25c-4b73-a8cf-20220d964146]: Assigning socketPath: /var/folders/v_/z4vclcrd70bd5td8y0bywwk00000gp/T/fire_emu_8407.sock
+[debug] [2020-04-01T17:25:13.642Z] DEBUG: [worker-scrapeKoreanData-a4e95a23-f25c-4b73-a8cf-20220d964146]: BUSY
+[debug] [2020-04-01T17:25:13.979Z] DEBUG: [runtime-status] [8407] Functions runtime initialized. {"cwd":"/Users/mundanelunacy/coronamaps/functions","node_version":"11.4.0"}
+[debug] [2020-04-01T17:25:13.980Z] DEBUG: [runtime-status] [8407] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true,"pubsub_emulator":true}
+[debug] [2020-04-01T17:25:13.982Z] DEBUG: [runtime-status] [8407] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-04-01T17:25:13.983Z] DEBUG: [runtime-status] [8407] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-01T17:25:13.984Z] DEBUG: [runtime-status] [8407] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-01T17:25:14.375Z] DEBUG: [runtime-status] [8407] Trigger "scrapeKoreanData" has been found, beginning invocation!
+[debug] [2020-04-01T17:25:14.376Z] [functions] Beginning execution of "scrapeKoreanData"
+[debug] [2020-04-01T17:25:14.376Z] DEBUG: [runtime-status] [8407] triggerDefinition {"httpsTrigger":{},"name":"scrapeKoreanData","entryPoint":"scrapeKoreanData"}
+[debug] [2020-04-01T17:25:14.376Z] DEBUG: [runtime-status] [8407] Running scrapeKoreanData in mode HTTPS
+[debug] [2020-04-01T17:25:14.381Z] DEBUG: [runtime-status] [8407] Attempting to listen to socketPath: /var/folders/v_/z4vclcrd70bd5td8y0bywwk00000gp/T/fire_emu_8407.sock
+[debug] [2020-04-01T17:25:14.387Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2020-04-01T17:25:14.393Z] DEBUG: [runtime-status] [8407] Ephemeral server handling GET request
+[debug] [2020-04-01T17:25:14.901Z] DEBUG: [runtime-status] [8407] Ephemeral server survived.
+[debug] [2020-04-01T17:25:16.278Z] [functions] Finished "scrapeKoreanData" in ~1s
+[debug] [2020-04-01T17:25:16.278Z] DEBUG: [worker-scrapeKoreanData-a4e95a23-f25c-4b73-a8cf-20220d964146]: IDLE
+[debug] [2020-04-01T17:25:16.278Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2020-04-01T17:26:41.399Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2020-04-01T17:26:41.399Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-04-01T17:26:41.399Z] Accepted request GET /coronamaps-9e44a/us-central1/importKoreanData --> importKoreanData
+[debug] [2020-04-01T17:26:41.405Z] DEBUG: [worker-pool] addWorker(importKoreanData)
+[debug] [2020-04-01T17:26:41.405Z] DEBUG: [worker-pool] Adding worker with key importKoreanData, total=1
+[debug] [2020-04-01T17:26:41.405Z] DEBUG: [worker-pool] submitWork(triggerId=importKoreanData)
+[debug] [2020-04-01T17:26:41.405Z] DEBUG: [worker-importKoreanData-19db28c8-6077-4483-b5ad-db7bf898bdc9]: Assigning socketPath: /var/folders/v_/z4vclcrd70bd5td8y0bywwk00000gp/T/fire_emu_8460.sock
+[debug] [2020-04-01T17:26:41.405Z] DEBUG: [worker-importKoreanData-19db28c8-6077-4483-b5ad-db7bf898bdc9]: BUSY
+[debug] [2020-04-01T17:26:41.912Z] DEBUG: [runtime-status] [8460] Functions runtime initialized. {"cwd":"/Users/mundanelunacy/coronamaps/functions","node_version":"11.4.0"}
+[debug] [2020-04-01T17:26:41.914Z] DEBUG: [runtime-status] [8460] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true,"pubsub_emulator":true}
+[debug] [2020-04-01T17:26:41.917Z] DEBUG: [runtime-status] [8460] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-04-01T17:26:41.919Z] DEBUG: [runtime-status] [8460] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-01T17:26:41.920Z] DEBUG: [runtime-status] [8460] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-01T17:26:42.683Z] DEBUG: [runtime-status] [8460] Trigger "importKoreanData" has been found, beginning invocation!
+[debug] [2020-04-01T17:26:42.683Z] [functions] Beginning execution of "importKoreanData"
+[debug] [2020-04-01T17:26:42.683Z] DEBUG: [runtime-status] [8460] triggerDefinition {"httpsTrigger":{},"name":"importKoreanData","entryPoint":"importKoreanData"}
+[debug] [2020-04-01T17:26:42.683Z] DEBUG: [runtime-status] [8460] Running importKoreanData in mode HTTPS
+[debug] [2020-04-01T17:26:42.687Z] DEBUG: [runtime-status] [8460] Attempting to listen to socketPath: /var/folders/v_/z4vclcrd70bd5td8y0bywwk00000gp/T/fire_emu_8460.sock
+[debug] [2020-04-01T17:26:42.690Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2020-04-01T17:26:42.696Z] DEBUG: [runtime-status] [8460] Ephemeral server handling GET request
+[debug] [2020-04-01T17:26:46.257Z] DEBUG: [runtime-status] [8460] Ephemeral server survived.
+[debug] [2020-04-01T17:26:46.349Z] [functions] Finished "importKoreanData" in ~3s
+[debug] [2020-04-01T17:26:46.349Z] DEBUG: [worker-importKoreanData-19db28c8-6077-4483-b5ad-db7bf898bdc9]: IDLE
+[debug] [2020-04-01T17:26:46.349Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[info] >  (node:8460) UnhandledPromiseRejectionWarning: Error: getaddrinfo ENOTFOUND maps.googleapis.com maps.googleapis.com:443
+[info] >      at GetAddrInfoReqWrap.onlookup [as oncomplete] (dns.js:57:26)
+[info] >  (node:8460) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). (rejection id: 2)
+[info] >  (node:8460) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%ED%94%84%EB%A0%8C%EC%A6%88%EB%B9%88&locationbias=point:37.54974388975971,126.85034194566299 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%B6%80%EC%82%B0%EC%9D%98%EB%A3%8C%EC%9B%90(%EB%B3%B4%EA%B1%B4%EC%86%8C%20%EA%B5%AC%EA%B8%89%EC%B0%A8%20%EC%9D%B4%EC%9A%A9)&locationbias=point:35.18729655432529,129.05922489147238 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%8C%80%EB%8B%88%EC%8A%A4%EC%B9%B4%ED%8E%98&locationbias=point:33.4977483046547,126.96791389227299 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%9D%B8%EC%84%B1%EC%95%BD%EA%B5%AD&locationbias=point:36.022155599389826,129.3690428425264 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%BD%94%EB%A1%9C%EB%82%9819%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%EB%B3%B4%EA%B1%B4%EC%86%8C%20%EC%84%A0%EB%B3%84%EC%A7%84%EB%A3%8C%EC%86%8C(%EB%B3%B4%EA%B1%B4%EC%86%8C%20%EA%B5%AC%EA%B8%89%EC%B0%A8%20%EC%9D%B4%EC%9A%A9)&locationbias=point:35.16411220331141,129.17866201817904 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%82%BC%EB%9E%91%EC%A7%84%20%EC%8B%A0%ED%86%B5%EC%9D%98%EC%9B%90%20%EC%A7%84%EB%A3%8C&locationbias=point:35.4000485409135,128.84289064999462 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%8B%A4%EC%9B%90%20%EC%8B%9D%EC%82%AC&locationbias=point:37.4778240442181,126.88042274613399 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%B0%94%EB%A5%B8%EA%B8%B8%EB%B3%91%EC%9B%90%20%EC%99%B8%EB%9E%98&locationbias=point:35.2058905832124,129.12175452060868 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%A7%84%EB%B6%80%EC%8B%9C%EC%99%B8%EB%B2%84%EC%8A%A4%ED%84%B0%EB%AF%B8%EB%84%90&locationbias=point:37.6362883914799,128.55850740918117 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%AA%A9%ED%8F%AC%EC%97%AD&locationbias=point:34.79117899358169,126.38664835784698 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%84%9C%EC%9A%B8%ED%8A%B9%EB%B3%84%EC%8B%9C%20%EC%84%9C%EC%9A%B8%EC%9D%98%EB%A3%8C%EC%9B%90%20%EC%9D%B4%EC%86%A1&locationbias=point:37.6128675208202,127.09809248467599 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EA%B2%BD%EC%A3%BC%EB%86%8D%ED%98%91%20%EC%B6%A9%ED%9A%A8%EC%A7%80%EC%A0%90&locationbias=point:35.841835525738105,129.186634934596 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EA%B5%AC%EC%95%BD%EA%B5%AD(%EC%86%8C%EB%8F%85%EC%9D%BC:%203/9)&locationbias=point:35.828353353189954,128.7364130822357 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%84%9C%EC%9A%B8%EB%AC%B4%EA%B5%90%EB%8F%99%EB%82%99%EC%A7%80&locationbias=point:37.52614034822079,126.931104400504 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%9A%B8%EC%82%B0%EA%B3%B5%ED%95%AD&locationbias=point:35.592851406683906,129.35589690265235 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%ED%8E%80%EB%B9%84%EC%96%B4%ED%82%B9%20%EC%88%98%EC%9B%90%EB%8C%80%EC%A0%90&locationbias=point:37.21351274133342,126.9757193851956 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%AC%B4%ED%95%99%EC%8B%9C%EC%9E%A5%20%EA%B2%BD%EC%84%B1%EB%B0%98%EC%B0%AC&locationbias=point:36.97394402008615,127.92727208443844 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%B4%9D%EA%B0%81%EC%A7%91%EA%B3%B1%EC%B0%BD&locationbias=point:37.60248884502391,127.07777637317 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%8C%80%ED%95%9C%ED%95%AD%EA%B3%B5&locationbias=point:37.558785863486186,126.80335487953401 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%88%9C%EC%B2%9C%ED%96%A5%EB%8C%80%ED%95%99%EA%B5%90%EB%B6%80%EC%86%8D%20%EB%B6%80%EC%B2%9C%EB%B3%91%EC%9B%90&locationbias=point:37.4987700454192,126.762999882731 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%B9%84%EC%97%94%EB%82%98%EC%BB%A4%ED%94%BC%ED%95%98%EC%9A%B0%EC%8A%A4%20%EB%8C%80%EC%A0%84%EA%B4%80%ED%8F%89%ED%85%8C%ED%81%AC%EB%85%B8%ED%94%84%EB%9D%BC%EC%9E%90%EC%A0%90&locationbias=point:36.42658467809787,127.38881389156901 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%84%9C%EC%9A%B8%EA%B4%80&locationbias=point:36.50422192258674,127.27167982539457 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%8F%88%EB%B6%80%EC%95%BC%20%EC%9C%A1%EA%B1%B0%EB%A6%AC%EC%A0%90&locationbias=point:36.0417728646774,129.3674008095449 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%B6%81%EC%B0%BD%EB%8F%99%EC%88%9C%EB%91%90%EB%B6%80%20%EB%B6%84%EB%8B%B9%EC%84%9C%ED%98%84%EC%A0%90&locationbias=point:37.3868153049796,127.12204778074901 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%B0%B0%EC%8A%A4%ED%82%A8%EB%9D%BC%EB%B9%88%EC%8A%A4%20%ED%99%94%EA%B3%A1%EC%97%AD%EC%A0%90(%EB%A7%88%EC%8A%A4%ED%81%AC%20%EC%B0%A9%EC%9A%A9,%20%EB%B0%A9%EC%97%AD%20%EC%99%84%EB%A3%8C,%20%ED%99%98%EC%9E%90%20%ED%87%B4%EC%9B%90)&locationbias=point:37.5412621675829,126.83825165740402 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%86%A1%ED%8C%8C%EA%B5%AC%EB%B3%B4%EA%B1%B4%EC%86%8C&locationbias=point:37.5145795416534,127.10655565199299 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%ED%98%84%EB%8C%80%EC%9E%90%EB%8F%99%EC%B0%A8%EB%AC%B8%ED%99%94%ED%9A%8C%EA%B4%80&locationbias=point:35.538198323259714,129.38825935274167 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%98%AC%EB%A6%AC%EB%B8%8C%EC%98%81%20%EC%83%81%EB%B4%89%EB%93%80%EC%98%A4%ED%8A%B8%EB%A6%AC%EC%8A%A4%EC%A0%90&locationbias=point:37.59776521050663,127.09241305075305 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%8A%A4%ED%83%80%EB%B2%85%EC%8A%A4%20%EC%84%9C%EC%9A%B8%EB%8C%80%EC%97%AD&locationbias=point:37.48160856834189,126.951962262615 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%9B%90%EC%95%BD%EA%B5%AD&locationbias=point:36.240493523978095,128.30188745688255 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%B6%84%EB%8B%B9%EA%B5%AC%EB%B3%B4%EA%B1%B4%EC%86%8C%20%EA%B7%BC%EB%AC%B4(3/15~18)&locationbias=point:37.411071576549105,127.12474835939199 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%82%A8%ED%95%9C%EC%82%B0%EC%84%B1%EC%9E%85%EA%B5%AC%EC%97%AD%208%ED%98%B8%EC%84%A0&locationbias=point:37.4516686968693,127.159882577768 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%AA%A8%ED%85%94%EB%AA%85%EC%9E%91&locationbias=point:37.47489886412361,126.980903291917 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%B3%B4%EB%8F%8C%EB%AF%B8%EC%97%AD%20%EC%84%B8%EC%A2%85%EC%B2%AD%EC%82%AC%EC%A0%90&locationbias=point:36.507492118443004,127.262872591014 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%AF%B8%EC%8A%A4%ED%84%B0%ED%94%BC%EC%9E%90%20%EC%84%B8%EC%A2%85%EC%A0%95%EB%B6%80%EC%B2%AD%EC%82%AC%EC%A0%90&locationbias=point:36.50738805015321,127.262251584741 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%82%AD%EB%A7%8C%EC%A1%B0%EA%B0%9C%EA%B5%AC%EC%9D%B4&locationbias=point:36.88985854569388,126.82336087674601 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%ED%95%98%EB%82%98%EB%A1%9C%EB%A7%88%ED%8A%B8%20%EC%9E%A5%EC%97%B0%EC%A0%90%20(10:15-10:20)&locationbias=point:36.82611250252571,127.95495909973526 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%BD%94%EB%A1%9C%EB%82%9819%20%EC%A4%91%EA%B5%AC%EB%B3%B4%EA%B1%B4%EC%86%8C%20%EC%84%A0%EB%B3%84%EC%A7%84%EB%A3%8C%EC%86%8C&locationbias=point:35.56953499455542,129.35040542542728 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%88%9C%EC%B2%9C%ED%96%A5%EB%8C%80%ED%95%99%EA%B5%90%EB%B6%80%EC%86%8D%20%EB%B6%80%EC%B2%9C%EB%B3%91%EC%9B%90&locationbias=point:37.4987700454192,126.762999882731 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EA%B0%80%EB%B0%B0%EA%B3%B5%EC%83%81&locationbias=point:36.12578867997941,128.34103341305905 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%ED%99%95%EC%9E%A5%EB%8B%A8%EC%A7%80%EA%B3%A8%EB%93%9C%EB%94%94%EC%9B%80%EC%95%84%ED%8C%8C%ED%8A%B8%20%EA%B1%B0%EC%A3%BC&locationbias=point:36.15720758020733,128.43321264378127 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%8F%84%EB%B4%89%EC%97%AD&locationbias=point:37.67921190466579,127.04553488667199 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EC%BD%94%EB%A1%9C%EB%82%9819%20%EC%A7%84%EC%A3%BC%ED%95%9C%EC%9D%BC%EB%B3%91%EC%9B%90%20%EC%84%A0%EB%B3%84%EC%A7%84%EB%A3%8C%EC%86%8C&locationbias=point:35.16696519824999,128.12854765711302 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%8D%94%EC%A7%84%EA%B5%AD%20%EA%B0%95%EB%82%A8%EB%8C%80%EC%A0%90%20%EB%B0%A9%EB%AC%B8(%EB%B0%A9%EC%97%AD%EC%99%84%EB%A3%8C)&locationbias=point:37.2709960260288,127.12611787635902 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%A5%98%EC%95%A4%EB%8B%A5%ED%84%B0%EC%8A%A4%EC%97%B0%ED%95%A9%EC%9D%98%EC%9B%90(%EB%B0%A9%EB%AC%B8%EC%9D%BC:%202/18,%202/27,%20%EC%86%8C%EB%8F%85%EC%9D%BC:%203/1)&locationbias=point:35.833593278726006,128.7279842255324 request failed with OVER_QUERY_LIMIT status
+[info] >  https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=AIzaSyD6r11byMY5Rl41d2chr7bkBFeX1EwOZu0&inputtype=textquery&language=ko&fields=formatted_address,geometry,name,place_id&input=%EB%AA%A9%ED%8F%AC%EC%97%AD&locationbias=point:34.79117899358169,126.38664835784698 request failed with OVER_QUERY_LIMIT status
+[debug] [2020-04-01T17:29:52.447Z] [work-queue] {"queueLength":1,"workRunningCount":0}
+[debug] [2020-04-01T17:29:52.448Z] [work-queue] {"queueLength":0,"workRunningCount":1}
+[debug] [2020-04-01T17:29:52.448Z] Accepted request GET /coronamaps-9e44a/us-central1/importKoreanData --> importKoreanData
+[debug] [2020-04-01T17:29:52.448Z] DEBUG: [worker-pool] submitWork(triggerId=importKoreanData)
+[debug] [2020-04-01T17:29:52.449Z] DEBUG: [worker-importKoreanData-19db28c8-6077-4483-b5ad-db7bf898bdc9]: Assigning socketPath: /var/folders/v_/z4vclcrd70bd5td8y0bywwk00000gp/T/fire_emu_8460.sock
+[debug] [2020-04-01T17:29:52.449Z] DEBUG: [worker-importKoreanData-19db28c8-6077-4483-b5ad-db7bf898bdc9]: BUSY
+[debug] [2020-04-01T17:29:52.451Z] DEBUG: [runtime-status] [8460] Trigger "importKoreanData" has been found, beginning invocation!
+[debug] [2020-04-01T17:29:52.451Z] [functions] Beginning execution of "importKoreanData"
+[debug] [2020-04-01T17:29:52.451Z] DEBUG: [runtime-status] [8460] triggerDefinition {"httpsTrigger":{},"name":"importKoreanData","entryPoint":"importKoreanData"}
+[debug] [2020-04-01T17:29:52.451Z] DEBUG: [runtime-status] [8460] Running importKoreanData in mode HTTPS
+[debug] [2020-04-01T17:29:52.452Z] DEBUG: [runtime-status] [8460] Attempting to listen to socketPath: /var/folders/v_/z4vclcrd70bd5td8y0bywwk00000gp/T/fire_emu_8460.sock
+[debug] [2020-04-01T17:29:52.454Z] DEBUG: [functions] Runtime ready! Sending request!
+[debug] [2020-04-01T17:29:52.457Z] DEBUG: [runtime-status] [8460] Ephemeral server handling GET request
+[debug] [2020-04-01T17:29:52.894Z] DEBUG: [runtime-status] [8460] Ephemeral server survived.
+[debug] [2020-04-01T17:29:52.896Z] [functions] Finished "importKoreanData" in ~1s
+[debug] [2020-04-01T17:29:52.896Z] DEBUG: [worker-importKoreanData-19db28c8-6077-4483-b5ad-db7bf898bdc9]: IDLE
+[debug] [2020-04-01T17:29:52.896Z] [work-queue] {"queueLength":0,"workRunningCount":0}
+[debug] [2020-04-01T17:35:10.618Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/config/googleMaps.js.map changed, reloading triggers
+[debug] [2020-04-01T17:35:10.619Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/config/googleMaps.js changed, reloading triggers
+[debug] [2020-04-01T17:35:10.620Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/helpers/index.js.map changed, reloading triggers
+[debug] [2020-04-01T17:35:10.620Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/helpers/index.js changed, reloading triggers
+[debug] [2020-04-01T17:35:10.620Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/countries/korea/parser.js.map changed, reloading triggers
+[debug] [2020-04-01T17:35:10.621Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/countries/korea/parser.js changed, reloading triggers
+[debug] [2020-04-01T17:35:10.621Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/index.js.map changed, reloading triggers
+[debug] [2020-04-01T17:35:10.621Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/index.js changed, reloading triggers
+[debug] [2020-04-01T17:35:11.624Z] DEBUG: [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2020-04-01T17:35:11.625Z] DEBUG: [worker-~diagnostic~-2d8e2e1f-4954-42db-a126-03795adb7515]: FINISHING
+[debug] [2020-04-01T17:35:11.625Z] DEBUG: [worker-pool] Shutting down IDLE worker (scrapeKoreanData)
+[debug] [2020-04-01T17:35:11.625Z] DEBUG: [worker-scrapeKoreanData-a4e95a23-f25c-4b73-a8cf-20220d964146]: FINISHING
+[debug] [2020-04-01T17:35:11.625Z] DEBUG: [worker-pool] Shutting down IDLE worker (importKoreanData)
+[debug] [2020-04-01T17:35:11.626Z] DEBUG: [worker-importKoreanData-19db28c8-6077-4483-b5ad-db7bf898bdc9]: FINISHING
+[debug] [2020-04-01T17:35:11.635Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-04-01T17:35:11.635Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2020-04-01T17:35:11.635Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-04-01T17:35:11.635Z] DEBUG: [worker-~diagnostic~-9820af9e-9789-4b2e-a491-f3e63b6a9d07]: Assigning socketPath: /var/folders/v_/z4vclcrd70bd5td8y0bywwk00000gp/T/fire_emu_8581.sock
+[debug] [2020-04-01T17:35:11.635Z] DEBUG: [worker-~diagnostic~-9820af9e-9789-4b2e-a491-f3e63b6a9d07]: BUSY
+[debug] [2020-04-01T17:35:11.639Z] DEBUG: [worker-~diagnostic~-2d8e2e1f-4954-42db-a126-03795adb7515]: exited
+[debug] [2020-04-01T17:35:11.639Z] DEBUG: [worker-~diagnostic~-2d8e2e1f-4954-42db-a126-03795adb7515]: FINISHED
+[debug] [2020-04-01T17:35:11.646Z] DEBUG: [worker-scrapeKoreanData-a4e95a23-f25c-4b73-a8cf-20220d964146]: exited
+[debug] [2020-04-01T17:35:11.646Z] DEBUG: [worker-scrapeKoreanData-a4e95a23-f25c-4b73-a8cf-20220d964146]: FINISHED
+[debug] [2020-04-01T17:35:11.654Z] DEBUG: [worker-importKoreanData-19db28c8-6077-4483-b5ad-db7bf898bdc9]: exited
+[debug] [2020-04-01T17:35:11.654Z] DEBUG: [worker-importKoreanData-19db28c8-6077-4483-b5ad-db7bf898bdc9]: FINISHED
+[debug] [2020-04-01T17:35:11.926Z] DEBUG: [runtime-status] [8581] Functions runtime initialized. {"cwd":"/Users/mundanelunacy/coronamaps/functions","node_version":"11.4.0"}
+[debug] [2020-04-01T17:35:11.931Z] DEBUG: [runtime-status] [8581] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true,"pubsub_emulator":true}
+[debug] [2020-04-01T17:35:11.934Z] DEBUG: [runtime-status] [8581] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-04-01T17:35:11.936Z] DEBUG: [runtime-status] [8581] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-01T17:35:11.939Z] DEBUG: [runtime-status] [8581] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-01T17:35:12.657Z] DEBUG: [worker-~diagnostic~-9820af9e-9789-4b2e-a491-f3e63b6a9d07]: IDLE
+[debug] [2020-04-01T17:38:09.800Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/config/googleMaps.js.map changed, reloading triggers
+[debug] [2020-04-01T17:38:09.801Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/config/googleMaps.js changed, reloading triggers
+[debug] [2020-04-01T17:38:09.801Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/helpers/index.js.map changed, reloading triggers
+[debug] [2020-04-01T17:38:09.801Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/helpers/index.js changed, reloading triggers
+[debug] [2020-04-01T17:38:09.801Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/countries/korea/parser.js.map changed, reloading triggers
+[debug] [2020-04-01T17:38:09.801Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/countries/korea/parser.js changed, reloading triggers
+[debug] [2020-04-01T17:38:09.801Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/index.js.map changed, reloading triggers
+[debug] [2020-04-01T17:38:09.801Z] DEBUG: File /Users/mundanelunacy/coronamaps/functions/lib/index.js changed, reloading triggers
+[debug] [2020-04-01T17:38:10.803Z] DEBUG: [worker-pool] Shutting down IDLE worker (~diagnostic~)
+[debug] [2020-04-01T17:38:10.803Z] DEBUG: [worker-~diagnostic~-9820af9e-9789-4b2e-a491-f3e63b6a9d07]: FINISHING
+[debug] [2020-04-01T17:38:10.803Z] DEBUG: [worker-pool] Cleaned up workers for ~diagnostic~: 2 --> 1
+[debug] [2020-04-01T17:38:10.803Z] DEBUG: [worker-pool] Cleaned up workers for scrapeKoreanData: 1 --> 0
+[debug] [2020-04-01T17:38:10.803Z] DEBUG: [worker-pool] Cleaned up workers for importKoreanData: 1 --> 0
+[debug] [2020-04-01T17:38:10.810Z] DEBUG: [worker-pool] addWorker(~diagnostic~)
+[debug] [2020-04-01T17:38:10.810Z] DEBUG: [worker-pool] Adding worker with key ~diagnostic~, total=2
+[debug] [2020-04-01T17:38:10.810Z] DEBUG: [worker-pool] submitWork(triggerId=)
+[debug] [2020-04-01T17:38:10.811Z] DEBUG: [worker-~diagnostic~-859f9bc6-83e6-42a9-a0f9-5e34eda940d1]: Assigning socketPath: /var/folders/v_/z4vclcrd70bd5td8y0bywwk00000gp/T/fire_emu_8752.sock
+[debug] [2020-04-01T17:38:10.811Z] DEBUG: [worker-~diagnostic~-859f9bc6-83e6-42a9-a0f9-5e34eda940d1]: BUSY
+[debug] [2020-04-01T17:38:10.812Z] DEBUG: [worker-~diagnostic~-9820af9e-9789-4b2e-a491-f3e63b6a9d07]: exited
+[debug] [2020-04-01T17:38:10.812Z] DEBUG: [worker-~diagnostic~-9820af9e-9789-4b2e-a491-f3e63b6a9d07]: FINISHED
+[debug] [2020-04-01T17:38:11.090Z] DEBUG: [runtime-status] [8752] Functions runtime initialized. {"cwd":"/Users/mundanelunacy/coronamaps/functions","node_version":"11.4.0"}
+[debug] [2020-04-01T17:38:11.092Z] DEBUG: [runtime-status] [8752] Disabled runtime features: {"functions_config_helper":true,"network_filtering":true,"timeout":true,"memory_limiting":true,"admin_stubs":true,"pubsub_emulator":true}
+[debug] [2020-04-01T17:38:11.094Z] DEBUG: [runtime-status] [8752] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-admin/lib/index.js"}
+[debug] [2020-04-01T17:38:11.094Z] DEBUG: [runtime-status] [8752] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-01T17:38:11.095Z] DEBUG: [runtime-status] [8752] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.3.0","resolution":"/Users/mundanelunacy/coronamaps/functions/node_modules/firebase-functions/lib/index.js"}
+[debug] [2020-04-01T17:38:11.807Z] DEBUG: [worker-~diagnostic~-859f9bc6-83e6-42a9-a0f9-5e34eda940d1]: IDLE
