@@ -1,9 +1,10 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { Map, InfoWindow, Marker } from "google-maps-react";
-import { MapKey } from "../MapKey";
+
 import moment from "moment-timezone";
 const incubationPeriodDays = 14;
+const googleMapsPlaceLinkRoot = "https://www.google.com/maps/place/?q=place_id:";
 
 export const DisplayMap = ({
     initialCenter,
@@ -73,7 +74,7 @@ export const DisplayMap = ({
                 name={incident.name}
                 start={incident.startTimestampMs}
                 end={incident.endTimestampMs}
-                color
+                placeId={incident.placeId}
                 position={{
                     lat: incident.position.geopoint.latitude,
                     lng: incident.position.geopoint.longitude
@@ -104,7 +105,19 @@ export const DisplayMap = ({
                 <InfoWindow marker={displayMap.activeMarker} visible={displayMap.showingInfoWindow}>
                     <>
                         <Box>
-                            <Typography>{displayMap.selectedPlace.name}</Typography>
+                            {displayMap.selectedPlace.placeId ? (
+                                <Typography>
+                                    <a
+                                        href={`${googleMapsPlaceLinkRoot}${displayMap.selectedPlace.placeId}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        {displayMap.selectedPlace.name}
+                                    </a>
+                                </Typography>
+                            ) : (
+                                <Typography>{displayMap.selectedPlace.name}</Typography>
+                            )}
                         </Box>
                         <Box>
                             <Typography>
@@ -123,7 +136,6 @@ export const DisplayMap = ({
                     </>
                 </InfoWindow>
             </Map>
-            <MapKey />
         </>
     );
 };

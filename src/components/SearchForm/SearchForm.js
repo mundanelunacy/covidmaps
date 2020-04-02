@@ -86,7 +86,7 @@ export function SearchForm({ firebase, queryIncidents }) {
                     queryIncidents(
                         results[0].geometry.location.lat(),
                         results[0].geometry.location.lng(),
-                        2,
+                        10,
                         firebase
                     );
                 }
@@ -119,7 +119,7 @@ export function SearchForm({ firebase, queryIncidents }) {
                         fullWidth
                         onChange={handleChange}
                         className={classes.inputTextField}
-                        placeholder="location, e.g. Shinjuku"
+                        placeholder="location, e.g. Seoul"
                     />
                 );
             }}

@@ -5,6 +5,8 @@ import { TopBar } from "../../components/TopBar";
 import { DisplayMap } from "../../components/DisplayMap";
 import { useStyles } from "./LandingPageCss";
 // import clsx from "clsx";
+import { MapKey } from "../../components/MapKey";
+import { VerifiedMapsShortcut } from "../../components/VerifiedMapsShortcut";
 
 export const LandingPage = ({ query }) => {
     const classes = useStyles();
@@ -22,6 +24,8 @@ export const LandingPage = ({ query }) => {
             >
                 <div className={classes.drawerHeader} />
                 <DisplayMap initialCenter={query.center} />
+                <MapKey />
+                <VerifiedMapsShortcut />
             </main>
         </div>
     );
