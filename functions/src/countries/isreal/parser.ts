@@ -13,13 +13,11 @@ try {
 const db = admin.firestore();
 const geo = require("geofirex").init(admin);
 const placesEndpoint = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?`;
+const arcgisEndpoint =
+    "https://services5.arcgis.com/dlrDjz89gx9qyfev/arcgis/rest/services/Corona_Exposure_View/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=true&spatialRel=esriSpatialRelIntersects&outFields=*&maxRecordCountFactor=4&outSR=4326&resultOffset=0&resultRecordCount=8000&cacheHint=true";
 
 export const arcgisImport = async (request: any, response: any) => {
-    const original: AxiosResponse = await axios.get(
-        "https://services5.arcgis.com/dlrDjz89gx9qyfev/arcgis/rest/services/Corona_Exposure_View/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=true&spatialRel=esriSpatialRelIntersects&outFields=*&maxRecordCountFactor=4&outSR=4326&resultOffset=0&resultRecordCount=8000&cacheHint=true"
-    );
-
-    // let count: number = original.data.features.length;
+    const original: AxiosResponse = await axios.get(arcgisEndpoint);
 
     original.data.features.map(async (data: any) => {
         const doc = await db
@@ -66,7 +64,7 @@ export const getGooglePlace = async (request: any, response: any) => {
     });
 
     for (i = 0; i < temp.length; i++) {
-        console.log("i:  " + i);
+        // console.log("i:  " + i);
         const doc = temp[i];
 
         const query = {
@@ -74,9 +72,7 @@ export const getGooglePlace = async (request: any, response: any) => {
             inputtype: "textquery",
             language: "iw",
             fields: "formatted_address,geometry,name,place_id",
-            // input: doc.data().attributes.Place,
             input: doc.data.attributes.Place,
-            // locationbias: `point:${doc.data().geometry.x},${doc.data().geometry.y}`
             locationbias: `point:${doc.data.geometry.x},${doc.data.geometry.y}`
         };
 

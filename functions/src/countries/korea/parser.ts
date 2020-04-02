@@ -14,9 +14,10 @@ try {
 const db = admin.firestore();
 const geo = require("geofirex").init(admin);
 const placesEndpoint = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?`;
+const naverEndpoint = "https://coronamap.site/javascripts/ndata.js";
 
 export const naverImport = async (request: any, response: any) => {
-    const original: AxiosResponse = await axios.get("https://coronamap.site/javascripts/ndata.js");
+    const original: AxiosResponse = await axios.get(naverEndpoint);
     const mutated = "[" + original.data.substring(original.data.indexOf("\n") + 1);
     const x: Function = new Function("return " + mutated);
     const inputData: [] = x();
@@ -64,7 +65,7 @@ export const getGooglePlace = async (request: any, response: any) => {
     });
 
     for (i = 0; i < temp.length; i++) {
-        console.log("i:  " + i);
+        // console.log("i:  " + i);
         const doc = temp[i];
 
         const s = doc.data.latlng.split(",");
@@ -86,8 +87,8 @@ export const getGooglePlace = async (request: any, response: any) => {
         };
 
         const requestStr = `${placesEndpoint}${encodeURI(objToParams(query))}`;
-
         let mapsResponse: any;
+
         try {
             mapsResponse = await axios.get(requestStr);
             sleep(125);
