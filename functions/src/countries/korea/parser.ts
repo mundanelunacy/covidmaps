@@ -79,7 +79,7 @@ export const getGooglePlace = async (request: any, response: any) => {
             .tz(
                 `${new Date().getUTCFullYear()}-${minTwoDigits(doc.data().month)}-${minTwoDigits(
                     doc.data().day
-                )}`,
+                )} 23:59`,
                 "Asia/Seoul"
             )
             .valueOf();

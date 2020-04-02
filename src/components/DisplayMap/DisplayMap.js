@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { Map, InfoWindow, Marker } from "google-maps-react";
+import { MapKey } from "../MapKey";
 import moment from "moment-timezone";
 const incubationPeriodDays = 14;
 
@@ -122,6 +123,7 @@ export const DisplayMap = ({
                     </>
                 </InfoWindow>
             </Map>
+            <MapKey />
         </>
     );
 };
