@@ -1,10 +1,9 @@
 import * as functions from "firebase-functions";
 import axios, { AxiosResponse } from "axios";
-import * as hash from "object-hash";
 import * as admin from "firebase-admin";
-import * as moment from "moment-timezone";
+import * as hash from "object-hash";
 import { apiKey } from "../../config/googleMaps";
-import { objToParams, sleep, minTwoDigits } from "../../helpers";
+import { objToParams, sleep } from "../../helpers";
 
 // initialize Firestore
 try {
@@ -15,24 +14,27 @@ const db = admin.firestore();
 const geo = require("geofirex").init(admin);
 const placesEndpoint = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?`;
 
-export const naverImport = async (request: any, response: any) => {
-    const original: AxiosResponse = await axios.get("https://coronamap.site/javascripts/ndata.js");
-    const mutated = "[" + original.data.substring(original.data.indexOf("\n") + 1);
-    const x: Function = new Function("return " + mutated);
-    const inputData: [] = x();
+export const arcgisImport = async (request: any, response: any) => {
+    const original: AxiosResponse = await axios.get(
+        "https://services5.arcgis.com/dlrDjz89gx9qyfev/arcgis/rest/services/Corona_Exposure_View/FeatureServer/0/query?f=json&where=1%3D1&returnGeometry=true&spatialRel=esriSpatialRelIntersects&outFields=*&maxRecordCountFactor=4&outSR=4326&resultOffset=0&resultRecordCount=8000&cacheHint=true"
+    );
 
-    inputData.map(async (data: any) => {
+    // let count: number = original.data.features.length;
+
+    original.data.features.map(async (data: any) => {
         const doc = await db
-            .collection("rawKoreaData")
+            .collection("rawIsrealData")
             .doc(hash(data))
             .get();
 
         if (!doc.exists) {
             await db
-                .collection("rawKoreaData")
+                .collection("rawIsrealData")
                 .doc(hash(data))
                 .set({ ...data, incidentCreated: false });
+            return 1;
         }
+        return 0;
     });
 
     response.send(`added documents`);
@@ -43,7 +45,7 @@ export const getGooglePlace = async (request: any, response: any) => {
 
     try {
         snapshot = await db
-            .collection("rawKoreaData")
+            .collection("rawIsrealData")
             .where("incidentCreated", "==", false)
             .get();
     } catch (e) {
@@ -67,26 +69,18 @@ export const getGooglePlace = async (request: any, response: any) => {
         console.log("i:  " + i);
         const doc = temp[i];
 
-        const s = doc.data.latlng.split(",");
-        const startTimestampMs = moment
-            .tz(
-                `${new Date().getUTCFullYear()}-${minTwoDigits(doc.data.month)}-${minTwoDigits(
-                    doc.data.day
-                )} 23:59`,
-                "Asia/Seoul"
-            )
-            .valueOf();
         const query = {
             key: apiKey,
             inputtype: "textquery",
-            language: "ko",
+            language: "iw",
             fields: "formatted_address,geometry,name,place_id",
-            input: doc.data.address,
-            locationbias: `point:${s[0].trim()},${s[1].trim()}`
+            // input: doc.data().attributes.Place,
+            input: doc.data.attributes.Place,
+            // locationbias: `point:${doc.data().geometry.x},${doc.data().geometry.y}`
+            locationbias: `point:${doc.data.geometry.x},${doc.data.geometry.y}`
         };
 
         const requestStr = `${placesEndpoint}${encodeURI(objToParams(query))}`;
-
         let mapsResponse: any;
         try {
             mapsResponse = await axios.get(requestStr);
@@ -96,45 +90,44 @@ export const getGooglePlace = async (request: any, response: any) => {
         }
 
         let obj: {} = {};
-
         try {
             if (mapsResponse.data.status === "OK") {
                 obj = {
                     address: mapsResponse.data.candidates[0].formatted_address,
-                    name: mapsResponse.data.candidates[0].name,
+                    name: mapsResponse.data.candidates[0].name
+                        ? mapsResponse.data.candidates[0].name
+                        : doc.data.attributes.Place,
                     placeId: mapsResponse.data.candidates[0].place_id,
                     position: geo.point(
                         mapsResponse.data.candidates[0].geometry.location.lat,
                         mapsResponse.data.candidates[0].geometry.location.lng
                     ),
                     validated: true,
-                    startTimestampMs,
-                    endTimestampMs: startTimestampMs + 60 * 60 * 1000
+                    startTimestampMs: doc.data.attributes.fromTime,
+                    endTimestampMs: doc.data.attributes.toTime
                 };
                 await db.collection("incidents").add(obj);
-
                 await db
-                    .collection("rawKoreaData")
+                    .collection("rawIsrealData")
                     .doc(doc.id)
                     .update({ incidentCreated: true });
 
                 count++;
             } else if (mapsResponse.data.status === "ZERO_RESULTS") {
                 obj = {
-                    address: doc.data.address_name,
-                    name: doc.data.address,
+                    address: "",
+                    name: doc.data.attributes.Place ? doc.data.attributes.Place : "",
                     placeId: "",
-                    position: geo.point(parseFloat(s[0]), parseFloat(s[1])),
+                    position: geo.point(doc.data.geometry.x, doc.data.geometry.y),
                     validated: true,
-                    startTimestampMs,
-                    endTimestampMs: startTimestampMs + 60 * 60 * 1000
+                    startTimestampMs: doc.data.attributes.fromTime,
+                    endTimestampMs: doc.data.attributes.toTime
                 };
                 await db.collection("incidents").add(obj);
                 await db
-                    .collection("rawKoreaData")
+                    .collection("rawIsrealData")
                     .doc(doc.id)
                     .update({ incidentCreated: true });
-
                 count++;
             } else {
                 console.error(`${requestStr} request failed with ${mapsResponse.data.status} status`);
