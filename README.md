@@ -2,9 +2,6 @@
 
 ### Under Development
 
-A prototype of the site can be found here:
-https://covidmaps-9e44a.firebaseapp.com/lp
-
 [Covidmaps.org](https://covidmaps.org) is a crowdsourced website where people can type in an address to bring up locations where COVID-19 cases had visited prior to quarantine. It aims to create a universally accessible database which give users the ability to check if they have been exposed.
 
 -   If you are Corona Case I urge you to click on the ["Submit Case" button](https://covidmaps.org/submit) where you'll be given instructions on how to input your case. Submissions are anonymous. [Privacy is strictly enforced](https://covidmaps.org/privacy)
