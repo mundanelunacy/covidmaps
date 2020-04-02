@@ -119,7 +119,7 @@ export function SearchForm({ firebase, queryIncidents }) {
                         fullWidth
                         onChange={handleChange}
                         className={classes.inputTextField}
-                        placeholder="location, e.g. Shinjuku"
+                        placeholder="location, e.g. Seoul"
                     />
                 );
             }}
