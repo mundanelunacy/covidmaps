@@ -1,7 +1,9 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { Map, InfoWindow, Marker } from "google-maps-react";
+import { MapKey } from "../MapKey";
 import moment from "moment-timezone";
+const incubationPeriodDays = 14;
 
 export const DisplayMap = ({
     initialCenter,
@@ -21,32 +23,72 @@ export const DisplayMap = ({
 
     const onMapInitialized = (mapProps, map) => {
         map.setOptions({
-            minZoom: 15,
+            minZoom: 10,
             zoomControlOptions: { position: google.maps.ControlPosition.LEFT_BOTTOM }
         });
 
         if (initialCenter) {
-            queryIncidents(initialCenter.lat, initialCenter.lng, 2, firebase);
+            queryIncidents(initialCenter.lat, initialCenter.lng, query.radius, firebase);
             return;
         }
 
         if (query) {
-            queryIncidents(query.center.lat, query.center.lng, 2, firebase);
+            queryIncidents(query.center.lat, query.center.lng, query.radius, firebase);
             return;
         }
     };
 
-    const icon = {
-        url: "/covid_icon.png",
-        anchor: new google.maps.Point(12, 12),
-        scaledSize: new google.maps.Size(24, 24)
+    // check for time difference and change marker color
+    const filterMarkers = (google, incident, onMarkerClick) => {
+        const differenceSeconds = (new Date().getTime() - incident.startTimestampMs) / 1000;
+        const DAY = 24 * 60 * 60;
+        const icon = {
+            path: google.maps.SymbolPath.CIRCLE,
+            scale: 10,
+            fillColor: "#F00",
+            fillOpacity: 1,
+            strokeWeight: 0.4
+        };
+
+        // change icon color based on time difference from now till incubation period
+        switch (true) {
+            case differenceSeconds > 4 * DAY && differenceSeconds <= incubationPeriodDays * DAY:
+                icon.fillColor = "#00F"; //blue
+                break;
+            case differenceSeconds > DAY && differenceSeconds <= 4 * DAY:
+                icon.fillColor = "#FF0"; //yellow
+                break;
+            case differenceSeconds > 0 && differenceSeconds <= DAY:
+                icon.fillColor = "#F00"; //red
+                break;
+            default:
+                return;
+        }
+
+        // return marker
+        return (
+            <Marker
+                key={incident.id}
+                title={incident.name}
+                name={incident.name}
+                start={incident.startTimestampMs}
+                end={incident.endTimestampMs}
+                color
+                position={{
+                    lat: incident.position.geopoint.latitude,
+                    lng: incident.position.geopoint.longitude
+                }}
+                onClick={onMarkerClick}
+                icon={icon}
+            />
+        );
     };
 
     return (
         <>
             <Map
                 google={google}
-                zoom={16}
+                zoom={14}
                 center={query.center}
                 onClick={onMapClicked}
                 initialCenter={initialCenter}
@@ -58,21 +100,7 @@ export const DisplayMap = ({
                 style={{ width: "100%", height: "100%" }}
                 containerStyle={{ position: "static", width: "100%", height: "100%" }}
             >
-                {query.incidents.map(incident => (
-                    <Marker
-                        key={incident.id}
-                        title={incident.name}
-                        name={incident.name}
-                        start={incident.startTimestampMs}
-                        end={incident.endTimestampMs}
-                        position={{
-                            lat: incident.position.geopoint.latitude,
-                            lng: incident.position.geopoint.longitude
-                        }}
-                        onClick={onMarkerClick}
-                        icon={icon}
-                    />
-                ))}
+                {query.incidents.map(incident => filterMarkers(google, incident, onMarkerClick))}
                 <InfoWindow marker={displayMap.activeMarker} visible={displayMap.showingInfoWindow}>
                     <>
                         <Box>
@@ -95,6 +123,7 @@ export const DisplayMap = ({
                     </>
                 </InfoWindow>
             </Map>
+            <MapKey />
         </>
     );
 };
