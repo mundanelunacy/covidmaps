@@ -1,5 +1,5 @@
 import * as functions from "firebase-functions";
-import { naverImport, getGooglePlace, adHoc1159 } from "./countries/korea/parser";
+import { naverImport, getGooglePlace } from "./countries/korea/parser";
 
 // // Start writing Firebase Functions
 // // https://firebase.google.com/docs/functions/typescript
