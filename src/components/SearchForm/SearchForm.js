@@ -86,7 +86,7 @@ export function SearchForm({ firebase, queryIncidents }) {
                     queryIncidents(
                         results[0].geometry.location.lat(),
                         results[0].geometry.location.lng(),
-                        2,
+                        10,
                         firebase
                     );
                 }
