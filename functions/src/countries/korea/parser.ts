@@ -22,21 +22,26 @@ export const naverImport = async (request: any, response: any) => {
     const x: Function = new Function("return " + mutated);
     const inputData: [] = x();
 
-    inputData.map(async (data: any) => {
-        const doc = await db
-            .collection("rawKoreaData")
-            .doc(hash(data))
-            .get();
-
-        if (!doc.exists) {
-            await db
+    const asyncRes = await Promise.all(
+        inputData.map(async (data: any, index: number) => {
+            const doc = await db
                 .collection("rawKoreaData")
                 .doc(hash(data))
-                .set({ ...data, incidentCreated: false });
-        }
-    });
+                .get();
 
-    response.send(`added documents`);
+            if (!doc.exists) {
+                await db
+                    .collection("rawKoreaData")
+                    .doc(hash(data))
+                    .set({ ...data, incidentCreated: false });
+
+                return index;
+            }
+            return;
+        })
+    );
+
+    response.send(asyncRes.filter(value => value));
 };
 
 export const getGooglePlace = async (request: any, response: any) => {

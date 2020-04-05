@@ -19,23 +19,25 @@ const arcgisEndpoint =
 export const arcgisImport = async (request: any, response: any) => {
     const original: AxiosResponse = await axios.get(arcgisEndpoint);
 
-    original.data.features.map(async (data: any) => {
-        const doc = await db
-            .collection("rawIsrealData")
-            .doc(hash(data))
-            .get();
-
-        if (!doc.exists) {
-            await db
+    const asyncRes = await Promise.all(
+        original.data.features.map(async (data: any, index: number) => {
+            const doc = await db
                 .collection("rawIsrealData")
                 .doc(hash(data))
-                .set({ ...data, incidentCreated: false });
-            return 1;
-        }
-        return 0;
-    });
+                .get();
 
-    response.send(`added documents`);
+            if (!doc.exists) {
+                await db
+                    .collection("rawIsrealData")
+                    .doc(hash(data))
+                    .set({ ...data, incidentCreated: false });
+                return index;
+            }
+            return;
+        })
+    );
+
+    response.send(asyncRes.filter(value => value));
 };
 
 export const getGooglePlace = async (request: any, response: any) => {
@@ -64,7 +66,6 @@ export const getGooglePlace = async (request: any, response: any) => {
     });
 
     for (i = 0; i < temp.length; i++) {
-        // console.log("i:  " + i);
         const doc = temp[i];
 
         const query = {
