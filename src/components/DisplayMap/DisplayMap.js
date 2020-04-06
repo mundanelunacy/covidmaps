@@ -15,7 +15,7 @@ export const DisplayMap = ({
     firebase,
     query,
     tzString,
-    queryIncidents
+    queryIncidents,
 }) => {
     const google = window.google;
     const onCenterMoved = (mapProps, map) => {
@@ -25,7 +25,7 @@ export const DisplayMap = ({
     const onMapInitialized = (mapProps, map) => {
         map.setOptions({
             minZoom: 10,
-            zoomControlOptions: { position: google.maps.ControlPosition.LEFT_BOTTOM }
+            zoomControlOptions: { position: google.maps.ControlPosition.LEFT_BOTTOM },
         });
 
         if (initialCenter) {
@@ -48,7 +48,7 @@ export const DisplayMap = ({
             scale: 10,
             fillColor: "#F00",
             fillOpacity: 1,
-            strokeWeight: 0.4
+            strokeWeight: 0.4,
         };
 
         // change icon color based on time difference from now till incubation period
@@ -77,7 +77,7 @@ export const DisplayMap = ({
                 placeId={incident.placeId}
                 position={{
                     lat: incident.position.geopoint.latitude,
-                    lng: incident.position.geopoint.longitude
+                    lng: incident.position.geopoint.longitude,
                 }}
                 onClick={onMarkerClick}
                 icon={icon}
@@ -101,7 +101,7 @@ export const DisplayMap = ({
                 style={{ width: "100%", height: "100%" }}
                 containerStyle={{ position: "static", width: "100%", height: "100%" }}
             >
-                {query.incidents.map(incident => filterMarkers(google, incident, onMarkerClick))}
+                {query.incidents.map((incident) => filterMarkers(google, incident, onMarkerClick))}
                 <InfoWindow marker={displayMap.activeMarker} visible={displayMap.showingInfoWindow}>
                     <>
                         <Box>
