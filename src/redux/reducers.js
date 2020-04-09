@@ -35,6 +35,9 @@ export const initialState = {
     displayMap: {
         zoom: 14,
     },
+    topBar: {
+        drawer: false,
+    },
 };
 
 const queryReducer = (state = initialState.query, action) => {
@@ -163,6 +166,16 @@ const displayMapReducer = (state = initialState.displayMap, action) => {
     return state;
 };
 
+const topBarReducer = (state = initialState.topBar, action) => {
+    if (action.type === "SET_DRAWER") {
+        return {
+            ...state,
+            drawer: action.drawer,
+        };
+    }
+    return state;
+};
+
 export const rootReducer = combineReducers({
     firebase: firebaseReducer,
     firestore: firestoreReducer,
@@ -173,4 +186,5 @@ export const rootReducer = combineReducers({
     manualInputForm: manualInputFormReducer,
     databaseStaging: databaseStagingReducer,
     displayMap: displayMapReducer,
+    topBar: topBarReducer,
 });

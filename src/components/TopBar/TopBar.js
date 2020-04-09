@@ -38,19 +38,16 @@ import clsx from "clsx";
 
 import { Link as RouterLink } from "react-router-dom";
 
-export const TopBar = ({ query }) => {
+export const TopBar = ({ query, open, setDrawerOpen }) => {
     const classes = useStyles();
     const theme = useTheme();
 
-    //Todo move this state to Redux
-    const [open, setOpen] = React.useState(false);
-
     const handleDrawerOpen = () => {
-        setOpen(true);
+        setDrawerOpen(true);
     };
 
     const handleDrawerClose = () => {
-        setOpen(false);
+        setDrawerOpen(false);
     };
 
     return (

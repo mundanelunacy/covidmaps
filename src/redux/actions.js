@@ -178,3 +178,10 @@ export const setZoom = (zoom) => (dispatch) => {
         zoom,
     });
 };
+
+export const setDrawerOpen = (drawer) => (dispatch) => {
+    dispatch({
+        type: "SET_DRAWER",
+        drawer,
+    });
+};
