@@ -99,13 +99,14 @@ const CustomMarker = ({ google, map, mapCenter, incidents, tzString, infoWindow 
         );
     };
 
-    const [markerCluster, setMarkerCluster] = useReducer(markerClusterReducer, null);
+    // const [markerCluster, setMarkerCluster] = useReducer(markerClusterReducer, null);
+    const [, setMarkerCluster] = useReducer(markerClusterReducer, null);
 
     useEffect(() => {
         setMarkerCluster({ incidents });
     }, [incidents]);
 
-    console.log(markerCluster);
+    // console.log(markerCluster);
     return null;
 };
 
@@ -150,7 +151,6 @@ export const DisplayMap = ({
             return;
         }
     };
-    console.log(zoom);
     return (
         <>
             <Map
