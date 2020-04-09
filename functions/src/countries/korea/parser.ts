@@ -1,79 +1,55 @@
 import * as functions from "firebase-functions";
 import axios, { AxiosResponse } from "axios";
-import * as hash from "object-hash";
 import * as admin from "firebase-admin";
 import * as moment from "moment-timezone";
-import { apiKey } from "../../config/googleMaps";
-import { objToParams, sleep, minTwoDigits } from "../../helpers";
+import { minTwoDigits } from "../../helpers";
+import { RAW_KOREA_DATA, INCIDENTS, NAVER_ENDPOINT, KOREA_DEFAULT_DURATION_MS } from "../constants";
+
+import { noDupesInsert, setIncidentCreatedFlag, getNonRegisteredIncidents, googlePlacesQuery } from "../lib";
 
 // initialize Firestore
 try {
     admin.initializeApp(functions.config().firebase);
 } catch (e) {}
 
-const db = admin.firestore();
 const geo = require("geofirex").init(admin);
-const placesEndpoint = `https://maps.googleapis.com/maps/api/place/findplacefromtext/json?`;
-const naverEndpoint = "https://coronamap.site/javascripts/ndata.js";
 
 export const naverImport = async (request: any, response: any) => {
-    const original: AxiosResponse = await axios.get(naverEndpoint);
+    const original: AxiosResponse = await axios.get(NAVER_ENDPOINT);
     const mutated = "[" + original.data.substring(original.data.indexOf("\n") + 1);
     const x: Function = new Function("return " + mutated);
     const inputData: [] = x();
 
     const asyncRes = await Promise.all(
         inputData.map(async (data: any, index: number) => {
-            const doc = await db
-                .collection("rawKoreaData")
-                .doc(hash(data))
-                .get();
-
-            if (!doc.exists) {
-                await db
-                    .collection("rawKoreaData")
-                    .doc(hash(data))
-                    .set({ ...data, incidentCreated: false });
-
-                return index;
-            }
-            return;
+            const docId = await noDupesInsert(RAW_KOREA_DATA, data);
+            await setIncidentCreatedFlag(RAW_KOREA_DATA, docId, false);
+            return docId;
         })
     );
 
-    response.send(asyncRes.filter(value => value));
+    response.send(asyncRes.filter((value) => value));
 };
 
 export const getGooglePlace = async (request: any, response: any) => {
-    let snapshot: any;
+    let i: number = 0;
+    let count: number = 0;
+    let obj: {} = {};
 
-    try {
-        snapshot = await db
-            .collection("rawKoreaData")
-            .where("incidentCreated", "==", false)
-            .get();
-    } catch (e) {
-        console.log("error: ", e);
-    }
+    const temp: any[] = await getNonRegisteredIncidents(RAW_KOREA_DATA);
 
-    if (snapshot.empty) {
+    if (!temp.length) {
         response.send("added 0 documents");
         return;
     }
 
-    let i: number = 0;
-    let count: number = 0;
-    const temp: any[] = [];
-
-    snapshot.forEach((doc: any) => {
-        temp.push({ data: doc.data(), id: doc.id });
-    });
-
     for (i = 0; i < temp.length; i++) {
-        // console.log("i:  " + i);
         const doc = temp[i];
 
-        const s = doc.data.latlng.split(",");
+        const pos = {
+            lat: parseFloat(doc.data.latlng.split(",")[0].trim()),
+            lng: parseFloat(doc.data.latlng.split(",")[1].trim()),
+        };
         const startTimestampMs = moment
             .tz(
                 `${new Date().getUTCFullYear()}-${minTwoDigits(doc.data.month)}-${minTwoDigits(
@@ -82,27 +58,8 @@ export const getGooglePlace = async (request: any, response: any) => {
                 "Asia/Seoul"
             )
             .valueOf();
-        const query = {
-            key: apiKey,
-            inputtype: "textquery",
-            language: "ko",
-            fields: "formatted_address,geometry,name,place_id",
-            input: doc.data.address,
-            locationbias: `point:${s[0].trim()},${s[1].trim()}`
-        };
 
-        const requestStr = `${placesEndpoint}${encodeURI(objToParams(query))}`;
-        let mapsResponse: any;
-
-        try {
-            mapsResponse = await axios.get(requestStr);
-            sleep(125);
-        } catch (e) {
-            console.error(`axios ${requestStr} failed`);
-        }
-
-        let obj: {} = {};
-
+        const mapsResponse: any = await googlePlacesQuery(doc.data.address, pos.lat, pos.lng, "ko");
         try {
             if (mapsResponse.data.status === "OK") {
                 obj = {
@@ -115,14 +72,10 @@ export const getGooglePlace = async (request: any, response: any) => {
                     ),
                     validated: true,
                     startTimestampMs,
-                    endTimestampMs: startTimestampMs + 60 * 60 * 1000
+                    endTimestampMs: startTimestampMs + KOREA_DEFAULT_DURATION_MS,
                 };
-                await db.collection("incidents").add(obj);
-
-                await db
-                    .collection("rawKoreaData")
-                    .doc(doc.id)
-                    .update({ incidentCreated: true });
+                await noDupesInsert(INCIDENTS, obj);
+                await setIncidentCreatedFlag(RAW_KOREA_DATA, doc.id, true);
 
                 count++;
             } else if (mapsResponse.data.status === "ZERO_RESULTS") {
@@ -130,24 +83,23 @@ export const getGooglePlace = async (request: any, response: any) => {
                     address: doc.data.address_name,
                     name: doc.data.address,
                     placeId: "",
-                    position: geo.point(parseFloat(s[0]), parseFloat(s[1])),
+                    position: geo.point(pos.lat, pos.lng),
                     validated: true,
                     startTimestampMs,
-                    endTimestampMs: startTimestampMs + 60 * 60 * 1000
+                    endTimestampMs: startTimestampMs + KOREA_DEFAULT_DURATION_MS,
                 };
-                await db.collection("incidents").add(obj);
-                await db
-                    .collection("rawKoreaData")
-                    .doc(doc.id)
-                    .update({ incidentCreated: true });
+                await noDupesInsert(INCIDENTS, obj);
+                await setIncidentCreatedFlag(RAW_KOREA_DATA, doc.id, true);
 
                 count++;
             } else {
-                console.error(`${requestStr} request failed with ${mapsResponse.data.status} status`);
+                console.error(
+                    `${mapsResponse.request} request failed with ${mapsResponse.data.status} status`
+                );
             }
         } catch (e) {
             console.error("this document add produced an error");
-            console.error(obj);
+            console.error(doc);
         }
     }
 
