@@ -17,7 +17,8 @@ import {
     ExpansionPanel,
     ExpansionPanelSummary,
     ExpansionPanelDetails,
-    Link
+    Link,
+    Hidden,
 } from "@material-ui/core";
 import {
     Menu as MenuIcon,
@@ -28,7 +29,7 @@ import {
     Info as InfoIcon,
     VisibilityOff as VisibilityOffIcon,
     Favorite as FavoriteIcon,
-    Add as AddIcon
+    Add as AddIcon,
 } from "@material-ui/icons";
 
 import { SearchForm } from "../../components/SearchForm";
@@ -57,7 +58,7 @@ export const TopBar = ({ query }) => {
             <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open
+                    [classes.appBarShift]: open,
                 })}
             >
                 <Toolbar>
@@ -73,22 +74,27 @@ export const TopBar = ({ query }) => {
                     <Link component={RouterLink} to="/">
                         <img src="/logo.png" className={classes.logo} alt="logo" />
                     </Link>
-                    <Typography variant="h6" className={classes.title}>
-                        Covidmaps.org [Prototype]
-                    </Typography>
+
+                    <Hidden xsDown>
+                        <Typography variant="h6" className={classes.title}>
+                            Covidmaps.org [Prototype]
+                        </Typography>
+                    </Hidden>
 
                     <SearchForm />
-                    <Link component={RouterLink} to="/submit">
-                        <Button
-                            startIcon={<AddIcon />}
-                            color="secondary"
-                            variant="contained"
-                            size="large"
-                            className={classes.submitButton}
-                        >
-                            <Typography>Submit Case</Typography>
-                        </Button>
-                    </Link>
+                    <Hidden smDown>
+                        <Link component={RouterLink} to="/submit">
+                            <Button
+                                startIcon={<AddIcon />}
+                                color="secondary"
+                                variant="contained"
+                                size="large"
+                                className={classes.submitButton}
+                            >
+                                <Typography>Submit Case</Typography>
+                            </Button>
+                        </Link>
+                    </Hidden>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -97,7 +103,7 @@ export const TopBar = ({ query }) => {
                 anchor="left"
                 open={open}
                 classes={{
-                    paper: classes.drawerPaper
+                    paper: classes.drawerPaper,
                 }}
             >
                 <div className={classes.drawerHeader}>
