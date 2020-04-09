@@ -1,31 +1,17 @@
 import { getDistance } from "../utilities/geo";
+import { INCIDENTS } from "../config/firebaseCollections";
 const geofirex = require("geofirex");
 const get = geofirex.get;
 
-export const onMarkerClick = (props, marker, e) => dispatch => {
-    dispatch({
-        type: "MARKER_SELECT",
-        payload: { props, marker }
-    });
-};
-
-export const onMapClicked = props => (dispatch, getState) => {
-    if (getState().displayMap.showingInfoWindow) {
-        dispatch({
-            type: "MARKER_CLEAR"
-        });
-    }
-};
-
-export const submitIncident = (inputLat, inputLong, firebase) => dispatch => {
+export const submitIncident = (inputLat, inputLong, firebase) => (dispatch) => {
     const geo = geofirex.init(firebase);
-    const incidents = firebase.firestore().collection("incidents");
+    const incidents = firebase.firestore().collection(INCIDENTS);
     const position = geo.point(inputLat, inputLong);
     incidents.add({ name: "Phoenix", position });
     dispatch({ type: "INPUT_COORD_CLEAR" });
 };
 
-export const importTakeoutToStaging = (placeVisits, firebase) => dispatch => {
+export const importTakeoutToStaging = (placeVisits, firebase) => (dispatch) => {
     const geo = geofirex.init(firebase);
     const incidents = placeVisits.map(({ placeVisit }, idx) => {
         const position = geo.point(
@@ -39,7 +25,7 @@ export const importTakeoutToStaging = (placeVisits, firebase) => dispatch => {
             startTimestampMs: parseInt(placeVisit.duration.startTimestampMs),
             endTimestampMs: parseInt(placeVisit.duration.endTimestampMs),
             validated: Math.random() > 0.5,
-            position
+            position,
         };
     });
 
@@ -52,7 +38,7 @@ const query = async (lat, lng, radius, firebase) => {
 
     const query = geo
         .query(
-            firebase.firestore().collection("incidents")
+            firebase.firestore().collection(INCIDENTS)
             // .where("validated", "==", true)
         )
         .within(geo.point(lat, lng), radius, "position");
@@ -60,7 +46,7 @@ const query = async (lat, lng, radius, firebase) => {
     return await get(query);
 };
 
-export const queryIncidents = (lat, lng, radius, firebase) => async dispatch => {
+export const queryIncidents = (lat, lng, radius, firebase) => async (dispatch) => {
     const incidents = await query(lat, lng, radius, firebase);
 
     dispatch({
@@ -68,12 +54,12 @@ export const queryIncidents = (lat, lng, radius, firebase) => async dispatch => 
         query: {
             center: { lat, lng },
             radius,
-            incidents
-        }
+            incidents,
+        },
     });
 };
 
-export const centerMoved = (mapProps, map, firebase) => async dispatch => {
+export const centerMoved = (mapProps, map, firebase) => async (dispatch) => {
     const lat = map.center.lat();
     const lng = map.center.lng();
     const radius = getDistance(map.getBounds().getNorthEast(), map.getBounds().getSouthWest()) / 2;
@@ -84,88 +70,88 @@ export const centerMoved = (mapProps, map, firebase) => async dispatch => {
         query: {
             center: { lat, lng },
             radius,
-            incidents
-        }
+            incidents,
+        },
     });
 };
 
-export const changeTimeZone = tzString => (dispatch, getState) => {
+export const changeTimeZone = (tzString) => (dispatch, getState) => {
     dispatch({
         type: "CHANGE_TIMEZONE",
-        tzString
+        tzString,
     });
 };
 
-export const loadParsedVisits = placeVisits => dispatch => {
+export const loadParsedVisits = (placeVisits) => (dispatch) => {
     dispatch({
         type: "LOAD_VISITS",
-        placeVisits
+        placeVisits,
     });
 };
 
-export const addManualInputPlaceToBuffer = (value, results, firebase) => dispatch => {
+export const addManualInputPlaceToBuffer = (value, results, firebase) => (dispatch) => {
     const geo = geofirex.init(firebase);
 
     const place = {
         name: value.description,
         address: results[0].formatted_address,
         placeId: value.place_id,
-        position: geo.point(results[0].geometry.location.lat(), results[0].geometry.location.lng())
+        position: geo.point(results[0].geometry.location.lat(), results[0].geometry.location.lng()),
     };
 
     dispatch({
         type: "ADD_MANUAL_PLACE_TO_BUFFER",
-        place
+        place,
     });
 };
 
-export const addManualInputTimeToBuffer = (startDate, durationMin) => dispatch => {
+export const addManualInputTimeToBuffer = (startDate, durationMin) => (dispatch) => {
     dispatch({
         type: "ADD_MANUAL_TIME_TO_BUFFER",
         time: {
             startTimestampMs: startDate.getTime(),
-            endTimestampMs: startDate.getTime() + 1000 * 60 * durationMin
-        }
+            endTimestampMs: startDate.getTime() + 1000 * 60 * durationMin,
+        },
     });
 };
 
-export const setManualInputValue = inputValue => dispatch => {
+export const setManualInputValue = (inputValue) => (dispatch) => {
     dispatch({
         type: "SET_MANUAL_INPUT_VALUE",
-        inputValue
+        inputValue,
     });
 };
 
-export const setManualInputDate = inputDate => dispatch => {
+export const setManualInputDate = (inputDate) => (dispatch) => {
     dispatch({
         type: "SET_MANUAL_INPUT_DATE",
-        inputDate
+        inputDate,
     });
 };
 
-export const setManualInputDuration = inputDuration => dispatch => {
+export const setManualInputDuration = (inputDuration) => (dispatch) => {
     dispatch({
         type: "SET_MANUAL_INPUT_DURATION",
-        inputDuration
+        inputDuration,
     });
 };
 
-export const clearManualInput = () => dispatch => {
+export const clearManualInput = () => (dispatch) => {
     dispatch({
-        type: "CLEAR_MANUAL_INPUT"
+        type: "CLEAR_MANUAL_INPUT",
     });
 };
 
-export const addBufferToStaging = buffer => dispatch => {
+export const addBufferToStaging = (buffer) => (dispatch) => {
     dispatch({
         type: "ADD_BUFFER_TO_STAGING",
-        buffer
+        buffer,
     });
 };
 
-export const uploadStagingToDb = (stagingIncidents, firebase) => dispatch => {
+export const uploadStagingToDb = (stagingIncidents, firebase) => (dispatch) => {
     // const geo = geofirex.init(firebase);
-    const incidents = firebase.firestore().collection("incidents");
+    const incidents = firebase.firestore().collection(INCIDENTS);
 
     stagingIncidents.map((incident, idx) => {
         incidents.add(incident);
@@ -173,15 +159,22 @@ export const uploadStagingToDb = (stagingIncidents, firebase) => dispatch => {
     });
 };
 
-export const clearStaging = () => dispatch => {
+export const clearStaging = () => (dispatch) => {
     dispatch({
-        type: "CLEAR_STAGING"
+        type: "CLEAR_STAGING",
     });
 };
 
-export const deleteFromStaging = index => dispatch => {
+export const deleteFromStaging = (index) => (dispatch) => {
     dispatch({
         type: "DELETE_FROM_STAGING",
-        index
+        index,
+    });
+};
+
+export const setZoom = (zoom) => (dispatch) => {
+    dispatch({
+        type: "SET_ZOOM",
+        zoom,
     });
 };

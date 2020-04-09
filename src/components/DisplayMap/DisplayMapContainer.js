@@ -3,14 +3,14 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 // import PropTypes from "prop-types";
-import { onMarkerClick, onMapClicked, centerMoved, queryIncidents } from "../../redux/actions";
+import { centerMoved, queryIncidents, setZoom } from "../../redux/actions";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         firebase: state.firebase,
-        displayMap: state.displayMap,
         query: state.query,
-        tzString: state.timezone.tzString
+        tzString: state.timezone.tzString,
+        zoom: state.displayMap.zoom,
     };
 };
 
@@ -19,6 +19,6 @@ DisplayMap.propTypes = {};
 DisplayMap.defaultProps = {};
 
 export default compose(
-    connect(mapStateToProps, { onMarkerClick, onMapClicked, centerMoved, queryIncidents }),
+    connect(mapStateToProps, { centerMoved, queryIncidents, setZoom }),
     firestoreConnect()
 )(DisplayMap);
