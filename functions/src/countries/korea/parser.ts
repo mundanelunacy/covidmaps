@@ -23,12 +23,15 @@ export const naverImport = async (request: any, response: any) => {
     const asyncRes = await Promise.all(
         inputData.map(async (data: any, index: number) => {
             const docId = await noDupesInsert(RAW_KOREA_DATA, data);
-            await setIncidentCreatedFlag(RAW_KOREA_DATA, docId, false);
-            return docId;
+            if (docId) {
+                await setIncidentCreatedFlag(RAW_KOREA_DATA, docId, false);
+                return docId;
+            }
+            return "";
         })
     );
 
-    response.send(asyncRes.filter((value) => value));
+    response.send(`added ${asyncRes.filter((value) => value).length} documents`);
 };
 
 export const getGooglePlace = async (request: any, response: any) => {

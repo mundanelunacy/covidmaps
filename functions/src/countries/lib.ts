@@ -18,10 +18,11 @@ export const noDupesInsert = async (collection: string, obj: object): Promise<st
     const tempDoc = await db.collection(collection).doc(docId).get();
     if (!tempDoc.exists) {
         await db.collection(collection).doc(docId).set(obj);
-    } else {
-        console.log(`${docId} was a dupe`);
+        return docId;
     }
-    return docId;
+    // console.log(`${docId} was a dupe`);
+
+    return "";
 };
 
 export const setIncidentCreatedFlag = async (collection: string, docId: string, status: boolean) => {
