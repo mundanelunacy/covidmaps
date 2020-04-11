@@ -2,10 +2,15 @@ import * as functions from "firebase-functions";
 import axios, { AxiosResponse } from "axios";
 import * as admin from "firebase-admin";
 import * as moment from "moment-timezone";
-import { minTwoDigits } from "../../helpers";
-import { RAW_KOREA_DATA, INCIDENTS, NAVER_ENDPOINT, KOREA_DEFAULT_DURATION_MS } from "../constants";
+import { minTwoDigits } from "../../lib/helpers";
+import { RAW_KOREA_DATA, INCIDENTS, NAVER_ENDPOINT, KOREA_DEFAULT_DURATION_MS } from "../../lib/constants";
 
-import { noDupesInsert, setIncidentCreatedFlag, getNonRegisteredIncidents, googlePlacesQuery } from "../lib";
+import {
+    noDupesInsert,
+    setIncidentCreatedFlag,
+    getNonRegisteredIncidents,
+    googlePlacesQuery,
+} from "../../lib/lib";
 
 // initialize Firestore
 try {

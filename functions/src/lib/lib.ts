@@ -2,7 +2,7 @@ import * as functions from "firebase-functions";
 import * as hash from "object-hash";
 import * as admin from "firebase-admin";
 import { apiKey } from "../config/googleMaps";
-import { objToParams, sleep } from "../helpers";
+import { objToParams, sleep } from "./helpers";
 import axios, { AxiosResponse } from "axios";
 import { GOOGLEPLACES_SLEEP_INTERVAL, GOOGLEPLACES_ENDPOINT } from "./constants";
 

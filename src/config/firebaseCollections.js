@@ -1,1 +1,1 @@
-../../functions/src/countries/constants.ts
+../../functions/src/lib/constants.ts

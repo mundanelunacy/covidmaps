@@ -1,8 +1,13 @@
 import * as functions from "firebase-functions";
 import axios, { AxiosResponse } from "axios";
 import * as admin from "firebase-admin";
-import { noDupesInsert, setIncidentCreatedFlag, getNonRegisteredIncidents, googlePlacesQuery } from "../lib";
-import { RAW_ISREAL_DATA, INCIDENTS, ARCGIS_ENDPOINT } from "../constants";
+import {
+    noDupesInsert,
+    setIncidentCreatedFlag,
+    getNonRegisteredIncidents,
+    googlePlacesQuery,
+} from "../../lib/lib";
+import { RAW_ISREAL_DATA, INCIDENTS, ARCGIS_ENDPOINT } from "../../lib/constants";
 
 // initialize Firestore
 try {
