@@ -22,6 +22,7 @@ import {
     SET_ZOOM,
     SET_DRAWER,
     SET_VERIFIED_FILTER,
+    DISPLAY_UPLOAD_CONFIRMATION,
 } from "./types";
 
 export const initialState = {
@@ -60,7 +61,10 @@ export const initialState = {
         drawer: false,
     },
     filter: {
-        verified: true,
+        verified: false,
+    },
+    submitPage: {
+        submittedPlaces: 0,
     },
 };
 
@@ -210,6 +214,16 @@ const filterReducer = (state = initialState.filter, action) => {
     return state;
 };
 
+const submitPageReducer = (state = initialState.submitPage, action) => {
+    if (action.type === DISPLAY_UPLOAD_CONFIRMATION) {
+        return {
+            ...state,
+            submittedPlaces: action.submittedPlaces,
+        };
+    }
+    return state;
+};
+
 export const rootReducer = combineReducers({
     firebase: firebaseReducer,
     firestore: firestoreReducer,
@@ -222,4 +236,5 @@ export const rootReducer = combineReducers({
     displayMap: displayMapReducer,
     topBar: topBarReducer,
     filter: filterReducer,
+    submitPage: submitPageReducer,
 });

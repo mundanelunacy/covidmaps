@@ -1,4 +1,5 @@
 import { getDistance } from "../utilities/geo";
+import { insertNoDupes } from "../utilities/firebaseHelpers";
 import { INCIDENTS } from "../config/firebaseCollections";
 
 import {
@@ -19,6 +20,7 @@ import {
     SET_ZOOM,
     SET_DRAWER,
     SET_VERIFIED_FILTER,
+    DISPLAY_UPLOAD_CONFIRMATION,
 } from "./types";
 const geofirex = require("geofirex");
 const get = geofirex.get;
@@ -167,14 +169,14 @@ export const addBufferToStaging = (buffer) => (dispatch) => {
     });
 };
 
-export const uploadStagingToDb = (stagingIncidents, firebase) => (dispatch) => {
-    // const geo = geofirex.init(firebase);
-    const incidents = firebase.firestore().collection(INCIDENTS);
+export const uploadStagingToDb = (stagingIncidents, firebase) => async (dispatch) => {
+    const insertedIds = await Promise.all(
+        stagingIncidents.map(async (incident, idx) => {
+            return await insertNoDupes(incident, INCIDENTS, firebase);
+        })
+    );
 
-    stagingIncidents.map((incident, idx) => {
-        incidents.add(incident);
-        return {};
-    });
+    return insertedIds.filter((value) => value);
 };
 
 export const clearStaging = () => (dispatch) => {
@@ -208,5 +210,12 @@ export const setVerifiedFilter = (verified) => (dispatch, getState) => {
     dispatch({
         type: SET_VERIFIED_FILTER,
         verified,
+    });
+};
+
+export const setSubmittedPlaces = (submittedPlaces) => (dispatch) => {
+    dispatch({
+        type: DISPLAY_UPLOAD_CONFIRMATION,
+        submittedPlaces,
     });
 };
