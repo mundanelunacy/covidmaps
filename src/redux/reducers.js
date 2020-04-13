@@ -2,6 +2,7 @@ import { firebaseReducer } from "react-redux-firebase";
 import { combineReducers } from "redux";
 import { firestoreReducer } from "redux-firestore";
 import { getTzString } from "../utilities/timeUtils";
+import { createTodayTs } from "../utilities/timeUtils";
 import {
     PARSER_CLEAR,
     IMPORT_TAKEOUT_TO_STAGING,
@@ -45,7 +46,7 @@ export const initialState = {
 
     manualInputForm: {
         inputValue: "",
-        inputDate: new Date(),
+        inputDate: createTodayTs(getTzString()),
         inputDuration: 30,
     },
     databaseStaging: {

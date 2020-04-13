@@ -11,6 +11,7 @@ export const AddDuration = ({
     setManualInputDuration,
     manualInputDate,
     manualInputDuration,
+    tzString,
 }) => {
     const classes = useStyles();
 
