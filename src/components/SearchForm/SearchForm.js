@@ -9,6 +9,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
+import { useLocation, useHistory } from "react-router-dom";
 
 const autocompleteService = { current: null };
 const geocoder = { current: null };
@@ -30,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
 
 export function SearchForm({ firebase, queryIncidents, setZoom }) {
     const classes = useStyles();
+    const location = useLocation();
+    const history = useHistory();
     const [inputValue, setInputValue] = React.useState("");
     const [options, setOptions] = React.useState([]);
 
@@ -89,6 +92,11 @@ export function SearchForm({ firebase, queryIncidents, setZoom }) {
                     setZoom(14);
                 }
             });
+        }
+
+        // route back to lp if we are in some other page
+        if (location.pathname !== "/") {
+            history.push("/");
         }
     };
 
