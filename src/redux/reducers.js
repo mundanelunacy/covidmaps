@@ -3,7 +3,7 @@ import { combineReducers } from "redux";
 import { firestoreReducer } from "redux-firestore";
 import { getTzString } from "../utilities/timeUtils";
 import {
-    INPUT_COORD_CLEAR,
+    PARSER_CLEAR,
     IMPORT_TAKEOUT_TO_STAGING,
     QUERY_INCIDENTS,
     CENTER_MOVED,
@@ -90,7 +90,7 @@ const parserReducer = (state = initialState.parser, action) => {
             placeVisits: action.placeVisits,
         };
     }
-    if (action.type === INPUT_COORD_CLEAR) {
+    if (action.type === PARSER_CLEAR) {
         return {
             ...state,
             placeVisits: [],
