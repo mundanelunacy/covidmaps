@@ -32,6 +32,8 @@ import {
     Add as AddIcon,
 } from "@material-ui/icons";
 
+import { FilterIncidents } from "../FilterIncidents";
+
 import { SearchForm } from "../../components/SearchForm";
 import { useStyles } from "./TopBarCss";
 import clsx from "clsx";
@@ -123,7 +125,9 @@ export const TopBar = ({ query, open, setDrawerOpen }) => {
                                     </ListItem>
                                 </List>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>(TBD) Filter Options etc.</ExpansionPanelDetails>
+                            <ExpansionPanelDetails>
+                                <FilterIncidents />
+                            </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </ListItemText>
                     <ListItem>

@@ -5,10 +5,10 @@ import { firestoreConnect } from "react-redux-firebase";
 // import PropTypes from "prop-types";
 import { addManualInputTimeToBuffer, setManualInputDate, setManualInputDuration } from "../../redux/actions";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         manualInputDate: state.manualInputForm.inputDate,
-        manualInputDuration: state.manualInputForm.inputDuration
+        manualInputDuration: state.manualInputForm.inputDuration,
     };
 };
 
@@ -20,7 +20,7 @@ export default compose(
     connect(mapStateToProps, {
         addManualInputTimeToBuffer,
         setManualInputDate,
-        setManualInputDuration
+        setManualInputDuration,
     }),
     firestoreConnect()
 )(AddDuration);
