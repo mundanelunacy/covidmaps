@@ -11,11 +11,19 @@ import {
 import { HelpOutline as HelpOutlineIcon } from "@material-ui/icons";
 import { useStyles } from "./FilterIncidentsCss";
 
-export const FilterIncidents = ({ verified, setVerifiedFilter }) => {
+export const FilterIncidents = ({
+    verified,
+    setVerifiedFilter,
+    queryIncidents,
+    center,
+    radius,
+    firebase,
+}) => {
     const classes = useStyles();
 
     const handleVerifiedSwitch = (event) => {
         setVerifiedFilter(event.target.checked);
+        queryIncidents(center.lat, center.lng, radius, firebase);
     };
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [popoverContent, setPopoverContent] = useState("");

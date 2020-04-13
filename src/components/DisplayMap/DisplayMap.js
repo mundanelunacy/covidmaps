@@ -7,7 +7,6 @@ export const DisplayMap = ({
     centerMoved,
     firebase,
     query,
-    tzString,
     queryIncidents,
     setZoom,
     zoom,
