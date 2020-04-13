@@ -79,10 +79,6 @@ export function SearchForm({ firebase, queryIncidents, setZoom }) {
         if (value) {
             geocoder.current.geocode({ placeId: value.place_id }, (results, status) => {
                 if (status === "OK") {
-                    // console.log(
-                    //     `(${results[0].geometry.location.lat()}, ${results[0].geometry.location.lng()})`
-                    // );
-
                     queryIncidents(
                         results[0].geometry.location.lat(),
                         results[0].geometry.location.lng(),
