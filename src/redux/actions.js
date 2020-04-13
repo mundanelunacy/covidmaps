@@ -2,7 +2,6 @@ import { getDistance } from "../utilities/geo";
 import { INCIDENTS } from "../config/firebaseCollections";
 
 import {
-    INPUT_COORD_CLEAR,
     IMPORT_TAKEOUT_TO_STAGING,
     QUERY_INCIDENTS,
     CENTER_MOVED,
@@ -20,17 +19,9 @@ import {
     SET_ZOOM,
     SET_DRAWER,
     SET_VERIFIED_FILTER,
-} from "./type";
+} from "./types";
 const geofirex = require("geofirex");
 const get = geofirex.get;
-
-export const submitIncident = (inputLat, inputLong, firebase) => (dispatch) => {
-    const geo = geofirex.init(firebase);
-    const incidents = firebase.firestore().collection(INCIDENTS);
-    const position = geo.point(inputLat, inputLong);
-    incidents.add({ name: "Phoenix", position });
-    dispatch({ type: INPUT_COORD_CLEAR });
-};
 
 export const importTakeoutToStaging = (placeVisits, firebase) => (dispatch) => {
     const geo = geofirex.init(firebase);

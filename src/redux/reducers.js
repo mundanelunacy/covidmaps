@@ -21,7 +21,7 @@ import {
     SET_ZOOM,
     SET_DRAWER,
     SET_VERIFIED_FILTER,
-} from "./type";
+} from "./types";
 
 export const initialState = {
     query: {
