@@ -9,7 +9,6 @@ const mapStateToProps = (state) => {
     return {
         manualInputDate: state.manualInputForm.inputDate,
         manualInputDuration: state.manualInputForm.inputDuration,
-        tzString: state.timezone.tzString,
     };
 };
 
