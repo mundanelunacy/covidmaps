@@ -32,22 +32,28 @@ export const importTakeoutToStaging = (placeVisits, firebase) => (dispatch) => {
     dispatch({ type: "IMPORT_TAKEOUT_TO_STAGING", incidents });
 };
 
-const query = async (lat, lng, radius, firebase) => {
-    const geo = geofirex.init(firebase);
-    // const query = geo.query("incidents").within(geo.point(lat, lng), radius, "position");
+const displayFilter = (incidents, filter) => {
+    if (filter.verified) {
+        return incidents.filter((el) => el.validated);
+    }
 
-    const query = geo
-        .query(
-            firebase.firestore().collection(INCIDENTS)
-            // .where("validated", "==", true)
-        )
-        .within(geo.point(lat, lng), radius, "position");
-
-    return await get(query);
+    return incidents;
 };
 
-export const queryIncidents = (lat, lng, radius, firebase) => async (dispatch) => {
-    const incidents = await query(lat, lng, radius, firebase);
+const query = async (lat, lng, radius, firebase, filter) => {
+    const geo = geofirex.init(firebase);
+    const query = geo
+        .query(firebase.firestore().collection(INCIDENTS))
+        .within(geo.point(lat, lng), radius, "position");
+
+    let incidents = await get(query);
+    incidents = displayFilter(incidents, filter);
+
+    return incidents;
+};
+
+export const queryIncidents = (lat, lng, radius, firebase) => async (dispatch, getState) => {
+    const incidents = await query(lat, lng, radius, firebase, getState().filter);
 
     dispatch({
         type: "QUERY_INCIDENTS",
@@ -59,11 +65,11 @@ export const queryIncidents = (lat, lng, radius, firebase) => async (dispatch) =
     });
 };
 
-export const centerMoved = (mapProps, map, firebase) => async (dispatch) => {
+export const centerMoved = (mapProps, map, firebase) => async (dispatch, getState) => {
     const lat = map.center.lat();
     const lng = map.center.lng();
     const radius = getDistance(map.getBounds().getNorthEast(), map.getBounds().getSouthWest()) / 2;
-    const incidents = await query(lat, lng, radius, firebase);
+    const incidents = await query(lat, lng, radius, firebase, getState().filter);
 
     dispatch({
         type: "CENTER_MOVED",
@@ -183,5 +189,12 @@ export const setDrawerOpen = (drawer) => (dispatch) => {
     dispatch({
         type: "SET_DRAWER",
         drawer,
+    });
+};
+
+export const setVerifiedFilter = (verified) => (dispatch) => {
+    dispatch({
+        type: "SET_VERIFIED_FILTER",
+        verified,
     });
 };

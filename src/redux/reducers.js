@@ -25,7 +25,7 @@ export const initialState = {
 
     manualInputForm: {
         inputValue: "",
-        inputDate: new Date(2020, 0, 1),
+        inputDate: new Date(),
         inputDuration: 30,
     },
     databaseStaging: {
@@ -37,6 +37,9 @@ export const initialState = {
     },
     topBar: {
         drawer: false,
+    },
+    filter: {
+        verified: true,
     },
 };
 
@@ -176,6 +179,16 @@ const topBarReducer = (state = initialState.topBar, action) => {
     return state;
 };
 
+const filterReducer = (state = initialState.filter, action) => {
+    if (action.type === "SET_VERIFIED_FILTER") {
+        return {
+            ...state,
+            verified: action.verified,
+        };
+    }
+    return state;
+};
+
 export const rootReducer = combineReducers({
     firebase: firebaseReducer,
     firestore: firestoreReducer,
@@ -187,4 +200,5 @@ export const rootReducer = combineReducers({
     databaseStaging: databaseStagingReducer,
     displayMap: displayMapReducer,
     topBar: topBarReducer,
+    filter: filterReducer,
 });

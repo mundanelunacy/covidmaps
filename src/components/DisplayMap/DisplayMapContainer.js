@@ -9,7 +9,6 @@ const mapStateToProps = (state) => {
     return {
         firebase: state.firebase,
         query: state.query,
-        tzString: state.timezone.tzString,
         zoom: state.displayMap.zoom,
     };
 };
