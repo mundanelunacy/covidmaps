@@ -2,21 +2,37 @@ import { firebaseReducer } from "react-redux-firebase";
 import { combineReducers } from "redux";
 import { firestoreReducer } from "redux-firestore";
 import { getTzString } from "../utilities/timeUtils";
+import { createTodayTs } from "../utilities/timeUtils";
+import {
+    PARSER_CLEAR,
+    IMPORT_TAKEOUT_TO_STAGING,
+    QUERY_INCIDENTS,
+    CENTER_MOVED,
+    CHANGE_TIMEZONE,
+    LOAD_VISITS,
+    ADD_MANUAL_PLACE_TO_BUFFER,
+    ADD_MANUAL_TIME_TO_BUFFER,
+    SET_MANUAL_INPUT_VALUE,
+    SET_MANUAL_INPUT_DATE,
+    SET_MANUAL_INPUT_DURATION,
+    CLEAR_MANUAL_INPUT,
+    ADD_BUFFER_TO_STAGING,
+    CLEAR_STAGING,
+    DELETE_FROM_STAGING,
+    SET_ZOOM,
+    SET_DRAWER,
+    SET_VERIFIED_FILTER,
+} from "./types";
 
 export const initialState = {
-    displayMap: {
-        showingInfoWindow: false,
-        activeMarker: {},
-        selectedPlace: {}
-    },
     query: {
         center: { lat: 37.5172, lng: 127.0473 }, // default Gangnam
         radius: 5,
-        incidents: []
+        incidents: [],
     },
     timezone: { tzString: getTzString() },
     parser: {
-        placeVisits: []
+        placeVisits: [],
     },
     manualInputBuffer: {
         startTimestampMs: 0,
@@ -25,147 +41,170 @@ export const initialState = {
         name: "",
         placeId: "",
         position: {},
-        validated: false
+        validated: false,
     },
 
     manualInputForm: {
         inputValue: "",
-        inputDate: new Date(2020, 0, 1),
-        inputDuration: 30
+        inputDate: createTodayTs(getTzString()),
+        inputDuration: 30,
     },
-
     databaseStaging: {
         count: 0,
-        incidents: []
-    }
-};
-
-const displayMapReducer = (state = initialState.displayMap, action) => {
-    if (action.type === "MARKER_SELECT") {
-        return {
-            ...state,
-            selectedPlace: action.payload.props,
-            activeMarker: action.payload.marker,
-            showingInfoWindow: true
-        };
-    }
-    if (action.type === "MARKER_CLEAR") {
-        return { ...state, activeMarker: null, showingInfoWindow: false };
-    }
-    return state;
+        incidents: [],
+    },
+    displayMap: {
+        zoom: 14,
+    },
+    topBar: {
+        drawer: false,
+    },
+    filter: {
+        verified: true,
+    },
 };
 
 const queryReducer = (state = initialState.query, action) => {
-    if (action.type === "CENTER_MOVED") {
+    if (action.type === CENTER_MOVED) {
         return { ...state, ...action.query };
     }
-    if (action.type === "QUERY_INCIDENTS") {
+    if (action.type === QUERY_INCIDENTS) {
         return { ...state, ...action.query };
     }
     return state;
 };
 
 const timeZoneReducer = (state = initialState.timezone, action) => {
-    if (action.type === "CHANGE_TIMEZONE") {
+    if (action.type === CHANGE_TIMEZONE) {
         return {
             ...state,
-            tzString: action.tzString
+            tzString: action.tzString,
         };
     }
     return state;
 };
 
 const parserReducer = (state = initialState.parser, action) => {
-    if (action.type === "LOAD_VISITS") {
+    if (action.type === LOAD_VISITS) {
         return {
             ...state,
-            placeVisits: action.placeVisits
+            placeVisits: action.placeVisits,
         };
     }
-    if (action.type === "PARSER_CLEAR") {
+    if (action.type === PARSER_CLEAR) {
         return {
             ...state,
-            placeVisits: []
+            placeVisits: [],
         };
     }
     return state;
 };
 
 const manualInputBufferReducer = (state = initialState.manualInputBuffer, action) => {
-    if (action.type === "ADD_MANUAL_PLACE_TO_BUFFER") {
+    if (action.type === ADD_MANUAL_PLACE_TO_BUFFER) {
         return {
             ...state,
-            ...action.place
+            ...action.place,
         };
     }
-    if (action.type === "ADD_MANUAL_TIME_TO_BUFFER") {
+    if (action.type === ADD_MANUAL_TIME_TO_BUFFER) {
         return {
             ...state,
-            ...action.time
+            ...action.time,
         };
     }
-    if (action.type === "CLEAR_MANUAL_INPUT") {
+    if (action.type === CLEAR_MANUAL_INPUT) {
         return {
             ...state,
-            ...initialState.manualInputBuffer
+            ...initialState.manualInputBuffer,
         };
     }
     return state;
 };
 
 const manualInputFormReducer = (state = initialState.manualInputForm, action) => {
-    if (action.type === "SET_MANUAL_INPUT_VALUE") {
+    if (action.type === SET_MANUAL_INPUT_VALUE) {
         return {
             ...state,
-            inputValue: action.inputValue
+            inputValue: action.inputValue,
         };
     }
-    if (action.type === "SET_MANUAL_INPUT_DATE") {
+    if (action.type === SET_MANUAL_INPUT_DATE) {
         return {
             ...state,
-            inputDate: action.inputDate
+            inputDate: action.inputDate,
         };
     }
-    if (action.type === "SET_MANUAL_INPUT_DURATION") {
+    if (action.type === SET_MANUAL_INPUT_DURATION) {
         return {
             ...state,
-            inputDuration: action.inputDuration
+            inputDuration: action.inputDuration,
         };
     }
-    if (action.type === "CLEAR_MANUAL_INPUT") {
+    if (action.type === CLEAR_MANUAL_INPUT) {
         return {
             ...state,
-            ...initialState.manualInputForm
+            ...initialState.manualInputForm,
         };
     }
     return state;
 };
 
 const databaseStagingReducer = (state = initialState.databaseStaging, action) => {
-    if (action.type === "ADD_BUFFER_TO_STAGING") {
+    if (action.type === ADD_BUFFER_TO_STAGING) {
         return {
             ...state,
-            incidents: [...state.incidents, ...[action.buffer]]
+            incidents: [...state.incidents, ...[action.buffer]],
         };
     }
-    if (action.type === "CLEAR_STAGING") {
+    if (action.type === CLEAR_STAGING) {
         return {
             ...state,
-            ...initialState.databaseStaging
+            ...initialState.databaseStaging,
         };
     }
-    if (action.type === "IMPORT_TAKEOUT_TO_STAGING") {
+    if (action.type === IMPORT_TAKEOUT_TO_STAGING) {
         return {
             ...state,
-            incidents: [...state.incidents, ...action.incidents]
+            incidents: [...state.incidents, ...action.incidents],
         };
     }
-    if (action.type === "DELETE_FROM_STAGING") {
+    if (action.type === DELETE_FROM_STAGING) {
         const newState = state;
         newState.incidents.splice(action.index, 1);
         return {
             ...state,
-            incidents: [...newState.incidents]
+            incidents: [...newState.incidents],
+        };
+    }
+    return state;
+};
+
+const displayMapReducer = (state = initialState.displayMap, action) => {
+    if (action.type === SET_ZOOM) {
+        return {
+            ...state,
+            zoom: action.zoom,
+        };
+    }
+    return state;
+};
+
+const topBarReducer = (state = initialState.topBar, action) => {
+    if (action.type === SET_DRAWER) {
+        return {
+            ...state,
+            drawer: action.drawer,
+        };
+    }
+    return state;
+};
+
+const filterReducer = (state = initialState.filter, action) => {
+    if (action.type === SET_VERIFIED_FILTER) {
+        return {
+            ...state,
+            verified: action.verified,
         };
     }
     return state;
@@ -174,11 +213,13 @@ const databaseStagingReducer = (state = initialState.databaseStaging, action) =>
 export const rootReducer = combineReducers({
     firebase: firebaseReducer,
     firestore: firestoreReducer,
-    displayMap: displayMapReducer,
     query: queryReducer,
     timezone: timeZoneReducer,
     parser: parserReducer,
     manualInputBuffer: manualInputBufferReducer,
     manualInputForm: manualInputFormReducer,
-    databaseStaging: databaseStagingReducer
+    databaseStaging: databaseStagingReducer,
+    displayMap: displayMapReducer,
+    topBar: topBarReducer,
+    filter: filterReducer,
 });

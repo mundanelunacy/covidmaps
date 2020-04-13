@@ -4,12 +4,12 @@ import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 // import PropTypes from "prop-types";
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
     return {};
 };
 
-const mapStateToProps = state => {
-    return { query: state.query };
+const mapStateToProps = (state) => {
+    return { query: state.query, open: state.topBar.drawer };
 };
 
 LandingPage.propTypes = {};

@@ -17,7 +17,8 @@ import {
     ExpansionPanel,
     ExpansionPanelSummary,
     ExpansionPanelDetails,
-    Link
+    Link,
+    Hidden,
 } from "@material-ui/core";
 import {
     Menu as MenuIcon,
@@ -28,8 +29,10 @@ import {
     Info as InfoIcon,
     VisibilityOff as VisibilityOffIcon,
     Favorite as FavoriteIcon,
-    Add as AddIcon
+    Add as AddIcon,
 } from "@material-ui/icons";
+
+import { FilterIncidents } from "../FilterIncidents";
 
 import { SearchForm } from "../../components/SearchForm";
 import { useStyles } from "./TopBarCss";
@@ -37,19 +40,16 @@ import clsx from "clsx";
 
 import { Link as RouterLink } from "react-router-dom";
 
-export const TopBar = ({ query }) => {
+export const TopBar = ({ query, open, setDrawerOpen }) => {
     const classes = useStyles();
     const theme = useTheme();
 
-    //Todo move this state to Redux
-    const [open, setOpen] = React.useState(false);
-
     const handleDrawerOpen = () => {
-        setOpen(true);
+        setDrawerOpen(true);
     };
 
     const handleDrawerClose = () => {
-        setOpen(false);
+        setDrawerOpen(false);
     };
 
     return (
@@ -57,7 +57,7 @@ export const TopBar = ({ query }) => {
             <AppBar
                 position="fixed"
                 className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open
+                    [classes.appBarShift]: open,
                 })}
             >
                 <Toolbar>
@@ -73,22 +73,27 @@ export const TopBar = ({ query }) => {
                     <Link component={RouterLink} to="/">
                         <img src="/logo.png" className={classes.logo} alt="logo" />
                     </Link>
-                    <Typography variant="h6" className={classes.title}>
-                        Covidmaps.org [Prototype]
-                    </Typography>
+
+                    <Hidden xsDown>
+                        <Typography variant="h6" className={classes.title}>
+                            Covidmaps.org [Prototype]
+                        </Typography>
+                    </Hidden>
 
                     <SearchForm />
-                    <Link component={RouterLink} to="/submit">
-                        <Button
-                            startIcon={<AddIcon />}
-                            color="secondary"
-                            variant="contained"
-                            size="large"
-                            className={classes.submitButton}
-                        >
-                            <Typography>Submit Case</Typography>
-                        </Button>
-                    </Link>
+                    <Hidden smDown>
+                        <Link component={RouterLink} to="/submit">
+                            <Button
+                                startIcon={<AddIcon />}
+                                color="secondary"
+                                variant="contained"
+                                size="large"
+                                className={classes.submitButton}
+                            >
+                                <Typography>Submit Case</Typography>
+                            </Button>
+                        </Link>
+                    </Hidden>
                 </Toolbar>
             </AppBar>
             <Drawer
@@ -97,7 +102,7 @@ export const TopBar = ({ query }) => {
                 anchor="left"
                 open={open}
                 classes={{
-                    paper: classes.drawerPaper
+                    paper: classes.drawerPaper,
                 }}
             >
                 <div className={classes.drawerHeader}>
@@ -120,7 +125,9 @@ export const TopBar = ({ query }) => {
                                     </ListItem>
                                 </List>
                             </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>(TBD) Filter Options etc.</ExpansionPanelDetails>
+                            <ExpansionPanelDetails>
+                                <FilterIncidents />
+                            </ExpansionPanelDetails>
                         </ExpansionPanel>
                     </ListItemText>
                     <ListItem>

@@ -10,7 +10,7 @@ import { theme } from "./config/material-ui";
 
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
-const App = props => {
+const App = (props) => {
     return (
         <Provider store={store}>
             <ReactReduxFirebaseProvider {...rrfProps}>
@@ -18,10 +18,8 @@ const App = props => {
                     <Router>
                         <Switch>
                             <Route exact path="/" component={LandingPage} />
-                            {/* <Route exact path="/map" component={GeoPointQuery} /> */}
                             <Route exact path="/submit" component={Submit} />
                             <Route exact path="/test" component={TestLP} />
-                            {/* <Route exact path="/search" component={SearchForm} /> */}
                         </Switch>
                     </Router>
                 </MuiThemeProvider>

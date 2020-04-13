@@ -1,15 +1,16 @@
 import React from "react";
 import { Box, Select, MenuItem } from "@material-ui/core";
-import { useStyles } from "./AddDurationCss";
 import { KeyboardDateTimePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
+import { useStyles } from "./AddDurationCss";
 import DateFnsUtils from "@date-io/date-fns";
+const SUBMISSION_TIMEFRAME = 14 * 24 * 60 * 60 * 1000;
 
 export const AddDuration = ({
     addManualInputTimeToBuffer,
     setManualInputDate,
     setManualInputDuration,
     manualInputDate,
-    manualInputDuration
+    manualInputDuration,
 }) => {
     const classes = useStyles();
 
@@ -32,26 +33,28 @@ export const AddDuration = ({
         return items;
     };
 
-    const handleManualInputDate = date => {
+    const handleManualInputDate = (date) => {
         setManualInputDate(date);
         addManualInputTimeToBuffer(date, manualInputDuration);
     };
 
-    const handleManualInputDuration = e => {
+    const handleManualInputDuration = (e) => {
         setManualInputDuration(e.target.value);
     };
 
     return (
-        <Box p={1} component="span" className={classes.root}>
+        <Box className={classes.root} mt={2}>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <KeyboardDateTimePicker
                     placeholder="2020/01/01"
                     value={manualInputDate}
+                    minDate={Date.now() - SUBMISSION_TIMEFRAME}
                     onChange={handleManualInputDate}
                     format="yyyy/MM/dd HH:mm"
+                    showTodayButton
                 />
             </MuiPickersUtilsProvider>
-            <Select value={manualInputDuration} onChange={handleManualInputDuration}>
+            <Select value={manualInputDuration} onChange={handleManualInputDuration} mt={2}>
                 {durationItems()}
             </Select>
         </Box>

@@ -9,31 +9,34 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
+import { useLocation, useHistory } from "react-router-dom";
 
 const autocompleteService = { current: null };
 const geocoder = { current: null };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     icon: {
         color: theme.palette.text.secondary,
-        marginRight: theme.spacing(2)
+        marginRight: theme.spacing(2),
     },
     inputTextField: {
         color: "inherit",
         backgroundColor: fade(theme.palette.common.white, 0.55),
         "&:hover": {
-            backgroundColor: fade(theme.palette.common.white, 0.75)
+            backgroundColor: fade(theme.palette.common.white, 0.75),
         },
-        borderRadius: theme.shape.borderRadius
-    }
+        borderRadius: theme.shape.borderRadius,
+    },
 }));
 
-export function SearchForm({ firebase, queryIncidents }) {
+export function SearchForm({ firebase, queryIncidents, setZoom }) {
     const classes = useStyles();
+    const location = useLocation();
+    const history = useHistory();
     const [inputValue, setInputValue] = React.useState("");
     const [options, setOptions] = React.useState([]);
 
-    const handleChange = event => {
+    const handleChange = (event) => {
         setInputValue(event.target.value);
     };
 
@@ -61,7 +64,7 @@ export function SearchForm({ firebase, queryIncidents }) {
             return undefined;
         }
 
-        fetch({ input: inputValue }, results => {
+        fetch({ input: inputValue }, (results) => {
             if (active) {
                 setOptions(results || []);
             }
@@ -76,21 +79,20 @@ export function SearchForm({ firebase, queryIncidents }) {
         if (value) {
             geocoder.current.geocode({ placeId: value.place_id }, (results, status) => {
                 if (status === "OK") {
-                    // console.log(value);
-                    // console.log(results);
-                    // const location = results[0].geometry.location;
-                    console.log(
-                        `(${results[0].geometry.location.lat()}, ${results[0].geometry.location.lng()})`
-                    );
-
                     queryIncidents(
                         results[0].geometry.location.lat(),
                         results[0].geometry.location.lng(),
                         10,
                         firebase
                     );
+                    setZoom(14);
                 }
             });
+        }
+
+        // route back to lp if we are in some other page
+        if (location.pathname !== "/") {
+            history.push("/");
         }
     };
 
@@ -98,13 +100,13 @@ export function SearchForm({ firebase, queryIncidents }) {
         <Autocomplete
             id="submit-place-form"
             style={{ width: 300 }}
-            getOptionLabel={option => (typeof option === "string" ? option : option.description)}
+            getOptionLabel={(option) => (typeof option === "string" ? option : option.description)}
             onChange={onPlaceSelected}
-            filterOptions={x => x}
+            filterOptions={(x) => x}
             options={options}
             autoComplete
             includeInputInList
-            renderInput={params => {
+            renderInput={(params) => {
                 params.InputProps.startAdornment = (
                     <InputAdornment position="start">
                         <SearchIcon></SearchIcon>
@@ -123,11 +125,11 @@ export function SearchForm({ firebase, queryIncidents }) {
                     />
                 );
             }}
-            renderOption={option => {
+            renderOption={(option) => {
                 const matches = option.structured_formatting.main_text_matched_substrings;
                 const parts = parse(
                     option.structured_formatting.main_text,
-                    matches.map(match => [match.offset, match.offset + match.length])
+                    matches.map((match) => [match.offset, match.offset + match.length])
                 );
 
                 return (
