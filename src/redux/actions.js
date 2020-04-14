@@ -1,6 +1,6 @@
 import { getDistance } from "../utilities/geo";
 import { insertNoDupes } from "../utilities/firebaseHelpers";
-import { INCIDENTS } from "../config/firebaseCollections";
+import { INCIDENTS } from "../config/constants";
 
 import {
     IMPORT_TAKEOUT_TO_STAGING,
@@ -38,7 +38,7 @@ export const importTakeoutToStaging = (placeVisits, firebase) => (dispatch) => {
             address: placeVisit.location.address,
             startTimestampMs: parseInt(placeVisit.duration.startTimestampMs),
             endTimestampMs: parseInt(placeVisit.duration.endTimestampMs),
-            validated: Math.random() > 0.5,
+            validated: false,
             position,
         };
     });

@@ -1,5 +1,5 @@
 import hash from "object-hash";
-import { INCIDENTS } from "../config/firebaseCollections";
+import { INCIDENTS } from "../config/constants";
 
 export const insertNoDupes = async (obj, collection, firebase) => {
     const colRef = firebase.firestore().collection(collection);
