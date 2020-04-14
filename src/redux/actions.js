@@ -199,3 +199,10 @@ export const setSubmittedPlaces = (submittedPlaces) => (dispatch) => {
         submittedPlaces,
     });
 };
+
+export const setBrowserPosition = (coords) => (dispatch) => {
+    dispatch({
+        type: actions.SET_BROWSER_POSITION,
+        coords,
+    });
+};

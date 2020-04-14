@@ -6,11 +6,12 @@ import { addManualInputPlaceToBuffer, setManualInputValue } from "../../redux/ac
 
 // import PropTypes from "prop-types";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
         firebase: state.firebase,
-        placeSelectionError: state.manualInputForm.inputValue && !state.manualInputBuffer.placeId,
-        inputValue: state.manualInputForm.inputValue
+        // placeSelectionError: state.manualInputForm.inputValue && !state.manualInputBuffer.placeId,
+        inputValue: state.manualInputForm.inputValue,
+        browserPos: state.browser.position,
     };
 };
 

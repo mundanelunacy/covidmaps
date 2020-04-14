@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export function SearchForm({ firebase, queryIncidents, setZoom }) {
+export function SearchForm({ firebase, queryIncidents, setZoom, query }) {
     const classes = useStyles();
     const location = useLocation();
     const history = useHistory();
@@ -65,7 +65,18 @@ export function SearchForm({ firebase, queryIncidents, setZoom }) {
             return undefined;
         }
 
-        fetch({ input: inputValue }, (results) => {
+        let request = { input: inputValue };
+
+        if (query) {
+            request = {
+                ...request,
+                input: inputValue,
+                location: new window.google.maps.LatLng(query.center.lat, query.center.lng),
+                radius: query.radius * 1000,
+            };
+        }
+
+        fetch(request, (results) => {
             if (active) {
                 setOptions(results || []);
             }
@@ -74,7 +85,7 @@ export function SearchForm({ firebase, queryIncidents, setZoom }) {
         return () => {
             active = false;
         };
-    }, [inputValue, fetch]);
+    }, [inputValue, fetch, query]);
 
     const onPlaceSelected = (event, value) => {
         if (value) {

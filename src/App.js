@@ -7,7 +7,7 @@ import { LandingPage } from "./pages/LandingPage";
 import { Submit } from "./pages/Submit";
 import { MuiThemeProvider } from "@material-ui/core";
 import { theme } from "./config/material-ui";
-
+import { GetBrowserPosition } from "./components/GetBrowserPosition";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 
 const App = (props) => {
@@ -22,6 +22,7 @@ const App = (props) => {
                             <Route exact path="/test" component={TestLP} />
                         </Switch>
                     </Router>
+                    <GetBrowserPosition />
                 </MuiThemeProvider>
             </ReactReduxFirebaseProvider>
         </Provider>

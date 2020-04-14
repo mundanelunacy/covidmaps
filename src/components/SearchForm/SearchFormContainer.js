@@ -6,7 +6,7 @@ import { queryIncidents, setZoom } from "../../redux/actions";
 // import PropTypes from "prop-types";
 
 const mapStateToProps = (state) => {
-    return { firebase: state.firebase };
+    return { firebase: state.firebase, query: state.query };
 };
 
 SearchForm.propTypes = {};

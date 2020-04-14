@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useStyles } from "./VerifiedMapsShortcutCss";
 import { Typography, List, ListItem, ListItemIcon, ListItemText } from "@material-ui/core";
 import { LocationOn as LocatioOnIcon, HighlightOff as CloseIcon } from "@material-ui/icons";
+import { GANGNAM_GPS_POSITION, TELAVIV_GPS_POSITION } from "../../config/constants";
 
 export const VerifiedMapsShortcut = ({ firebase, queryIncidents, query }) => {
     const classes = useStyles();
@@ -15,7 +16,14 @@ export const VerifiedMapsShortcut = ({ firebase, queryIncidents, query }) => {
             <List>
                 <ListItem
                     className={classes.cursorPointer}
-                    onClick={() => queryIncidents(37.5172, 127.0473, query.radius, firebase)}
+                    onClick={() =>
+                        queryIncidents(
+                            GANGNAM_GPS_POSITION.lat,
+                            GANGNAM_GPS_POSITION.lng,
+                            query.radius,
+                            firebase
+                        )
+                    }
                 >
                     <ListItemIcon>
                         <LocatioOnIcon />
@@ -24,7 +32,14 @@ export const VerifiedMapsShortcut = ({ firebase, queryIncidents, query }) => {
                 </ListItem>
                 <ListItem
                     className={classes.cursorPointer}
-                    onClick={() => queryIncidents(32.0853, 34.7818, query.radius, firebase)}
+                    onClick={() =>
+                        queryIncidents(
+                            TELAVIV_GPS_POSITION.lat,
+                            TELAVIV_GPS_POSITION.lng,
+                            query.radius,
+                            firebase
+                        )
+                    }
                 >
                     <ListItemIcon>
                         <LocatioOnIcon />

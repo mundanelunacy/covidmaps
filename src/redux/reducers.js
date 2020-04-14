@@ -47,6 +47,9 @@ export const initialState = {
     submitPage: {
         submittedPlaces: 0,
     },
+    browser: {
+        position: {},
+    },
 };
 
 const queryReducer = (state = initialState.query, action) => {
@@ -205,6 +208,16 @@ const submitPageReducer = (state = initialState.submitPage, action) => {
     return state;
 };
 
+const browserReducer = (state = initialState.browser, action) => {
+    if (action.type === actions.SET_BROWSER_POSITION) {
+        return {
+            ...state,
+            position: { lat: action.coords.latitude, lng: action.coords.longitude },
+        };
+    }
+    return state;
+};
+
 export const rootReducer = combineReducers({
     firebase: firebaseReducer,
     firestore: firestoreReducer,
@@ -218,4 +231,5 @@ export const rootReducer = combineReducers({
     topBar: topBarReducer,
     filter: filterReducer,
     submitPage: submitPageReducer,
+    browser: browserReducer,
 });
