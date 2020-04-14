@@ -10,7 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import { useLocation, useHistory } from "react-router-dom";
-import { DISPLAY_MAP_INIT_ZOOM } from "../../config/constants";
+import { DISPLAY_MAP_INIT_ZOOM, QUERY_INIT_RADIUS } from "../../config/constants";
 
 const autocompleteService = { current: null };
 const geocoder = { current: null };
@@ -83,7 +83,7 @@ export function SearchForm({ firebase, queryIncidents, setZoom }) {
                     queryIncidents(
                         results[0].geometry.location.lat(),
                         results[0].geometry.location.lng(),
-                        10,
+                        QUERY_INIT_RADIUS,
                         firebase
                     );
                     setZoom(DISPLAY_MAP_INIT_ZOOM);
