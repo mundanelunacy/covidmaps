@@ -40,7 +40,7 @@ import clsx from "clsx";
 
 import { Link as RouterLink } from "react-router-dom";
 
-export const TopBar = ({ query, open, setDrawerOpen }) => {
+export const TopBar = ({ open, setDrawerOpen }) => {
     const classes = useStyles();
     const theme = useTheme();
 

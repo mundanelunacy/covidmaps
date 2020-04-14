@@ -16,6 +16,7 @@ const mapStateToProps = (state) => {
         firebase: state.firebase,
         uploadStagingValid: state.databaseStaging.incidents.length,
         stagingIncidents: state.databaseStaging.incidents,
+        query: state.query,
     };
 };
 

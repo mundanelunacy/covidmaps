@@ -9,3 +9,5 @@ export const ARCGIS_ENDPOINT =
 export const NAVER_ENDPOINT = "https://coronamap.site/javascripts/ndata.js";
 export const KOREA_DEFAULT_DURATION_MS = 60 * 60 * 1000;
 export const RETIRE_INCIDENTS_TIME_MS = 14 * 24 * 60 * 60 * 1000;
+export const DISPLAY_MAP_INIT_ZOOM = 12;
+export const QUERY_INIT_RADIUS = 100;

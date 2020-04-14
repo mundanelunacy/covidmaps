@@ -11,6 +11,7 @@ export const UploadStagingButton = ({
     clearStaging,
     setSubmittedPlaces,
     queryIncidents,
+    query,
 }) => {
     const classes = useStyles();
 
@@ -22,7 +23,7 @@ export const UploadStagingButton = ({
             queryIncidents(
                 firstDoc.position.geopoint.latitude,
                 firstDoc.position.geopoint.longitude,
-                10,
+                query.radius,
                 firebase
             );
         }

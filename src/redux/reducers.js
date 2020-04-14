@@ -3,12 +3,13 @@ import { combineReducers } from "redux";
 import { firestoreReducer } from "redux-firestore";
 import { getTzString } from "../utilities/timeUtils";
 import { createTodayTs } from "../utilities/timeUtils";
+import { QUERY_INIT_RADIUS, DISPLAY_MAP_INIT_ZOOM } from "../config/constants";
 import * as actions from "./types";
 
 export const initialState = {
     query: {
         center: { lat: 37.5172, lng: 127.0473 }, // default Gangnam
-        radius: 5,
+        radius: QUERY_INIT_RADIUS,
         incidents: [],
     },
     timezone: { tzString: getTzString() },
@@ -35,7 +36,7 @@ export const initialState = {
         incidents: [],
     },
     displayMap: {
-        zoom: 14,
+        zoom: DISPLAY_MAP_INIT_ZOOM,
     },
     topBar: {
         drawer: false,

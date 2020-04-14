@@ -1,4 +1,4 @@
-import { getDistance } from "../utilities/geo";
+import { getRadiusFromBounds } from "../utilities/geo";
 import { insertNoDupes } from "../utilities/firebaseHelpers";
 import { INCIDENTS } from "../config/constants";
 import * as actions from "./types";
@@ -62,7 +62,7 @@ export const queryIncidents = (lat, lng, radius, firebase) => async (dispatch, g
 export const centerMoved = (mapProps, map, firebase) => async (dispatch, getState) => {
     const lat = map.center.lat();
     const lng = map.center.lng();
-    const radius = getDistance(map.getBounds().getNorthEast(), map.getBounds().getSouthWest()) / 2;
+    const radius = getRadiusFromBounds(map);
     const incidents = await query(lat, lng, radius, firebase, getState().filter);
 
     dispatch({
