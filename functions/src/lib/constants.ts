@@ -20,3 +20,10 @@ export const TELAVIV_GPS_POSITION = {
     lat: 32.0853,
     lng: 34.7818,
 };
+
+export const MIT_GPS_POSITION = {
+    lat: 42.3601,
+    lng: -71.0942,
+};
+
+export const SUBMIT_MAP_INIT_POS = MIT_GPS_POSITION;
