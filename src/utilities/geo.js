@@ -21,3 +21,11 @@ export const getRadiusFromBounds = (map) => {
     const bounds = { p1: map.getBounds().getNorthEast(), p2: map.getBounds().getSouthWest() };
     return getDistance(bounds.p1, bounds.p2) / 2;
 };
+
+export const getBounds = (points) => {
+    const bounds = new window.google.maps.LatLngBounds();
+    for (let i = 0; i < points.length; i++) {
+        bounds.extend(points[i]);
+    }
+    return bounds;
+};
