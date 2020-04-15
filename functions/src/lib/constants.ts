@@ -11,19 +11,7 @@ export const KOREA_DEFAULT_DURATION_MS = 60 * 60 * 1000;
 export const RETIRE_INCIDENTS_TIME_MS = 14 * 24 * 60 * 60 * 1000;
 export const DISPLAY_MAP_INIT_ZOOM = 12;
 export const QUERY_INIT_RADIUS = 100;
-
-export const GANGNAM_GPS_POSITION = {
-    lat: 37.5172,
-    lng: 127.0473,
-};
-export const TELAVIV_GPS_POSITION = {
-    lat: 32.0853,
-    lng: 34.7818,
-};
-
-export const MIT_GPS_POSITION = {
-    lat: 42.3601,
-    lng: -71.0942,
-};
-
+export const GANGNAM_GPS_POSITION = { lat: 37.5172, lng: 127.0473 };
+export const TELAVIV_GPS_POSITION = { lat: 32.0853, lng: 34.7818 };
+export const MIT_GPS_POSITION = { lat: 42.3601, lng: -71.0942 };
 export const SUBMIT_MAP_INIT_POS = MIT_GPS_POSITION;

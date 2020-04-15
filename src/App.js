@@ -9,6 +9,7 @@ import { MuiThemeProvider } from "@material-ui/core";
 import { theme } from "./config/material-ui";
 import { GetBrowserPosition } from "./components/GetBrowserPosition";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import { RealTimeDemo } from "./components/RealTimeDemo";
 
 const App = (props) => {
     return (
@@ -20,6 +21,8 @@ const App = (props) => {
                             <Route exact path="/" component={LandingPage} />
                             <Route exact path="/submit" component={Submit} />
                             <Route exact path="/test" component={TestLP} />
+                            <Route exact path="/rtdemo" component={RealTimeDemo} />
+                            <Route exact path="/rtdemo/:key" component={RealTimeDemo} />
                         </Switch>
                     </Router>
                     <GetBrowserPosition />
