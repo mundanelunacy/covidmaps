@@ -1,25 +1,7 @@
-import { getDistance } from "../utilities/geo";
-import { INCIDENTS } from "../config/firebaseCollections";
-
-import {
-    IMPORT_TAKEOUT_TO_STAGING,
-    QUERY_INCIDENTS,
-    CENTER_MOVED,
-    CHANGE_TIMEZONE,
-    LOAD_VISITS,
-    ADD_MANUAL_PLACE_TO_BUFFER,
-    ADD_MANUAL_TIME_TO_BUFFER,
-    SET_MANUAL_INPUT_VALUE,
-    SET_MANUAL_INPUT_DATE,
-    SET_MANUAL_INPUT_DURATION,
-    CLEAR_MANUAL_INPUT,
-    ADD_BUFFER_TO_STAGING,
-    CLEAR_STAGING,
-    DELETE_FROM_STAGING,
-    SET_ZOOM,
-    SET_DRAWER,
-    SET_VERIFIED_FILTER,
-} from "./types";
+import { getRadiusFromBounds } from "../utilities/geo";
+import { insertNoDupes } from "../utilities/firebaseHelpers";
+import { INCIDENTS } from "../config/constants";
+import * as actions from "./types";
 const geofirex = require("geofirex");
 const get = geofirex.get;
 
@@ -36,12 +18,12 @@ export const importTakeoutToStaging = (placeVisits, firebase) => (dispatch) => {
             address: placeVisit.location.address,
             startTimestampMs: parseInt(placeVisit.duration.startTimestampMs),
             endTimestampMs: parseInt(placeVisit.duration.endTimestampMs),
-            validated: Math.random() > 0.5,
+            validated: false,
             position,
         };
     });
 
-    dispatch({ type: IMPORT_TAKEOUT_TO_STAGING, incidents });
+    dispatch({ type: actions.IMPORT_TAKEOUT_TO_STAGING, incidents });
 };
 
 const displayFilter = (incidents, filter) => {
@@ -68,7 +50,7 @@ export const queryIncidents = (lat, lng, radius, firebase) => async (dispatch, g
     const incidents = await query(lat, lng, radius, firebase, getState().filter);
 
     dispatch({
-        type: QUERY_INCIDENTS,
+        type: actions.QUERY_INCIDENTS,
         query: {
             center: { lat, lng },
             radius,
@@ -80,11 +62,11 @@ export const queryIncidents = (lat, lng, radius, firebase) => async (dispatch, g
 export const centerMoved = (mapProps, map, firebase) => async (dispatch, getState) => {
     const lat = map.center.lat();
     const lng = map.center.lng();
-    const radius = getDistance(map.getBounds().getNorthEast(), map.getBounds().getSouthWest()) / 2;
+    const radius = getRadiusFromBounds(map);
     const incidents = await query(lat, lng, radius, firebase, getState().filter);
 
     dispatch({
-        type: CENTER_MOVED,
+        type: actions.CENTER_MOVED,
         query: {
             center: { lat, lng },
             radius,
@@ -95,14 +77,14 @@ export const centerMoved = (mapProps, map, firebase) => async (dispatch, getStat
 
 export const changeTimeZone = (tzString) => (dispatch, getState) => {
     dispatch({
-        type: CHANGE_TIMEZONE,
+        type: actions.CHANGE_TIMEZONE,
         tzString,
     });
 };
 
 export const loadParsedVisits = (placeVisits) => (dispatch) => {
     dispatch({
-        type: LOAD_VISITS,
+        type: actions.LOAD_VISITS,
         placeVisits,
     });
 };
@@ -118,14 +100,14 @@ export const addManualInputPlaceToBuffer = (value, results, firebase) => (dispat
     };
 
     dispatch({
-        type: ADD_MANUAL_PLACE_TO_BUFFER,
+        type: actions.ADD_MANUAL_PLACE_TO_BUFFER,
         place,
     });
 };
 
 export const addManualInputTimeToBuffer = (startDate, durationMin) => (dispatch) => {
     dispatch({
-        type: ADD_MANUAL_TIME_TO_BUFFER,
+        type: actions.ADD_MANUAL_TIME_TO_BUFFER,
         time: {
             startTimestampMs: startDate.getTime(),
             endTimestampMs: startDate.getTime() + 1000 * 60 * durationMin,
@@ -135,78 +117,92 @@ export const addManualInputTimeToBuffer = (startDate, durationMin) => (dispatch)
 
 export const setManualInputValue = (inputValue) => (dispatch) => {
     dispatch({
-        type: SET_MANUAL_INPUT_VALUE,
+        type: actions.SET_MANUAL_INPUT_VALUE,
         inputValue,
     });
 };
 
 export const setManualInputDate = (inputDate) => (dispatch) => {
     dispatch({
-        type: SET_MANUAL_INPUT_DATE,
+        type: actions.SET_MANUAL_INPUT_DATE,
         inputDate,
     });
 };
 
 export const setManualInputDuration = (inputDuration) => (dispatch) => {
     dispatch({
-        type: SET_MANUAL_INPUT_DURATION,
+        type: actions.SET_MANUAL_INPUT_DURATION,
         inputDuration,
     });
 };
 
 export const clearManualInput = () => (dispatch) => {
     dispatch({
-        type: CLEAR_MANUAL_INPUT,
+        type: actions.CLEAR_MANUAL_INPUT,
     });
 };
 
 export const addBufferToStaging = (buffer) => (dispatch) => {
     dispatch({
-        type: ADD_BUFFER_TO_STAGING,
+        type: actions.ADD_BUFFER_TO_STAGING,
         buffer,
     });
 };
 
-export const uploadStagingToDb = (stagingIncidents, firebase) => (dispatch) => {
-    // const geo = geofirex.init(firebase);
-    const incidents = firebase.firestore().collection(INCIDENTS);
+export const uploadStagingToDb = (stagingIncidents, firebase) => async (dispatch) => {
+    const insertedIds = await Promise.all(
+        stagingIncidents.map(async (incident, idx) => {
+            return await insertNoDupes(incident, INCIDENTS, firebase);
+        })
+    );
 
-    stagingIncidents.map((incident, idx) => {
-        incidents.add(incident);
-        return {};
-    });
+    return insertedIds.filter((value) => value);
 };
 
 export const clearStaging = () => (dispatch) => {
     dispatch({
-        type: CLEAR_STAGING,
+        type: actions.CLEAR_STAGING,
     });
 };
 
 export const deleteFromStaging = (index) => (dispatch) => {
     dispatch({
-        type: DELETE_FROM_STAGING,
+        type: actions.DELETE_FROM_STAGING,
         index,
     });
 };
 
 export const setZoom = (zoom) => (dispatch) => {
     dispatch({
-        type: SET_ZOOM,
+        type: actions.SET_ZOOM,
         zoom,
     });
 };
 
 export const setDrawerOpen = (drawer) => (dispatch) => {
     dispatch({
-        type: SET_DRAWER,
+        type: actions.SET_DRAWER,
         drawer,
     });
 };
 
 export const setVerifiedFilter = (verified) => (dispatch, getState) => {
     dispatch({
-        type: SET_VERIFIED_FILTER,
+        type: actions.SET_VERIFIED_FILTER,
         verified,
+    });
+};
+
+export const setSubmittedPlaces = (submittedPlaces) => (dispatch) => {
+    dispatch({
+        type: actions.DISPLAY_UPLOAD_CONFIRMATION,
+        submittedPlaces,
+    });
+};
+
+export const setBrowserPosition = (coords) => (dispatch) => {
+    dispatch({
+        type: actions.SET_BROWSER_POSITION,
+        coords,
     });
 };

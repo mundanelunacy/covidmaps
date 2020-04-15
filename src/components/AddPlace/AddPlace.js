@@ -9,23 +9,24 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
+import { QUERY_INIT_RADIUS } from "../../config/constants";
 
 const autocompleteService = { current: null };
 const geocoder = { current: null };
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
     icon: {
         color: theme.palette.text.secondary,
-        marginRight: theme.spacing(2)
+        marginRight: theme.spacing(2),
     },
     inputTextField: {
         color: "inherit",
         backgroundColor: fade(theme.palette.common.white, 0.55),
         "&:hover": {
-            backgroundColor: fade(theme.palette.common.white, 0.75)
+            backgroundColor: fade(theme.palette.common.white, 0.75),
         },
-        borderRadius: theme.shape.borderRadius
-    }
+        borderRadius: theme.shape.borderRadius,
+    },
 }));
 
 export function AddPlace({
@@ -33,12 +34,12 @@ export function AddPlace({
     addManualInputPlaceToBuffer,
     inputValue,
     setManualInputValue,
-    placeSelectionError
+    browserPos,
 }) {
     const classes = useStyles();
     const [options, setOptions] = React.useState([]);
 
-    const handleChange = event => {
+    const handleChange = (event) => {
         setManualInputValue(event.target.value);
     };
 
@@ -66,7 +67,18 @@ export function AddPlace({
             return undefined;
         }
 
-        fetch({ input: inputValue }, results => {
+        let request = { input: inputValue };
+
+        if (browserPos) {
+            request = {
+                ...request,
+                input: inputValue,
+                location: new window.google.maps.LatLng(browserPos.lat, browserPos.lng),
+                radius: QUERY_INIT_RADIUS * 1000,
+            };
+        }
+
+        fetch(request, (results) => {
             if (active) {
                 setOptions(results || []);
             }
@@ -75,7 +87,7 @@ export function AddPlace({
         return () => {
             active = false;
         };
-    }, [inputValue, fetch]);
+    }, [inputValue, fetch, browserPos]);
 
     const onPlaceSelected = (event, value) => {
         if (value) {
@@ -93,14 +105,14 @@ export function AddPlace({
             <Autocomplete
                 id="google-map-demo"
                 style={{ width: 300 }}
-                getOptionLabel={option => (typeof option === "string" ? option : option.description)}
+                getOptionLabel={(option) => (typeof option === "string" ? option : option.description)}
                 onChange={onPlaceSelected}
-                filterOptions={x => x}
+                filterOptions={(x) => x}
                 options={options}
                 autoComplete
                 includeInputInList
                 value={inputValue}
-                renderInput={params => {
+                renderInput={(params) => {
                     params.InputProps.startAdornment = (
                         <InputAdornment position="start">
                             <SearchIcon></SearchIcon>
@@ -119,11 +131,11 @@ export function AddPlace({
                         />
                     );
                 }}
-                renderOption={option => {
+                renderOption={(option) => {
                     const matches = option.structured_formatting.main_text_matched_substrings;
                     const parts = parse(
                         option.structured_formatting.main_text,
-                        matches.map(match => [match.offset, match.offset + match.length])
+                        matches.map((match) => [match.offset, match.offset + match.length])
                     );
 
                     return (

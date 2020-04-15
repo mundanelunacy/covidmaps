@@ -6,7 +6,7 @@ import { setDrawerOpen } from "../../redux/actions";
 // import PropTypes from "prop-types";
 
 const mapStateToProps = (state) => {
-    return { query: state.query, open: state.topBar.drawer };
+    return { open: state.topBar.drawer };
 };
 
 TopBar.propTypes = {};

@@ -3,16 +3,13 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { firestoreConnect } from "react-redux-firebase";
 // import PropTypes from "prop-types";
-import { clearManualInput, addBufferToStaging } from "../../redux/actions";
+import { setSubmittedPlaces } from "../../redux/actions";
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return {
-        manualInputBuffer: state.manualInputBuffer,
-        manualInputValid:
-            state.manualInputBuffer.startTimestampMs &&
-            state.manualInputBuffer.endTimestampMs &&
-            state.manualInputBuffer.placeId,
-        stagingIncidents: state.databaseStaging.incidents
+        stagingIncidents: state.databaseStaging.incidents,
+        submittedPlaces: state.submitPage.submittedPlaces,
+        open: state.topBar.drawer,
     };
 };
 
@@ -22,8 +19,7 @@ Submit.defaultProps = {};
 
 export default compose(
     connect(mapStateToProps, {
-        clearManualInput,
-        addBufferToStaging
+        setSubmittedPlaces,
     }),
     firestoreConnect()
 )(Submit);

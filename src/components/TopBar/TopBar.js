@@ -40,7 +40,7 @@ import clsx from "clsx";
 
 import { Link as RouterLink } from "react-router-dom";
 
-export const TopBar = ({ query, open, setDrawerOpen }) => {
+export const TopBar = ({ open, setDrawerOpen }) => {
     const classes = useStyles();
     const theme = useTheme();
 
@@ -70,13 +70,14 @@ export const TopBar = ({ query, open, setDrawerOpen }) => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <Link component={RouterLink} to="/">
+                    <Link component={RouterLink} to="/" style={{ color: "white" }}>
                         <img src="/logo.png" className={classes.logo} alt="logo" />
                     </Link>
-
                     <Hidden xsDown>
                         <Typography variant="h6" className={classes.title}>
-                            Covidmaps.org [Prototype]
+                            <Link component={RouterLink} to="/" style={{ color: "white" }} underline="none">
+                                Covidmaps.org [Prototype]
+                            </Link>
                         </Typography>
                     </Hidden>
 

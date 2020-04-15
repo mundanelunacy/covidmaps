@@ -10,6 +10,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import parse from "autosuggest-highlight/parse";
 import throttle from "lodash/throttle";
 import { useLocation, useHistory } from "react-router-dom";
+import { DISPLAY_MAP_INIT_ZOOM, QUERY_INIT_RADIUS } from "../../config/constants";
 
 const autocompleteService = { current: null };
 const geocoder = { current: null };
@@ -29,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export function SearchForm({ firebase, queryIncidents, setZoom }) {
+export function SearchForm({ firebase, queryIncidents, setZoom, query }) {
     const classes = useStyles();
     const location = useLocation();
     const history = useHistory();
@@ -64,7 +65,18 @@ export function SearchForm({ firebase, queryIncidents, setZoom }) {
             return undefined;
         }
 
-        fetch({ input: inputValue }, (results) => {
+        let request = { input: inputValue };
+
+        if (query) {
+            request = {
+                ...request,
+                input: inputValue,
+                location: new window.google.maps.LatLng(query.center.lat, query.center.lng),
+                radius: query.radius * 1000,
+            };
+        }
+
+        fetch(request, (results) => {
             if (active) {
                 setOptions(results || []);
             }
@@ -73,7 +85,7 @@ export function SearchForm({ firebase, queryIncidents, setZoom }) {
         return () => {
             active = false;
         };
-    }, [inputValue, fetch]);
+    }, [inputValue, fetch, query]);
 
     const onPlaceSelected = (event, value) => {
         if (value) {
@@ -82,10 +94,10 @@ export function SearchForm({ firebase, queryIncidents, setZoom }) {
                     queryIncidents(
                         results[0].geometry.location.lat(),
                         results[0].geometry.location.lng(),
-                        10,
+                        QUERY_INIT_RADIUS,
                         firebase
                     );
-                    setZoom(14);
+                    setZoom(DISPLAY_MAP_INIT_ZOOM);
                 }
             });
         }
