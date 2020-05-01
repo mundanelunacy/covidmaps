@@ -20,6 +20,7 @@ const App = (props) => {
                         <Switch>
                             <Route exact path="/" component={LandingPage} />
                             <Route exact path="/submit" component={Submit} />
+                            <Route exact path="/submit/:token" component={Submit} />
                             <Route exact path="/test" component={TestLP} />
                             <Route exact path="/rtdemo" component={RealTimeDemo} />
                             <Route exact path="/rtdemo/:key" component={RealTimeDemo} />

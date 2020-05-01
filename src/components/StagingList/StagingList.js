@@ -9,12 +9,19 @@ import {
     TableRow,
     TableCell,
     TableBody,
-    Paper
+    Paper,
 } from "@material-ui/core";
 import { useStyles } from "./StagingListCss";
 import moment from "moment-timezone";
 
-export const StagingList = ({ incidents, tzString, deleteFromStaging }) => {
+export const StagingList = ({
+    incidents,
+    tzString,
+    deleteFromStaging,
+    deleteFromStagingFs,
+    match,
+    firebase,
+}) => {
     const classes = useStyles();
     return (
         <Box p={1} component="span" className={classes.root}>
@@ -52,7 +59,11 @@ export const StagingList = ({ incidents, tzString, deleteFromStaging }) => {
                                             color="primary"
                                             variant="contained"
                                             onClick={() => {
-                                                deleteFromStaging(idx);
+                                                if (match.params.token) {
+                                                    deleteFromStagingFs(idx, match.params.token, firebase);
+                                                } else {
+                                                    deleteFromStaging(idx);
+                                                }
                                             }}
                                         >
                                             Delete Row

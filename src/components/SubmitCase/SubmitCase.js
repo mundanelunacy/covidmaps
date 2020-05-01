@@ -4,9 +4,15 @@ import { Box, Button } from "@material-ui/core";
 import { AddPlace } from "../AddPlace";
 import { AddDuration } from "../AddDuration";
 
-export const SubmitCase = ({ manualInputBuffer, manualInputValid, clearManualInput, addBufferToStaging }) => {
-    // const classes = useStyles();
-
+export const SubmitCase = ({
+    manualInputBuffer,
+    manualInputValid,
+    clearManualInput,
+    addBufferToStaging,
+    addBufferToStagingFs,
+    match,
+    firebase,
+}) => {
     return (
         <>
             <AddPlace />
@@ -16,7 +22,12 @@ export const SubmitCase = ({ manualInputBuffer, manualInputValid, clearManualInp
                     variant="contained"
                     disabled={!manualInputValid}
                     onClick={() => {
-                        addBufferToStaging(manualInputBuffer);
+                        if (match.params.token) {
+                            addBufferToStagingFs(manualInputBuffer, firebase, match.params.token);
+                        } else {
+                            addBufferToStaging(manualInputBuffer);
+                        }
+
                         clearManualInput();
                     }}
                 >

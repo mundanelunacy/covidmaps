@@ -7,15 +7,28 @@ import {
     clearManualInput,
     uploadStagingToDb,
     clearStaging,
+    clearStagingFs,
     setSubmittedPlaces,
     queryIncidents,
 } from "../../redux/actions";
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
+    let incidents;
+
+    if (
+        props.match.params.token &&
+        state.firestore.data.submitSessions &&
+        state.firestore.data.submitSessions[props.match.params.token]
+    ) {
+        incidents = state.firestore.data.submitSessions[props.match.params.token].incidents;
+    } else {
+        incidents = state.databaseStaging.incidents;
+    }
+
     return {
         firebase: state.firebase,
-        uploadStagingValid: state.databaseStaging.incidents.length,
-        stagingIncidents: state.databaseStaging.incidents,
+        uploadStagingValid: incidents.length,
+        stagingIncidents: incidents,
         query: state.query,
     };
 };
@@ -29,8 +42,19 @@ export default compose(
         clearManualInput,
         uploadStagingToDb,
         clearStaging,
+        clearStagingFs,
         setSubmittedPlaces,
         queryIncidents,
     }),
-    firestoreConnect()
+    firestoreConnect((props) => {
+        if (props.match.params.token) {
+            return [
+                {
+                    collection: "submitSessions",
+                    doc: props.match.params.token,
+                },
+            ];
+        }
+        return [];
+    })
 )(UploadStagingButton);
