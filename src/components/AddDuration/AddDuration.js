@@ -39,6 +39,7 @@ export const AddDuration = ({
     };
 
     const handleManualInputDuration = (e) => {
+        e.preventDefault();
         setManualInputDuration(e.target.value);
     };
 
