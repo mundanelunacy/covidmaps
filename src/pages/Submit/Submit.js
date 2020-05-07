@@ -11,7 +11,7 @@ import clsx from "clsx";
 import { useHistory, Link as RouterLink } from "react-router-dom";
 import { SubmitMap } from "../../components/SubmitMap";
 
-export const Submit = ({ setSubmittedPlaces, submittedPlaces, open }) => {
+export const Submit = ({ setSubmittedPlaces, submittedPlaces, open, match }) => {
     const classes = useStyles();
     const history = useHistory();
     const redirectTimeout = 3;
@@ -57,7 +57,7 @@ export const Submit = ({ setSubmittedPlaces, submittedPlaces, open }) => {
                                         </Typography>
                                     </Box>
                                     <Box mt={2}>
-                                        <TakeoutParser />
+                                        <TakeoutParser match={match} />
                                     </Box>
                                 </Grid>
                                 <Grid item xs={6}>
@@ -67,7 +67,7 @@ export const Submit = ({ setSubmittedPlaces, submittedPlaces, open }) => {
                                         </Typography>
                                     </Box>
                                     <Box mt={2}>
-                                        <SubmitCase />
+                                        <SubmitCase match={match} />
                                     </Box>
                                 </Grid>
                             </Grid>
@@ -76,15 +76,15 @@ export const Submit = ({ setSubmittedPlaces, submittedPlaces, open }) => {
                                 <Typography variant="h6">Step 3: Review List and Upload</Typography>
                             </Box>
                             <Box mt={2}>
-                                <UploadStagingButton />
+                                <UploadStagingButton match={match} />
                             </Box>
                             <Box mt={2}>
-                                <StagingList />
+                                <StagingList match={match} />
                             </Box>
                         </Grid>
                         <Grid item xs={6}>
                             <Box mt={2}>
-                                <SubmitMap />
+                                <SubmitMap match={match} />
                             </Box>
                         </Grid>
                     </Grid>

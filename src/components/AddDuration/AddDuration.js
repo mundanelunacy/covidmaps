@@ -41,6 +41,7 @@ export const AddDuration = ({
     const handleManualInputDuration = (e) => {
         e.preventDefault();
         setManualInputDuration(e.target.value);
+        addManualInputTimeToBuffer(new Date(manualInputDate), e.target.value);
     };
 
     return (
@@ -50,6 +51,7 @@ export const AddDuration = ({
                     placeholder="2020/01/01"
                     value={manualInputDate}
                     minDate={Date.now() - SUBMISSION_TIMEFRAME}
+                    maxDate={Date.now()}
                     onChange={handleManualInputDate}
                     format="yyyy/MM/dd HH:mm"
                     showTodayButton

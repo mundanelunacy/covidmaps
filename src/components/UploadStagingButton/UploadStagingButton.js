@@ -9,9 +9,11 @@ export const UploadStagingButton = ({
     stagingIncidents,
     uploadStagingToDb,
     clearStaging,
+    clearStagingFs,
     setSubmittedPlaces,
     queryIncidents,
     query,
+    match,
 }) => {
     const classes = useStyles();
 
@@ -27,12 +29,25 @@ export const UploadStagingButton = ({
                 firebase
             );
         }
-        clearStaging();
+
+        if (match.params.token) {
+            clearStagingFs(match.params.token, firebase, true);
+        } else {
+            clearStaging();
+        }
     };
 
     return (
         <Box p={1} component="span" className={classes.root}>
-            <Button variant="contained" onClick={clearStaging} disabled={!uploadStagingValid}>
+            <Button
+                variant="contained"
+                onClick={
+                    match.params.token
+                        ? () => clearStagingFs(match.params.token, firebase, false)
+                        : clearStaging
+                }
+                disabled={!uploadStagingValid}
+            >
                 Clear List
             </Button>
             <Button variant="contained" onClick={handleUpload} disabled={!uploadStagingValid}>

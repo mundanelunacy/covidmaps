@@ -5,9 +5,9 @@ import * as actions from "./types";
 const geofirex = require("geofirex");
 const get = geofirex.get;
 
-export const importTakeoutToStaging = (placeVisits, firebase) => (dispatch) => {
+const createStagingIncidents = (placeVisits, firebase) => {
     const geo = geofirex.init(firebase);
-    const incidents = placeVisits.map(({ placeVisit }, idx) => {
+    return placeVisits.map(({ placeVisit }, idx) => {
         const position = geo.point(
             placeVisit.location.latitudeE7 / 10000000,
             placeVisit.location.longitudeE7 / 10000000
@@ -22,8 +22,23 @@ export const importTakeoutToStaging = (placeVisits, firebase) => (dispatch) => {
             position,
         };
     });
+};
 
+export const importTakeoutToStaging = (placeVisits, firebase) => (dispatch) => {
+    const incidents = createStagingIncidents(placeVisits, firebase);
     dispatch({ type: actions.IMPORT_TAKEOUT_TO_STAGING, incidents });
+};
+
+export const importTakeoutToStagingFs = (placeVisits, token, firebase) => async (dispatch) => {
+    const incidents = createStagingIncidents(placeVisits, firebase);
+    const ref = firebase.firestore().collection("submitSessions").doc(token);
+    const doc = await ref.get();
+
+    if (doc.exists) {
+        await ref.set({ incidents: incidents.concat(doc.data().incidents) });
+    } else {
+        await ref.doc(token).set({ incidents });
+    }
 };
 
 const displayFilter = (incidents, filter) => {
@@ -149,6 +164,24 @@ export const addBufferToStaging = (buffer) => (dispatch) => {
     });
 };
 
+export const addBufferToStagingFs = (buffer, firebase, token) => async (dispatch) => {
+    const ref = firebase.firestore().collection("submitSessions").doc(token);
+    const doc = await ref.get();
+
+    if (doc.exists) {
+        let { incidents } = doc.data();
+        if (!incidents) {
+            incidents = [];
+        }
+        incidents.push(buffer);
+        ref.update({ incidents });
+    } else {
+        let incidents = [];
+        incidents.push(buffer);
+        ref.set({ incidents });
+    }
+};
+
 export const uploadStagingToDb = (stagingIncidents, firebase) => async (dispatch) => {
     const insertedIds = await Promise.all(
         stagingIncidents.map(async (incident, idx) => {
@@ -165,11 +198,30 @@ export const clearStaging = () => (dispatch) => {
     });
 };
 
+export const clearStagingFs = (token, firebase, deleteDoc) => async (dispatch) => {
+    const ref = await firebase.firestore().collection("submitSessions").doc(token);
+    if (deleteDoc) {
+        ref.delete();
+    } else {
+        ref.set({ incidents: [] });
+    }
+};
+
 export const deleteFromStaging = (index) => (dispatch) => {
     dispatch({
         type: actions.DELETE_FROM_STAGING,
         index,
     });
+};
+
+export const deleteFromStagingFs = (index, token, firebase) => async (dispatch) => {
+    const ref = firebase.firestore().collection("submitSessions").doc(token);
+    const doc = await ref.get();
+    if (doc.exists) {
+        let { incidents } = doc.data();
+        incidents.splice(index, 1);
+        ref.set({ incidents });
+    }
 };
 
 export const setZoom = (zoom) => (dispatch) => {

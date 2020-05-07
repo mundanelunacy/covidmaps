@@ -3,17 +3,24 @@ import React from "react";
 import { Input } from "@material-ui/core";
 // import { useStyles } from "./TakeoutParserCss";
 
-export const TakeoutParser = ({ loadParsedVisits, placeVisits, firebase, importTakeoutToStaging }) => {
+export const TakeoutParser = ({
+    loadParsedVisits,
+    placeVisits,
+    firebase,
+    importTakeoutToStaging,
+    importTakeoutToStagingFs,
+    match,
+}) => {
     // const classes = useStyles();
 
     let fileReader;
 
-    const handleFileRead = e => {
+    const handleFileRead = (e) => {
         // Filter out Timeline objects that are
         // 1.  NOT places
         // 2.  Have a duration less than 30min
         const placeVisits = JSON.parse(fileReader.result).timelineObjects.filter(
-            obj =>
+            (obj) =>
                 obj.placeVisit &&
                 obj.placeVisit.location.locationConfidence > 50 &&
                 (parseInt(obj.placeVisit.duration.endTimestampMs) -
@@ -24,10 +31,15 @@ export const TakeoutParser = ({ loadParsedVisits, placeVisits, firebase, importT
         );
 
         loadParsedVisits(placeVisits);
-        importTakeoutToStaging(placeVisits, firebase);
+
+        if (match.params.token) {
+            importTakeoutToStagingFs(placeVisits, match.params.token, firebase);
+        } else {
+            importTakeoutToStaging(placeVisits, firebase);
+        }
     };
 
-    const handleFileChosen = file => {
+    const handleFileChosen = (file) => {
         if (file.size / 1024 / 1024 > 2) {
             console.log("file is larger than 2MB");
             return;
@@ -40,7 +52,7 @@ export const TakeoutParser = ({ loadParsedVisits, placeVisits, firebase, importT
 
     return (
         <>
-            <Input type="file" accept="json" onChange={e => handleFileChosen(e.target.files[0])} />
+            <Input type="file" accept="json" onChange={(e) => handleFileChosen(e.target.files[0])} />
         </>
     );
 };
