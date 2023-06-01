@@ -14,9 +14,9 @@ import {
     ListItemText,
     // InputBase,
     useTheme,
-    ExpansionPanel,
-    ExpansionPanelSummary,
-    ExpansionPanelDetails,
+    Accordion,
+    AccordionSummary,
+    AccordionDetails,
     Link,
     Hidden,
 } from "@material-ui/core";
@@ -115,8 +115,8 @@ export const TopBar = ({ open, setDrawerOpen }) => {
 
                 <List>
                     <ListItemText>
-                        <ExpansionPanel>
-                            <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+                        <Accordion>
+                            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                                 <List>
                                     <ListItem button>
                                         <ListItemIcon>
@@ -125,11 +125,11 @@ export const TopBar = ({ open, setDrawerOpen }) => {
                                         <ListItemText>Filters</ListItemText>
                                     </ListItem>
                                 </List>
-                            </ExpansionPanelSummary>
-                            <ExpansionPanelDetails>
+                            </AccordionSummary>
+                            <AccordionDetails>
                                 <FilterIncidents />
-                            </ExpansionPanelDetails>
-                        </ExpansionPanel>
+                            </AccordionDetails>
+                        </Accordion>
                     </ListItemText>
                     <ListItem>
                         <ListItemIcon>

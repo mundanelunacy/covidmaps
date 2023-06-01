@@ -1,6 +1,6 @@
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import { fade, InputAdornment } from "@material-ui/core";
+import { alpha, InputAdornment } from "@material-ui/core";
 import { Search as SearchIcon } from "@material-ui/icons";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
@@ -21,9 +21,9 @@ const useStyles = makeStyles((theme) => ({
     },
     inputTextField: {
         color: "inherit",
-        backgroundColor: fade(theme.palette.common.white, 0.55),
+        backgroundColor: alpha(theme.palette.common.white, 0.55),
         "&:hover": {
-            backgroundColor: fade(theme.palette.common.white, 0.75),
+            backgroundColor: alpha(theme.palette.common.white, 0.75),
         },
         borderRadius: theme.shape.borderRadius,
     },
